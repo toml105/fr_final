@@ -1,4 +1,4 @@
-const CACHE = 'french-master-v7';
+const CACHE = 'french-master-v8';
 const FILES = [
   'index.html', 'manifest.json',
   'icon-192.png', 'icon-512.png', 'icon-1024.png', 'apple-touch-icon.png',
@@ -27,18 +27,37 @@ self.addEventListener('activate', e => {
 self.addEventListener('fetch', e => {
   const url = new URL(e.request.url);
 
-  // Navigation requests (page loads, iOS home screen launch, etc.)
-  // Always serve index.html for same-origin navigation
+  // Navigation requests: network-first so updates are seen immediately
   if (e.request.mode === 'navigate' && url.origin === self.location.origin) {
     e.respondWith(
-      caches.match('index.html')
-        .then(r => r || fetch('index.html'))
-        .catch(() => fetch(e.request))
+      fetch(e.request)
+        .then(res => {
+          const clone = res.clone();
+          caches.open(CACHE).then(c => c.put('index.html', clone));
+          return res;
+        })
+        .catch(() => caches.match('index.html'))
     );
     return;
   }
 
-  // All other requests: cache-first, then network
+  // JS/data files: network-first to pick up changes, fall back to cache
+  if (url.pathname.endsWith('.js') && url.origin === self.location.origin) {
+    e.respondWith(
+      fetch(e.request)
+        .then(res => {
+          if (res.ok) {
+            const clone = res.clone();
+            caches.open(CACHE).then(c => c.put(e.request, clone));
+          }
+          return res;
+        })
+        .catch(() => caches.match(e.request))
+    );
+    return;
+  }
+
+  // Everything else (icons, manifest, etc.): cache-first
   e.respondWith(
     caches.match(e.request).then(r => {
       if (r) return r;
