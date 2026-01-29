@@ -2,8 +2,8 @@
   "name": "French Master Pro",
   "short_name": "French",
   "description": "Complete French Learning App with Spaced Repetition — 200+ verbs, 1000+ vocabulary, grammar & more",
-  "start_url": "/",
-  "scope": "/",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#06060b",
   "theme_color": "#7c3aed",
@@ -11,41 +11,41 @@
   "lang": "en",
   "categories": ["education", "utilities"],
   "icons": [
-    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
-    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
-    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable"},
-    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"},
-    {"src": "apple-touch-icon.png", "sizes": "180x180", "type": "image/png"},
-    {"src": "icon-1024.png", "sizes": "1024x1024", "type": "image/png"}
+    {"src": "./icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "./icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "./icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable"},
+    {"src": "./icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"},
+    {"src": "./apple-touch-icon.png", "sizes": "180x180", "type": "image/png"},
+    {"src": "./icon-1024.png", "sizes": "1024x1024", "type": "image/png"}
   ],
   "shortcuts": [
     {
       "name": "Quick Quiz",
       "short_name": "Quiz",
       "description": "Start a 10-question vocabulary quiz",
-      "url": "/?action=quiz",
-      "icons": [{"src": "icon-192.png", "sizes": "192x192"}]
+      "url": "./?action=quiz",
+      "icons": [{"src": "./icon-192.png", "sizes": "192x192"}]
     },
     {
       "name": "Flashcards",
       "short_name": "Flash",
       "description": "Practice with flashcards",
-      "url": "/?action=flash",
-      "icons": [{"src": "icon-192.png", "sizes": "192x192"}]
+      "url": "./?action=flash",
+      "icons": [{"src": "./icon-192.png", "sizes": "192x192"}]
     },
     {
       "name": "Speed Round",
       "short_name": "Speed",
       "description": "60-second speed challenge",
-      "url": "/?action=speed",
-      "icons": [{"src": "icon-192.png", "sizes": "192x192"}]
+      "url": "./?action=speed",
+      "icons": [{"src": "./icon-192.png", "sizes": "192x192"}]
     },
     {
       "name": "Verb Explorer",
       "short_name": "Verbs",
       "description": "Browse and conjugate verbs",
-      "url": "/?action=verbs",
-      "icons": [{"src": "icon-192.png", "sizes": "192x192"}]
+      "url": "./?action=verbs",
+      "icons": [{"src": "./icon-192.png", "sizes": "192x192"}]
     }
   ]
 }
