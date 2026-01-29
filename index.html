@@ -143,6 +143,64 @@ h3{font-size:16px;font-weight:700;}
 .mb-8{margin-bottom:8px}.mb-12{margin-bottom:12px}.mb-16{margin-bottom:16px}
 .flex-between{display:flex;align-items:center;justify-content:space-between;}
 .hidden{display:none!important;}
+
+/* ── ACHIEVEMENT SYSTEM ── */
+.achievement-popup{position:fixed;top:80px;left:50%;transform:translateX(-50%) translateY(-120px);background:linear-gradient(135deg,#1e1b4b,#312e81);border:1.5px solid var(--primary);border-radius:var(--radius);padding:16px 24px;z-index:300;text-align:center;box-shadow:0 0 30px rgba(99,102,241,.4);transition:transform .5s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;max-width:90vw;}
+.achievement-popup.show{transform:translateX(-50%) translateY(0);}
+.achievement-popup .ach-icon{font-size:40px;margin-bottom:6px;}
+.achievement-popup .ach-title{font-size:14px;font-weight:800;color:var(--primary2);}
+.achievement-popup .ach-desc{font-size:11px;color:var(--text2);margin-top:2px;}
+.ach-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.ach-item{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 8px;text-align:center;transition:all .2s;position:relative;}
+.ach-item.earned{border-color:var(--primary);background:rgba(99,102,241,.08);}
+.ach-item.locked{opacity:.5;filter:grayscale(1);}
+.ach-item .ach-i{font-size:28px;display:block;margin-bottom:4px;}
+.ach-item .ach-n{font-size:10px;font-weight:700;color:var(--text);display:block;}
+.ach-item .ach-d{font-size:9px;color:var(--text3);display:block;margin-top:2px;}
+
+/* ── DAILY CHALLENGE ── */
+.challenge-card{background:linear-gradient(135deg,var(--bg3),#1a1a3e);border:1.5px solid var(--primary);border-radius:var(--radius);padding:16px;margin-bottom:12px;position:relative;overflow:hidden;}
+.challenge-card::before{content:'';position:absolute;top:-20px;right:-20px;width:80px;height:80px;background:radial-gradient(circle,rgba(99,102,241,.2),transparent);border-radius:50%;}
+.challenge-card .ch-badge{display:inline-block;padding:3px 10px;border-radius:10px;font-size:10px;font-weight:700;background:rgba(249,115,22,.15);color:var(--orange);margin-bottom:8px;}
+.challenge-card h3{font-size:16px;margin-bottom:4px;}
+.challenge-card .ch-desc{font-size:12px;color:var(--text2);margin-bottom:12px;}
+.challenge-card .ch-reward{font-size:11px;color:var(--warning);font-weight:600;}
+
+/* ── SMART REVIEW INDICATORS ── */
+.review-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:10px;font-size:10px;font-weight:700;}
+.review-due{background:rgba(239,68,68,.15);color:var(--danger);}
+.review-soon{background:rgba(249,115,22,.15);color:var(--orange);}
+.review-ok{background:rgba(34,197,94,.15);color:var(--success);}
+
+/* ── SENTENCE BUILDER ── */
+.sb-bank{display:flex;flex-wrap:wrap;gap:6px;min-height:48px;padding:12px;background:var(--bg3);border-radius:var(--radius-sm);border:1.5px dashed var(--border2);margin:12px 0;justify-content:center;}
+.sb-slot{display:flex;flex-wrap:wrap;gap:6px;min-height:48px;padding:12px;background:var(--bg4);border-radius:var(--radius-sm);border:1.5px solid var(--primary);margin:12px 0;justify-content:center;transition:border-color .2s;}
+.sb-slot.correct{border-color:var(--success);background:rgba(34,197,94,.06);}
+.sb-slot.wrong{border-color:var(--danger);background:rgba(239,68,68,.06);}
+.sb-word{padding:8px 14px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;user-select:none;font-family:var(--font);}
+.sb-word.in-bank{background:var(--bg2);border:1.5px solid var(--border2);color:var(--text);}
+.sb-word.in-slot{background:rgba(99,102,241,.15);border:1.5px solid var(--primary);color:var(--primary2);}
+.sb-word.used{opacity:.3;pointer-events:none;}
+
+/* ── MATCHING GAME ── */
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.match-card{padding:14px 10px;background:var(--bg3);border:1.5px solid var(--border2);border-radius:var(--radius-sm);font-size:13px;font-weight:600;text-align:center;cursor:pointer;transition:all .2s;min-height:50px;display:flex;align-items:center;justify-content:center;}
+.match-card.selected{border-color:var(--primary);background:rgba(99,102,241,.12);color:var(--primary2);}
+.match-card.matched{border-color:var(--success);background:rgba(34,197,94,.12);color:var(--success);pointer-events:none;opacity:.7;}
+.match-card.wrong-match{border-color:var(--danger);background:rgba(239,68,68,.12);animation:shake .3s ease;}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+
+/* ── GENDER DRILL ── */
+.gender-btn{flex:1;padding:16px;border-radius:var(--radius-sm);font-size:16px;font-weight:800;border:2px solid var(--border2);cursor:pointer;transition:all .2s;text-align:center;font-family:var(--font);}
+.gender-btn.masculine{background:rgba(59,130,246,.08);color:#60a5fa;}
+.gender-btn.feminine{background:rgba(236,72,153,.08);color:var(--pink);}
+.gender-btn.masculine:active{background:rgba(59,130,246,.2);}
+.gender-btn.feminine:active{background:rgba(236,72,153,.2);}
+.gender-btn.correct{border-color:var(--success);background:rgba(34,197,94,.15);}
+.gender-btn.wrong{border-color:var(--danger);background:rgba(239,68,68,.15);}
+
+/* ── STREAK FLAME ── */
+.streak-flame{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:12px;background:linear-gradient(135deg,rgba(249,115,22,.15),rgba(239,68,68,.15));color:var(--orange);font-size:13px;font-weight:800;}
 </style>
 </head>
 <body>
@@ -159,12 +217,16 @@ h3{font-size:16px;font-weight:700;}
     <div class="flex-between mb-8"><h3>Daily Goal</h3><span id="daily-goal-text" style="font-size:13px;color:var(--primary2);font-weight:700"></span></div>
     <div class="prog-bar"><div class="prog-fill" id="daily-goal-bar" style="width:0%"></div></div>
   </div>
+  <div id="daily-challenge-section" class="mb-12"></div>
+  <div id="smart-review-section" class="mb-12"></div>
   <h3 class="mb-8">Quick Actions</h3>
   <div class="card-grid-3 mb-16">
     <button class="btn btn-ghost btn-sm" onclick="startQuickQuiz()">Quick Quiz</button>
     <button class="btn btn-ghost btn-sm" onclick="startQuickFlash()">Flashcards</button>
     <button class="btn btn-ghost btn-sm" onclick="showRandomVerb()">Random Verb</button>
   </div>
+  <div class="flex-between mb-8"><h3>Achievements</h3><span style="font-size:12px;color:var(--primary2);cursor:pointer" onclick="showAllAchievements()">View All</span></div>
+  <div id="home-achievements" class="mb-16"></div>
   <div class="flex-between mb-8"><h3>Recent Activity</h3></div>
   <div id="home-activity"></div>
 </div>
@@ -194,6 +256,10 @@ h3{font-size:16px;font-weight:700;}
     <div class="cat-card mb-8" onclick="openPracticeMode('fillblank')"><div class="cat-icon" style="background:rgba(249,115,22,.15)">&#128196;</div><div class="cat-info"><h3>Fill in the Blank</h3><div class="sub">Complete sentences</div></div></div>
     <div class="cat-card mb-8" onclick="openPracticeMode('speed')"><div class="cat-icon" style="background:rgba(239,68,68,.15)">&#9889;</div><div class="cat-info"><h3>Speed Round</h3><div class="sub">60 seconds, max points!</div></div></div>
     <div class="cat-card mb-8" onclick="openPracticeMode('listening')"><div class="cat-icon" style="background:rgba(236,72,153,.15)">&#127911;</div><div class="cat-info"><h3>Listening</h3><div class="sub">Hear and identify</div></div></div>
+    <div class="cat-card mb-8" onclick="openPracticeMode('sentence')"><div class="cat-icon" style="background:rgba(6,182,212,.15)">&#128295;</div><div class="cat-info"><h3>Sentence Builder</h3><div class="sub">Arrange words in order</div></div></div>
+    <div class="cat-card mb-8" onclick="openPracticeMode('grammarquiz')"><div class="cat-icon" style="background:rgba(168,85,247,.15)">&#128218;</div><div class="cat-info"><h3>Grammar Quiz</h3><div class="sub">Test grammar rules</div></div></div>
+    <div class="cat-card mb-8" onclick="openPracticeMode('gender')"><div class="cat-icon" style="background:rgba(236,72,153,.15)">&#9892;</div><div class="cat-info"><h3>Gender Drill</h3><div class="sub">Le or La? Master noun genders</div></div></div>
+    <div class="cat-card mb-8" onclick="openPracticeMode('matching')"><div class="cat-icon" style="background:rgba(249,115,22,.15)">&#128279;</div><div class="cat-info"><h3>Matching</h3><div class="sub">Match French to English pairs</div></div></div>
   </div>
   <div id="practice-config" class="hidden"></div>
   <div id="practice-active" class="hidden"></div>
@@ -245,6 +311,7 @@ h3{font-size:16px;font-weight:700;}
   <a class="tab" data-page="stats" onclick="nav('stats')"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg><span>Stats</span></a>
 </nav>
 
+<div id="achievement-popup" class="achievement-popup"><div class="ach-icon"></div><div class="ach-title"></div><div class="ach-desc"></div></div>
 <div id="toast"></div>
 <div id="overlay" onclick="if(event.target===this)closeOverlay()"><div id="overlay-content"></div></div>
 
@@ -464,7 +531,8 @@ return r;}
 
 function openPracticeMode(mode){document.getElementById('practice-hub').classList.add('hidden');document.getElementById('practice-config').classList.remove('hidden');
 if(mode==='flashcards')cfgFlash();else if(mode==='mcq')cfgMCQ();else if(mode==='type')cfgType();else if(mode==='conjugation')cfgConj();
-else if(mode==='fillblank')cfgFill();else if(mode==='speed')goSpeed();else if(mode==='listening')cfgListen();}
+else if(mode==='fillblank')cfgFill();else if(mode==='speed')goSpeed();else if(mode==='listening')cfgListen();
+else if(mode==='sentence')cfgSentence();else if(mode==='grammarquiz')cfgGrammarQuiz();else if(mode==='gender')cfgGender();else if(mode==='matching')cfgMatching();}
 
 // ── FLASHCARDS ──
 function cfgFlash(){document.getElementById('practice-config').innerHTML=
@@ -647,6 +715,233 @@ if(!weak.length){toast('No weak areas');return;}nav('practice');
 setTimeout(()=>{document.getElementById('practice-hub').classList.add('hidden');
 const items=weak.map(([k])=>{const p=k.split('_');return{fr:p.slice(1).join(' '),en:p.slice(1).join(' '),type:p[0],key:k};});
 PS={mode:'fc',items:shuffle(items),i:0,known:0};startTimer();document.getElementById('practice-config').classList.add('hidden');rFC();},50);}
+
+// ── SENTENCE BUILDER ──
+function cfgSentence(){document.getElementById('practice-config').innerHTML=
+'<h2 class="mb-12">Sentence Builder</h2><p class="subtitle mb-16">Arrange words to form correct French sentences</p><h3 class="mb-8">Questions</h3><div class="pills mb-12" id="sb-n"><div class="pill active" data-v="10" onclick="selPill(this,\'sb-n\')">10</div><div class="pill" data-v="20" onclick="selPill(this,\'sb-n\')">20</div></div><button class="btn btn-primary btn-full mt-16" onclick="goSentence()">Start</button><button class="btn btn-ghost btn-full mt-8" onclick="resetPractice()">Back</button>';}
+
+function goSentence(){const n=+(document.querySelector('#sb-n .pill.active')?.dataset.v||10);
+let qs=[];
+PHRASES.categories.forEach(c=>c.phrases.forEach(p=>{const words=p.fr.split(/\s+/);if(words.length>=3&&words.length<=10)qs.push({fr:p.fr,en:p.en,words,key:'phrase_'+c.id+'_'+p.fr.replace(/\s/g,'_').substring(0,30)});}));
+CONNECTIVES.categories.forEach(c=>c.words.forEach(w=>{if(w.examples&&w.examples.length)w.examples.forEach(ex=>{const words=ex.fr.split(/\s+/);if(words.length>=3&&words.length<=10)qs.push({fr:ex.fr,en:ex.en,words,key:'conn_'+c.id+'_'+w.fr.replace(/\s/g,'_')});});}));
+qs=shuffle(qs).slice(0,n);if(!qs.length){toast('No sentences available');resetPractice();return;}
+PS={mode:'sentence',items:qs,i:0,sc:0};startTimer();document.getElementById('practice-config').classList.add('hidden');rSentence();}
+
+function rSentence(){const b=document.getElementById('practice-active');b.classList.remove('hidden');
+if(PS.i>=PS.items.length){const p=Math.round(PS.sc/PS.items.length*100);addAct('quiz','Sentence Builder: '+PS.sc+'/'+PS.items.length+' ('+p+'%)',p+'%');
+b.innerHTML='<div class="text-center mt-20"><h2>Complete!</h2><div class="score-big">'+p+'%</div><p class="subtitle">'+PS.sc+'/'+PS.items.length+'</p></div><button class="btn btn-primary btn-full mt-16" onclick="resetPractice()">Done</button>';checkAchievements();return;}
+const q=PS.items[PS.i];PS._placed=[];PS._words=shuffle([...q.words]);PS._correct=q.words;
+b.innerHTML='<div class="flex-between mb-12"><span style="font-size:13px;color:var(--text2)">'+(PS.i+1)+'/'+PS.items.length+'</span><span style="font-size:13px;color:var(--primary2);font-weight:700">Score: '+PS.sc+'</span></div><div class="prog-bar mb-12"><div class="prog-fill" style="width:'+PS.i/PS.items.length*100+'%"></div></div><p class="text-center mb-8" style="color:var(--text2);font-size:13px">'+q.en+'</p><div class="sb-slot" id="sb-slot"></div><div class="sb-bank" id="sb-bank"></div><div style="display:flex;gap:8px;margin-top:16px"><button class="btn btn-ghost btn-full" onclick="sbClear()">Clear</button><button class="btn btn-primary btn-full" onclick="sbCheck()">Check</button></div><div id="sb-fb"></div>';
+renderSBWords();}
+
+function renderSBWords(){const slot=document.getElementById('sb-slot'),bank=document.getElementById('sb-bank');
+slot.innerHTML=PS._placed.map((w,i)=>'<span class="sb-word in-slot" onclick="sbRemove('+i+')">'+w+'</span>').join('')||'<span style="color:var(--text3);font-size:13px">Tap words to build sentence</span>';
+bank.innerHTML=PS._words.map((w,i)=>{const used=PS._placed.filter(x=>x===w).length;const avail=PS._words.filter((x,j)=>x===w&&j<=i).length-PS._placed.filter((x,j)=>x===w&&j<=i).length;
+return '<span class="sb-word in-bank'+(PS._placed.includes(w)&&PS._words.filter(x=>x===w).length<=PS._placed.filter(x=>x===w).length?' used':'')+'" onclick="sbAdd('+i+')">'+w+'</span>';}).join('');}
+
+function sbAdd(idx){const w=PS._words[idx];const usedCount=PS._placed.filter(x=>x===w).length;const totalCount=PS._words.filter(x=>x===w).length;
+if(usedCount<totalCount){PS._placed.push(w);renderSBWords();}}
+function sbRemove(idx){PS._placed.splice(idx,1);renderSBWords();}
+function sbClear(){PS._placed=[];renderSBWords();}
+function sbCheck(){const placed=PS._placed.join(' '),correct=PS._correct.join(' ');
+const ok=placed.toLowerCase()===correct.toLowerCase()||norm(placed)===norm(correct);
+const slot=document.getElementById('sb-slot');slot.classList.add(ok?'correct':'wrong');
+document.getElementById('sb-fb').innerHTML=ok?'<div style="color:var(--success);font-weight:700;text-align:center;margin-top:12px">&#10003; Correct!</div>':'<div style="color:var(--danger);font-weight:700;text-align:center;margin-top:12px">&#10007; Correct: <span style="color:var(--success)">'+correct+'</span></div>';
+if(ok)PS.sc++;record(PS.items[PS.i].key,ok);PS.i++;setTimeout(rSentence,1200);}
+
+// ── GRAMMAR QUIZ ──
+function cfgGrammarQuiz(){document.getElementById('practice-config').innerHTML=
+'<h2 class="mb-12">Grammar Quiz</h2><p class="subtitle mb-16">Test your knowledge of French grammar rules</p><h3 class="mb-8">Questions</h3><div class="pills mb-12" id="gq-n"><div class="pill active" data-v="10" onclick="selPill(this,\'gq-n\')">10</div><div class="pill" data-v="20" onclick="selPill(this,\'gq-n\')">20</div></div><button class="btn btn-primary btn-full mt-16" onclick="goGrammarQuiz()">Start</button><button class="btn btn-ghost btn-full mt-8" onclick="resetPractice()">Back</button>';}
+
+function goGrammarQuiz(){const n=+(document.querySelector('#gq-n .pill.active')?.dataset.v||10);
+let qs=[];
+// Generate questions from grammar examples
+GRAMMAR.topics.forEach(t=>{t.sections.forEach(sec=>{if(sec.examples&&sec.examples.length){sec.examples.forEach(ex=>{
+const frWords=ex.fr.replace(/[^a-zA-ZÀ-ÿ\s]/g,'').split(/\s+/).filter(w=>w.length>2);
+if(frWords.length>0){const blank=frWords[Math.floor(Math.random()*frWords.length)];
+const sent=ex.fr.replace(new RegExp('\\b'+blank.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\b','i'),'___');
+if(sent!==ex.fr){const wrongPool=frWords.filter(w=>w!==blank);
+const allWords=[];VOCAB.categories.forEach(c=>c.subcategories.forEach(s=>s.words.forEach(w=>{const ws=w.fr.split(/\s+/);allWords.push(...ws);})));
+const wrongs=shuffle(allWords.filter(w=>w.length>2&&w.toLowerCase()!==blank.toLowerCase())).slice(0,3);
+if(wrongs.length>=2)qs.push({sent,ans:blank,en:ex.en,wrongs:wrongs.slice(0,3),topic:t.name,key:'grammar_'+t.id+'_'+blank.replace(/\s/g,'_')});}}});
+}});});
+qs=shuffle(qs).slice(0,n);if(!qs.length){toast('No grammar questions available');resetPractice();return;}
+PS={mode:'gq',items:qs,i:0,sc:0,ans:[]};startTimer();document.getElementById('practice-config').classList.add('hidden');rGQ();}
+
+function rGQ(){const b=document.getElementById('practice-active');b.classList.remove('hidden');
+if(PS.i>=PS.items.length){const p=Math.round(PS.sc/PS.items.length*100);addAct('quiz','Grammar Quiz: '+PS.sc+'/'+PS.items.length+' ('+p+'%)',p+'%');
+let rev='';PS.ans.filter(a=>!a.ok).forEach(a=>rev+='<div style="padding:6px 0;border-bottom:1px solid var(--border);font-size:12px"><span style="color:var(--danger)">&#10007;</span> '+a.q+' &rarr; <span style="color:var(--success)">'+a.ca+'</span></div>');
+b.innerHTML='<div class="text-center mt-20"><h2>Grammar Quiz Complete!</h2><div class="score-big">'+p+'%</div><p class="subtitle mb-8">'+PS.sc+'/'+PS.items.length+'</p></div>'+(rev?'<div class="card mt-16"><h3 class="mb-8">Review</h3>'+rev+'</div>':'')+'<button class="btn btn-primary btn-full mt-16" onclick="resetPractice()">Done</button>';checkAchievements();return;}
+const q=PS.items[PS.i];const opts=shuffle([q.ans,...q.wrongs]);
+b.innerHTML='<div class="flex-between mb-12"><span style="font-size:13px;color:var(--text2)">'+(PS.i+1)+'/'+PS.items.length+'</span><span style="font-size:13px;color:var(--primary2);font-weight:700">Score: '+PS.sc+'</span></div><div class="prog-bar mb-12"><div class="prog-fill" style="width:'+PS.i/PS.items.length*100+'%"></div></div><p style="font-size:11px;color:var(--text3);text-align:center">'+q.topic+'</p><div class="quiz-q" style="flex-direction:column"><span>'+q.sent+'</span><span style="font-size:13px;color:var(--text2);margin-top:4px">'+q.en+'</span></div><div class="quiz-options">'+opts.map(o=>'<button class="quiz-opt" data-a="'+o.replace(/"/g,'&quot;')+'" onclick="gqAns(this)">'+o+'</button>').join('')+'</div>';}
+
+function gqAns(el){const sel=el.dataset.a,ca=PS.items[PS.i].ans;
+document.querySelectorAll('.quiz-opt').forEach(o=>{o.style.pointerEvents='none';if(o.dataset.a===ca)o.classList.add('correct');else if(o===el)o.classList.add('wrong');});
+const ok=sel.toLowerCase()===ca.toLowerCase()||norm(sel)===norm(ca);if(ok)PS.sc++;
+record(PS.items[PS.i].key,ok);PS.ans.push({q:PS.items[PS.i].sent,sel,ca,ok});PS.i++;setTimeout(rGQ,800);}
+
+// ── GENDER DRILL ──
+function cfgGender(){document.getElementById('practice-config').innerHTML=
+'<h2 class="mb-12">Gender Drill</h2><p class="subtitle mb-16">Is it <b style="color:#60a5fa">Le</b> (masculine) or <b style="color:var(--pink)">La</b> (feminine)?</p><h3 class="mb-8">Questions</h3><div class="pills mb-12" id="gd-n"><div class="pill active" data-v="15" onclick="selPill(this,\'gd-n\')">15</div><div class="pill" data-v="30" onclick="selPill(this,\'gd-n\')">30</div><div class="pill" data-v="50" onclick="selPill(this,\'gd-n\')">50</div></div><button class="btn btn-primary btn-full mt-16" onclick="goGender()">Start</button><button class="btn btn-ghost btn-full mt-8" onclick="resetPractice()">Back</button>';}
+
+function goGender(){const n=+(document.querySelector('#gd-n .pill.active')?.dataset.v||15);
+let qs=[];
+VOCAB.categories.forEach(c=>c.subcategories.forEach(s=>s.words.forEach(w=>{
+const fr=w.fr.toLowerCase().trim();
+if(fr.startsWith('le ')){qs.push({word:fr.substring(3),gender:'masculine',article:'le',en:w.en,key:'vocab_'+c.id+'_'+w.fr.replace(/\s/g,'_')});}
+else if(fr.startsWith('la ')){qs.push({word:fr.substring(3),gender:'feminine',article:'la',en:w.en,key:'vocab_'+c.id+'_'+w.fr.replace(/\s/g,'_')});}
+else if(fr.startsWith("l'")){/* skip ambiguous */}
+else if(fr.startsWith('un ')){qs.push({word:fr.substring(3),gender:'masculine',article:'le',en:w.en,key:'vocab_'+c.id+'_'+w.fr.replace(/\s/g,'_')});}
+else if(fr.startsWith('une ')){qs.push({word:fr.substring(4),gender:'feminine',article:'la',en:w.en,key:'vocab_'+c.id+'_'+w.fr.replace(/\s/g,'_')});}
+})));
+qs=shuffle(qs).slice(0,n);if(!qs.length){toast('No gendered nouns found');resetPractice();return;}
+PS={mode:'gender',items:qs,i:0,sc:0,ans:[]};startTimer();document.getElementById('practice-config').classList.add('hidden');rGender();}
+
+function rGender(){const b=document.getElementById('practice-active');b.classList.remove('hidden');
+if(PS.i>=PS.items.length){const p=Math.round(PS.sc/PS.items.length*100);addAct('quiz','Gender Drill: '+PS.sc+'/'+PS.items.length+' ('+p+'%)',p+'%');
+let rev='';PS.ans.filter(a=>!a.ok).forEach(a=>rev+='<div style="padding:6px 0;border-bottom:1px solid var(--border);font-size:12px"><span style="color:var(--danger)">&#10007;</span> '+a.word+' &rarr; <span style="color:var(--success)">'+a.correct+'</span></div>');
+b.innerHTML='<div class="text-center mt-20"><h2>Gender Drill Complete!</h2><div class="score-big">'+p+'%</div><p class="subtitle mb-8">'+PS.sc+'/'+PS.items.length+'</p></div>'+(rev?'<div class="card mt-16"><h3 class="mb-8">Review</h3>'+rev+'</div>':'')+'<button class="btn btn-primary btn-full mt-16" onclick="resetPractice()">Done</button>';checkAchievements();return;}
+const q=PS.items[PS.i];
+b.innerHTML='<div class="flex-between mb-12"><span style="font-size:13px;color:var(--text2)">'+(PS.i+1)+'/'+PS.items.length+'</span><span style="font-size:13px;color:var(--primary2);font-weight:700">Score: '+PS.sc+'</span></div><div class="prog-bar mb-12"><div class="prog-fill" style="width:'+PS.i/PS.items.length*100+'%"></div></div><div class="text-center mt-20 mb-16"><p style="font-size:13px;color:var(--text2)">'+q.en+'</p><p style="font-size:28px;font-weight:800;margin-top:8px">___ '+q.word+'</p></div><div style="display:flex;gap:12px;margin-top:24px"><button class="gender-btn masculine" onclick="gdAns(this,\'masculine\')">Le<br><span style="font-size:11px;font-weight:400">Masculine</span></button><button class="gender-btn feminine" onclick="gdAns(this,\'feminine\')">La<br><span style="font-size:11px;font-weight:400">Feminine</span></button></div><div id="gd-fb"></div>';
+}
+
+function gdAns(el,choice){const q=PS.items[PS.i];const ok=choice===q.gender;
+document.querySelectorAll('.gender-btn').forEach(b=>{b.style.pointerEvents='none';if((b.classList.contains('masculine')&&q.gender==='masculine')||(b.classList.contains('feminine')&&q.gender==='feminine'))b.classList.add('correct');else if(b===el&&!ok)b.classList.add('wrong');});
+document.getElementById('gd-fb').innerHTML=ok?'<div style="color:var(--success);font-weight:700;text-align:center;margin-top:16px">&#10003; '+q.article+' '+q.word+'</div>':'<div style="color:var(--danger);font-weight:700;text-align:center;margin-top:16px">&#10007; It\'s <span style="color:var(--success)">'+q.article+' '+q.word+'</span></div>';
+if(ok)PS.sc++;record(q.key,ok);PS.ans.push({word:q.word,choice,correct:q.article+' '+q.word,ok});PS.i++;setTimeout(rGender,1000);}
+
+// ── MATCHING ──
+function cfgMatching(){document.getElementById('practice-config').innerHTML=
+'<h2 class="mb-12">Matching</h2><p class="subtitle mb-16">Match French words with their English translations</p><h3 class="mb-8">Pairs</h3><div class="pills mb-12" id="ma-n"><div class="pill active" data-v="6" onclick="selPill(this,\'ma-n\')">6</div><div class="pill" data-v="8" onclick="selPill(this,\'ma-n\')">8</div><div class="pill" data-v="10" onclick="selPill(this,\'ma-n\')">10</div></div><button class="btn btn-primary btn-full mt-16" onclick="goMatching()">Start</button><button class="btn btn-ghost btn-full mt-8" onclick="resetPractice()">Back</button>';}
+
+function goMatching(){const n=+(document.querySelector('#ma-n .pill.active')?.dataset.v||6);
+const items=shuffle(getAllItems(['vocab','verbs'])).slice(0,n);if(items.length<3){toast('Not enough items');resetPractice();return;}
+const left=shuffle(items.map((it,i)=>({id:i,text:it.fr,side:'fr'})));
+const right=shuffle(items.map((it,i)=>({id:i,text:it.en,side:'en'})));
+PS={mode:'match',items,left,right,matched:[],sel:null,attempts:0,startTime:Date.now()};
+startTimer();document.getElementById('practice-config').classList.add('hidden');rMatch();}
+
+function rMatch(){const b=document.getElementById('practice-active');b.classList.remove('hidden');
+if(PS.matched.length===PS.items.length){const elapsed=Math.round((Date.now()-PS.startTime)/1000);
+addAct('quiz','Matching: '+PS.items.length+' pairs in '+elapsed+'s ('+PS.attempts+' tries)',elapsed+'s');
+b.innerHTML='<div class="text-center mt-20"><h2>All Matched!</h2><div class="score-big">'+PS.items.length+'</div><p class="subtitle mb-8">pairs matched in '+elapsed+' seconds</p><p style="color:var(--text2);font-size:13px">'+PS.attempts+' attempts</p></div><button class="btn btn-primary btn-full mt-16" onclick="resetPractice()">Done</button>';checkAchievements();return;}
+let h='<div class="flex-between mb-12"><span style="font-size:13px;color:var(--text2)">'+PS.matched.length+'/'+PS.items.length+' matched</span><span style="font-size:13px;color:var(--primary2);font-weight:700">Attempts: '+PS.attempts+'</span></div>';
+h+='<div class="match-grid">';
+for(let r=0;r<Math.max(PS.left.length,PS.right.length);r++){
+const l=PS.left[r],ri=PS.right[r];
+if(l){const lm=PS.matched.includes(l.id);h+='<div class="match-card'+(lm?' matched':'')+(PS.sel&&PS.sel.side==='fr'&&PS.sel.id===l.id?' selected':'')+'" onclick="mSel(\'fr\','+l.id+')">'+l.text+'</div>';}else h+='<div></div>';
+if(ri){const rm=PS.matched.includes(ri.id);h+='<div class="match-card'+(rm?' matched':'')+(PS.sel&&PS.sel.side==='en'&&PS.sel.id===ri.id?' selected':'')+'" onclick="mSel(\'en\','+ri.id+')">'+ri.text+'</div>';}else h+='<div></div>';}
+h+='</div>';b.innerHTML=h;}
+
+function mSel(side,id){if(PS.matched.includes(id)&&((side==='fr'&&PS.left.find(x=>x.id===id))||(side==='en'&&PS.right.find(x=>x.id===id))))return;
+if(!PS.sel){PS.sel={side,id};rMatch();return;}
+if(PS.sel.side===side){PS.sel={side,id};rMatch();return;}
+PS.attempts++;
+const frId=side==='fr'?id:PS.sel.id;const enId=side==='en'?id:PS.sel.id;
+if(frId===enId){PS.matched.push(frId);PS.items.forEach((it,i)=>{if(i===frId)record(it.key,true);});PS.sel=null;rMatch();}
+else{const cards=document.querySelectorAll('.match-card.selected');cards.forEach(c=>c.classList.add('wrong-match'));
+PS.items.forEach((it,i)=>{if(i===frId)record(it.key,false);});
+setTimeout(()=>{PS.sel=null;rMatch();},500);}}
+
+// ── ACHIEVEMENT SYSTEM ──
+const ACHIEVEMENTS=[
+{id:'first_step',icon:'&#128099;',name:'First Step',desc:'Complete your first practice session',check:()=>srs.acts.length>=1},
+{id:'streak_3',icon:'&#128293;',name:'On Fire',desc:'Get a 3-day streak',check:()=>srs.stats.streak>=3},
+{id:'streak_7',icon:'&#127775;',name:'Week Warrior',desc:'Get a 7-day streak',check:()=>srs.stats.streak>=7},
+{id:'streak_30',icon:'&#128081;',name:'Monthly Master',desc:'Get a 30-day streak',check:()=>srs.stats.streak>=30},
+{id:'items_50',icon:'&#128218;',name:'Explorer',desc:'Study 50 different items',check:()=>Object.keys(srs.items).length>=50},
+{id:'items_200',icon:'&#128214;',name:'Scholar',desc:'Study 200 different items',check:()=>Object.keys(srs.items).length>=200},
+{id:'items_500',icon:'&#127891;',name:'Professor',desc:'Study 500 different items',check:()=>Object.keys(srs.items).length>=500},
+{id:'master_10',icon:'&#128170;',name:'Getting Strong',desc:'Master 10 items',check:()=>Object.values(srs.items).filter(v=>v.str>=4).length>=10},
+{id:'master_50',icon:'&#127942;',name:'Champion',desc:'Master 50 items',check:()=>Object.values(srs.items).filter(v=>v.str>=4).length>=50},
+{id:'master_100',icon:'&#127941;',name:'Centurion',desc:'Master 100 items',check:()=>Object.values(srs.items).filter(v=>v.str>=4).length>=100},
+{id:'accuracy_80',icon:'&#127919;',name:'Sharp Shooter',desc:'Reach 80% overall accuracy',check:()=>srs.stats.totalQ>=20&&(srs.stats.totalC/srs.stats.totalQ*100)>=80},
+{id:'accuracy_95',icon:'&#128175;',name:'Perfectionist',desc:'Reach 95% overall accuracy',check:()=>srs.stats.totalQ>=50&&(srs.stats.totalC/srs.stats.totalQ*100)>=95},
+{id:'speed_20',icon:'&#9889;',name:'Lightning Fast',desc:'Score 20+ in Speed Round',check:()=>srs.acts.some(a=>a.type==='speed'&&parseInt(a.score)>=20)},
+{id:'daily_done',icon:'&#9989;',name:'Goal Getter',desc:'Complete your daily goal',check:()=>srs.stats.dailyDone>=srs.stats.dailyGoal},
+{id:'questions_100',icon:'&#128200;',name:'Century',desc:'Answer 100 questions total',check:()=>srs.stats.totalQ>=100},
+{id:'questions_500',icon:'&#128640;',name:'Rocket Scholar',desc:'Answer 500 questions total',check:()=>srs.stats.totalQ>=500},
+{id:'questions_1000',icon:'&#9733;',name:'Superstar',desc:'Answer 1000 questions total',check:()=>srs.stats.totalQ>=1000},
+{id:'all_modes',icon:'&#127912;',name:'Versatile',desc:'Try all practice modes',check:()=>{const types=new Set(srs.acts.map(a=>a.type));return types.has('quiz')&&types.has('flashcard')&&types.has('conjugation')&&types.has('speed');}}
+];
+
+function getEarnedAchievements(){if(!srs._achievements)srs._achievements=[];return srs._achievements;}
+function checkAchievements(){const earned=getEarnedAchievements();let newEarned=false;
+ACHIEVEMENTS.forEach(ach=>{if(!earned.includes(ach.id)&&ach.check()){earned.push(ach.id);newEarned=true;showAchievementPopup(ach);}});
+if(newEarned){srs._achievements=earned;save();}}
+
+function showAchievementPopup(ach){const el=document.getElementById('achievement-popup');
+el.querySelector('.ach-icon').innerHTML=ach.icon;el.querySelector('.ach-title').textContent=ach.name;el.querySelector('.ach-desc').textContent=ach.desc;
+el.classList.add('show');setTimeout(()=>el.classList.remove('show'),3500);}
+
+function renderHomeAchievements(){const earned=getEarnedAchievements();
+const recent=ACHIEVEMENTS.filter(a=>earned.includes(a.id)).slice(-3);
+const next=ACHIEVEMENTS.filter(a=>!earned.includes(a.id)).slice(0,3-recent.length);
+const display=[...recent,...next];
+document.getElementById('home-achievements').innerHTML='<div class="ach-grid">'+
+display.map(a=>{const e=earned.includes(a.id);return '<div class="ach-item '+(e?'earned':'locked')+'"><span class="ach-i">'+a.icon+'</span><span class="ach-n">'+a.name+'</span><span class="ach-d">'+a.desc+'</span></div>';}).join('')+'</div>';}
+
+function showAllAchievements(){const earned=getEarnedAchievements();
+let h='<div class="overlay-header"><h2>&#127942; Achievements</h2><button class="overlay-close" onclick="closeOverlay()">&times;</button></div>';
+h+='<p style="color:var(--text2);font-size:13px;margin-bottom:16px">'+earned.length+'/'+ACHIEVEMENTS.length+' earned</p>';
+h+='<div class="ach-grid">'+ACHIEVEMENTS.map(a=>{const e=earned.includes(a.id);return '<div class="ach-item '+(e?'earned':'locked')+'"><span class="ach-i">'+a.icon+'</span><span class="ach-n">'+a.name+'</span><span class="ach-d">'+a.desc+'</span></div>';}).join('')+'</div>';
+openOverlay(h);}
+
+// ── DAILY CHALLENGE ──
+function getDailyChallenge(){const today=new Date().toDateString();
+if(srs._dailyCh&&srs._dailyCh.date===today)return srs._dailyCh;
+const challenges=[
+{type:'vocab_sprint',title:'Vocabulary Sprint',desc:'Get 8/10 correct in a Multiple Choice quiz',goal:8,mode:'mcq'},
+{type:'conj_master',title:'Conjugation Master',desc:'Complete a 10-question conjugation drill with 70%+',goal:7,mode:'conjugation'},
+{type:'speed_demon',title:'Speed Demon',desc:'Score 15+ points in Speed Round',goal:15,mode:'speed'},
+{type:'flash_pro',title:'Flashcard Pro',desc:'Know 15/20 flashcards',goal:15,mode:'flashcards'},
+{type:'type_ace',title:'Typing Ace',desc:'Get 7/10 correct in Type Answer',goal:7,mode:'type'},
+{type:'listen_up',title:'Listen Up',desc:'Get 8/10 correct in Listening Practice',goal:8,mode:'listening'},
+{type:'fill_master',title:'Fill Master',desc:'Get 8/10 correct in Fill in the Blank',goal:8,mode:'fillblank'}
+];
+const ch=challenges[Math.floor(Math.random()*challenges.length)];
+srs._dailyCh={date:today,challenge:ch,completed:false};save();return srs._dailyCh;}
+
+function renderDailyChallenge(){const dc=getDailyChallenge();
+const sec=document.getElementById('daily-challenge-section');
+if(dc.completed){sec.innerHTML='<div class="challenge-card"><div class="ch-badge">&#10003; COMPLETED</div><h3>'+dc.challenge.title+'</h3><p class="ch-desc" style="color:var(--success)">Challenge completed! Come back tomorrow.</p></div>';return;}
+sec.innerHTML='<div class="challenge-card"><div class="ch-badge">&#127775; DAILY CHALLENGE</div><h3>'+dc.challenge.title+'</h3><p class="ch-desc">'+dc.challenge.desc+'</p><button class="btn btn-primary btn-sm" onclick="startDailyChallenge()">Accept Challenge</button><span class="ch-reward"> +&#128293; Streak Bonus</span></div>';}
+
+function startDailyChallenge(){const dc=getDailyChallenge();nav('practice');
+setTimeout(()=>openPracticeMode(dc.challenge.mode),100);}
+
+function completeDailyChallenge(){const dc=getDailyChallenge();if(dc.completed)return;
+// Check if latest activity meets the challenge goal
+const latest=srs.acts[0];if(!latest)return;
+const score=parseInt(latest.score)||0;
+if(dc.challenge.type==='speed_demon'&&latest.type==='speed'&&score>=dc.challenge.goal){dc.completed=true;save();toast('Daily Challenge complete!');checkAchievements();}
+else if(latest.type==='quiz'||latest.type==='flashcard'||latest.type==='conjugation'){
+const match=latest.desc.match(/(\d+)\/(\d+)/);if(match&&parseInt(match[1])>=dc.challenge.goal){dc.completed=true;save();toast('Daily Challenge complete!');checkAchievements();}}}
+
+// ── SMART REVIEW ──
+function renderSmartReview(){const sec=document.getElementById('smart-review-section');
+const now=Date.now();const due=Object.entries(srs.items).filter(([k,v])=>v.next&&v.next<=now);
+const soon=Object.entries(srs.items).filter(([k,v])=>v.next&&v.next>now&&v.next<=now+86400000);
+if(due.length===0&&soon.length===0){sec.innerHTML='';return;}
+let h='<div class="card"><div class="flex-between mb-8"><h3>Smart Review</h3></div>';
+if(due.length>0)h+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span class="review-badge review-due">'+due.length+' due now</span><button class="btn btn-primary btn-sm" onclick="startSmartReview(\'due\')">Review</button></div>';
+if(soon.length>0)h+='<div style="display:flex;align-items:center;gap:8px"><span class="review-badge review-soon">'+soon.length+' due today</span></div>';
+h+='</div>';sec.innerHTML=h;}
+
+function startSmartReview(type){const now=Date.now();
+let items;if(type==='due')items=Object.entries(srs.items).filter(([k,v])=>v.next&&v.next<=now).sort((a,b)=>a[1].next-b[1].next).slice(0,20);
+else items=Object.entries(srs.items).filter(([k,v])=>v.next&&v.next>now&&v.next<=now+86400000).slice(0,20);
+if(!items.length){toast('No items to review');return;}
+nav('practice');setTimeout(()=>{document.getElementById('practice-hub').classList.add('hidden');
+const fcItems=items.map(([k])=>{const p=k.split('_');const label=p.slice(1).join(' ');return{fr:label,en:label,type:p[0],key:k};});
+PS={mode:'fc',items:shuffle(fcItems),i:0,known:0};startTimer();document.getElementById('practice-config').classList.add('hidden');rFC();},50);}
+
+// ── ENHANCED HOME ──
+const _origRenderHome=renderHome;
+renderHome=function(){_origRenderHome();renderDailyChallenge();renderSmartReview();renderHomeAchievements();
+// Enhanced subtitle with streak
+const s=srs.stats;if(s.streak>1)document.getElementById('home-subtitle').innerHTML='<span class="streak-flame">&#128293; '+s.streak+' day streak</span>';
+checkAchievements();completeDailyChallenge();}
 
 // ── SERVICE WORKER ──
 if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
