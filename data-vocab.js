@@ -1,888 +1,1583 @@
-// ============================================
-// COMPREHENSIVE VOCABULARY DATABASE
-// ============================================
-
 const VOCAB = {
+  categories: [
+    // ============================
+    // 1. NUMBERS
+    // ============================
+    {
+      id: 'numbers',
+      name: 'Numbers',
+      icon: '🔢',
+      color: '#6366f1',
+      subcategories: [
+        {
+          name: '0–20',
+          words: [
+            { fr: 'zéro', en: 'zero' },
+            { fr: 'un', en: 'one' },
+            { fr: 'deux', en: 'two' },
+            { fr: 'trois', en: 'three' },
+            { fr: 'quatre', en: 'four' },
+            { fr: 'cinq', en: 'five' },
+            { fr: 'six', en: 'six' },
+            { fr: 'sept', en: 'seven' },
+            { fr: 'huit', en: 'eight' },
+            { fr: 'neuf', en: 'nine' },
+            { fr: 'dix', en: 'ten' },
+            { fr: 'onze', en: 'eleven' },
+            { fr: 'douze', en: 'twelve' },
+            { fr: 'treize', en: 'thirteen' },
+            { fr: 'quatorze', en: 'fourteen' },
+            { fr: 'quinze', en: 'fifteen' },
+            { fr: 'seize', en: 'sixteen' },
+            { fr: 'dix-sept', en: 'seventeen' },
+            { fr: 'dix-huit', en: 'eighteen' },
+            { fr: 'dix-neuf', en: 'nineteen' },
+            { fr: 'vingt', en: 'twenty' }
+          ]
+        },
+        {
+          name: '21–100',
+          words: [
+            { fr: 'vingt et un', en: 'twenty-one' },
+            { fr: 'vingt-deux', en: 'twenty-two' },
+            { fr: 'vingt-trois', en: 'twenty-three' },
+            { fr: 'vingt-cinq', en: 'twenty-five' },
+            { fr: 'trente', en: 'thirty' },
+            { fr: 'trente et un', en: 'thirty-one' },
+            { fr: 'trente-cinq', en: 'thirty-five' },
+            { fr: 'quarante', en: 'forty' },
+            { fr: 'quarante-cinq', en: 'forty-five' },
+            { fr: 'cinquante', en: 'fifty' },
+            { fr: 'cinquante-cinq', en: 'fifty-five' },
+            { fr: 'soixante', en: 'sixty' },
+            { fr: 'soixante-cinq', en: 'sixty-five' },
+            { fr: 'soixante-dix', en: 'seventy' },
+            { fr: 'soixante et onze', en: 'seventy-one' },
+            { fr: 'soixante-quinze', en: 'seventy-five' },
+            { fr: 'quatre-vingts', en: 'eighty' },
+            { fr: 'quatre-vingt-un', en: 'eighty-one' },
+            { fr: 'quatre-vingt-cinq', en: 'eighty-five' },
+            { fr: 'quatre-vingt-dix', en: 'ninety' },
+            { fr: 'quatre-vingt-onze', en: 'ninety-one' },
+            { fr: 'quatre-vingt-quinze', en: 'ninety-five' },
+            { fr: 'cent', en: 'one hundred' }
+          ]
+        },
+        {
+          name: 'Large Numbers',
+          words: [
+            { fr: 'deux cents', en: 'two hundred' },
+            { fr: 'trois cents', en: 'three hundred' },
+            { fr: 'cinq cents', en: 'five hundred' },
+            { fr: 'mille', en: 'one thousand' },
+            { fr: 'deux mille', en: 'two thousand' },
+            { fr: 'dix mille', en: 'ten thousand' },
+            { fr: 'cent mille', en: 'one hundred thousand' },
+            { fr: 'un million', en: 'one million' },
+            { fr: 'un milliard', en: 'one billion' }
+          ]
+        },
+        {
+          name: 'Ordinals & Fractions',
+          words: [
+            { fr: 'premier / première', en: 'first' },
+            { fr: 'deuxième', en: 'second' },
+            { fr: 'troisième', en: 'third' },
+            { fr: 'quatrième', en: 'fourth' },
+            { fr: 'cinquième', en: 'fifth' },
+            { fr: 'sixième', en: 'sixth' },
+            { fr: 'septième', en: 'seventh' },
+            { fr: 'huitième', en: 'eighth' },
+            { fr: 'neuvième', en: 'ninth' },
+            { fr: 'dixième', en: 'tenth' },
+            { fr: 'dernier / dernière', en: 'last' },
+            { fr: 'un demi', en: 'a half' },
+            { fr: 'un tiers', en: 'a third' },
+            { fr: 'un quart', en: 'a quarter' },
+            { fr: 'trois quarts', en: 'three quarters' }
+          ]
+        }
+      ]
+    },
 
-// ============================================
-// NUMBERS - Complete system
-// ============================================
-numbers: {
-  "0-20": {
-    "0":"zéro","1":"un","2":"deux","3":"trois","4":"quatre","5":"cinq","6":"six","7":"sept","8":"huit","9":"neuf","10":"dix",
-    "11":"onze","12":"douze","13":"treize","14":"quatorze","15":"quinze","16":"seize","17":"dix-sept","18":"dix-huit","19":"dix-neuf","20":"vingt"
-  },
-  "21-60": {
-    "21":"vingt et un","22":"vingt-deux","23":"vingt-trois","24":"vingt-quatre","25":"vingt-cinq","26":"vingt-six","27":"vingt-sept","28":"vingt-huit","29":"vingt-neuf",
-    "30":"trente","31":"trente et un","32":"trente-deux","33":"trente-trois","34":"trente-quatre","35":"trente-cinq",
-    "40":"quarante","41":"quarante et un","42":"quarante-deux","45":"quarante-cinq",
-    "50":"cinquante","51":"cinquante et un","55":"cinquante-cinq",
-    "60":"soixante"
-  },
-  "61-100": {
-    "61":"soixante et un","65":"soixante-cinq","69":"soixante-neuf",
-    "70":"soixante-dix","71":"soixante et onze","72":"soixante-douze","73":"soixante-treize","74":"soixante-quatorze","75":"soixante-quinze","76":"soixante-seize","77":"soixante-dix-sept","78":"soixante-dix-huit","79":"soixante-dix-neuf",
-    "80":"quatre-vingts","81":"quatre-vingt-un","82":"quatre-vingt-deux","85":"quatre-vingt-cinq","89":"quatre-vingt-neuf",
-    "90":"quatre-vingt-dix","91":"quatre-vingt-onze","92":"quatre-vingt-douze","95":"quatre-vingt-quinze","99":"quatre-vingt-dix-neuf","100":"cent"
-  },
-  "large_numbers": {
-    "100":"cent","101":"cent un","150":"cent cinquante","200":"deux cents","201":"deux cent un","300":"trois cents","500":"cinq cents",
-    "1000":"mille","1001":"mille un","1500":"mille cinq cents","2000":"deux mille","10000":"dix mille","100000":"cent mille",
-    "1000000":"un million","2000000":"deux millions","1000000000":"un milliard"
-  },
-  "ordinals": {
-    "1st":"premier / première","2nd":"deuxième","3rd":"troisième","4th":"quatrième","5th":"cinquième",
-    "6th":"sixième","7th":"septième","8th":"huitième","9th":"neuvième","10th":"dixième",
-    "11th":"onzième","12th":"douzième","20th":"vingtième","21st":"vingt et unième","100th":"centième","last":"dernier / dernière"
-  },
-  "fractions": {
-    "half":"la moitié / demi(e)","third":"le tiers","quarter":"le quart","two thirds":"les deux tiers","three quarters":"les trois quarts",
-    "tenth":"le dixième","percent":"pour cent","double":"le double","triple":"le triple"
-  }
-},
+    // ============================
+    // 2. TIME & DATES
+    // ============================
+    {
+      id: 'time-dates',
+      name: 'Time & Dates',
+      icon: '📅',
+      color: '#0ea5e9',
+      subcategories: [
+        {
+          name: 'Days of the Week',
+          words: [
+            { fr: 'lundi', en: 'Monday', gender: 'm' },
+            { fr: 'mardi', en: 'Tuesday', gender: 'm' },
+            { fr: 'mercredi', en: 'Wednesday', gender: 'm' },
+            { fr: 'jeudi', en: 'Thursday', gender: 'm' },
+            { fr: 'vendredi', en: 'Friday', gender: 'm' },
+            { fr: 'samedi', en: 'Saturday', gender: 'm' },
+            { fr: 'dimanche', en: 'Sunday', gender: 'm' }
+          ]
+        },
+        {
+          name: 'Months',
+          words: [
+            { fr: 'janvier', en: 'January', gender: 'm' },
+            { fr: 'février', en: 'February', gender: 'm' },
+            { fr: 'mars', en: 'March', gender: 'm' },
+            { fr: 'avril', en: 'April', gender: 'm' },
+            { fr: 'mai', en: 'May', gender: 'm' },
+            { fr: 'juin', en: 'June', gender: 'm' },
+            { fr: 'juillet', en: 'July', gender: 'm' },
+            { fr: 'août', en: 'August', gender: 'm' },
+            { fr: 'septembre', en: 'September', gender: 'm' },
+            { fr: 'octobre', en: 'October', gender: 'm' },
+            { fr: 'novembre', en: 'November', gender: 'm' },
+            { fr: 'décembre', en: 'December', gender: 'm' }
+          ]
+        },
+        {
+          name: 'Seasons',
+          words: [
+            { fr: 'le printemps', en: 'spring', gender: 'm' },
+            { fr: "l'été", en: 'summer', gender: 'm' },
+            { fr: "l'automne", en: 'autumn / fall', gender: 'm' },
+            { fr: "l'hiver", en: 'winter', gender: 'm' }
+          ]
+        },
+        {
+          name: 'Time Expressions',
+          words: [
+            { fr: 'maintenant', en: 'now' },
+            { fr: "aujourd'hui", en: 'today' },
+            { fr: 'hier', en: 'yesterday' },
+            { fr: 'demain', en: 'tomorrow' },
+            { fr: 'avant-hier', en: 'the day before yesterday' },
+            { fr: 'après-demain', en: 'the day after tomorrow' },
+            { fr: 'ce matin', en: 'this morning' },
+            { fr: 'cet après-midi', en: 'this afternoon' },
+            { fr: 'ce soir', en: 'this evening / tonight' },
+            { fr: 'cette nuit', en: 'tonight / last night' },
+            { fr: 'la semaine prochaine', en: 'next week' },
+            { fr: 'la semaine dernière', en: 'last week' },
+            { fr: 'le mois prochain', en: 'next month' },
+            { fr: 'le mois dernier', en: 'last month' },
+            { fr: "l'année prochaine", en: 'next year' },
+            { fr: "l'année dernière", en: 'last year' },
+            { fr: 'tôt', en: 'early' },
+            { fr: 'tard', en: 'late' },
+            { fr: 'bientôt', en: 'soon' },
+            { fr: 'tout de suite', en: 'right away' },
+            { fr: 'parfois', en: 'sometimes' },
+            { fr: 'toujours', en: 'always' },
+            { fr: 'jamais', en: 'never' },
+            { fr: 'déjà', en: 'already' },
+            { fr: 'encore', en: 'still / again' },
+            { fr: 'pendant', en: 'during / for' },
+            { fr: 'depuis', en: 'since / for' },
+            { fr: 'il y a', en: 'ago' }
+          ]
+        }
+      ]
+    },
 
-// ============================================
-// TIME & DATES - Complete
-// ============================================
-time: {
-  "days": {
-    "Monday":"lundi","Tuesday":"mardi","Wednesday":"mercredi","Thursday":"jeudi","Friday":"vendredi","Saturday":"samedi","Sunday":"dimanche",
-    "day":"le jour","week":"la semaine","weekend":"le week-end","weekday":"le jour de semaine"
-  },
-  "months": {
-    "January":"janvier","February":"février","March":"mars","April":"avril","May":"mai","June":"juin",
-    "July":"juillet","August":"août","September":"septembre","October":"octobre","November":"novembre","December":"décembre",
-    "month":"le mois","year":"l'année (f) / l'an (m)"
-  },
-  "seasons": {
-    "spring":"le printemps","summer":"l'été (m)","autumn/fall":"l'automne (m)","winter":"l'hiver (m)",
-    "in spring":"au printemps","in summer":"en été","in autumn":"en automne","in winter":"en hiver"
-  },
-  "time_of_day": {
-    "morning":"le matin","afternoon":"l'après-midi (m)","evening":"le soir","night":"la nuit",
-    "noon":"midi","midnight":"minuit","dawn":"l'aube (f)","dusk":"le crépuscule",
-    "sunrise":"le lever du soleil","sunset":"le coucher du soleil"
-  },
-  "time_expressions": {
-    "today":"aujourd'hui","yesterday":"hier","tomorrow":"demain","the day before yesterday":"avant-hier","the day after tomorrow":"après-demain",
-    "this morning":"ce matin","this afternoon":"cet après-midi","this evening":"ce soir","tonight":"cette nuit",
-    "last night":"hier soir","last week":"la semaine dernière","next week":"la semaine prochaine",
-    "last month":"le mois dernier","next month":"le mois prochain","last year":"l'année dernière","next year":"l'année prochaine",
-    "now":"maintenant","right now":"tout de suite","soon":"bientôt","later":"plus tard","already":"déjà","still":"encore","not yet":"pas encore",
-    "always":"toujours","often":"souvent","sometimes":"parfois / quelquefois","rarely":"rarement","never":"jamais",
-    "early":"tôt","late":"tard","on time":"à l'heure","in advance":"en avance","delayed":"en retard"
-  },
-  "clock_time": {
-    "What time is it?":"Quelle heure est-il ?","It's one o'clock":"Il est une heure","It's two o'clock":"Il est deux heures",
-    "It's noon":"Il est midi","It's midnight":"Il est minuit","half past":"et demie","quarter past":"et quart","quarter to":"moins le quart",
-    "hour":"l'heure (f)","minute":"la minute","second":"la seconde","a.m.":"du matin","p.m.":"de l'après-midi / du soir"
-  },
-  "duration": {
-    "for (duration)":"pendant","since":"depuis","ago":"il y a","in (future)":"dans","during":"pendant / durant",
-    "all day":"toute la journée","all night":"toute la nuit","all week":"toute la semaine"
-  }
-},
+    // ============================
+    // 3. COLORS
+    // ============================
+    {
+      id: 'colors',
+      name: 'Colors',
+      icon: '🎨',
+      color: '#f43f5e',
+      subcategories: [
+        {
+          name: 'Basic Colors',
+          words: [
+            { fr: 'rouge', en: 'red' },
+            { fr: 'bleu / bleue', en: 'blue' },
+            { fr: 'vert / verte', en: 'green' },
+            { fr: 'jaune', en: 'yellow' },
+            { fr: 'orange', en: 'orange' },
+            { fr: 'violet / violette', en: 'purple / violet' },
+            { fr: 'rose', en: 'pink' },
+            { fr: 'noir / noire', en: 'black' },
+            { fr: 'blanc / blanche', en: 'white' },
+            { fr: 'gris / grise', en: 'grey' },
+            { fr: 'marron', en: 'brown' },
+            { fr: 'brun / brune', en: 'brown (hair/skin)' },
+            { fr: 'beige', en: 'beige' },
+            { fr: 'doré / dorée', en: 'golden' },
+            { fr: 'argenté / argentée', en: 'silver' },
+            { fr: 'turquoise', en: 'turquoise' },
+            { fr: 'bordeaux', en: 'burgundy' },
+            { fr: 'clair', en: 'light (color)' },
+            { fr: 'foncé', en: 'dark (color)' }
+          ]
+        }
+      ]
+    },
 
-// ============================================
-// COMMON ADJECTIVES - 150+ with agreements
-// ============================================
-adjectives: {
-  "appearance": {
-    "big/tall":"grand(e)","small/short":"petit(e)","fat":"gros(se)","thin":"mince","long":"long(ue)","short":"court(e)",
-    "wide":"large","narrow":"étroit(e)","thick":"épais(se)","deep":"profond(e)","shallow":"peu profond(e)",
-    "beautiful":"beau/belle","pretty":"joli(e)","ugly":"laid(e)","handsome":"beau","cute":"mignon(ne)",
-    "young":"jeune","old":"vieux/vieille","new":"nouveau/nouvelle","ancient":"ancien(ne)"
-  },
-  "colors": {
-    "red":"rouge","blue":"bleu(e)","green":"vert(e)","yellow":"jaune","orange":"orange","purple":"violet(te)",
-    "pink":"rose","brown":"marron / brun(e)","black":"noir(e)","white":"blanc(he)","gray":"gris(e)",
-    "light blue":"bleu clair","dark blue":"bleu foncé","navy":"bleu marine","gold":"doré(e)","silver":"argenté(e)",
-    "beige":"beige","turquoise":"turquoise","burgundy":"bordeaux"
-  },
-  "personality": {
-    "nice/kind":"gentil(le)","mean":"méchant(e)","friendly":"amical(e)","shy":"timide","outgoing":"extraverti(e)",
-    "funny":"drôle / amusant(e)","serious":"sérieux/sérieuse","calm":"calme","nervous":"nerveux/nerveuse",
-    "patient":"patient(e)","impatient":"impatient(e)","generous":"généreux/généreuse","selfish":"égoïste",
-    "honest":"honnête","dishonest":"malhonnête","brave":"courageux/courageuse","cowardly":"lâche",
-    "smart/intelligent":"intelligent(e)","stupid":"stupide / bête","wise":"sage","curious":"curieux/curieuse",
-    "lazy":"paresseux/paresseuse","hardworking":"travailleur/travailleuse","ambitious":"ambitieux/ambitieuse",
-    "proud":"fier/fière","humble":"humble / modeste","stubborn":"têtu(e)","flexible":"flexible"
-  },
-  "emotions": {
-    "happy":"heureux/heureuse / content(e)","sad":"triste","angry":"fâché(e) / en colère","scared":"effrayé(e) / avoir peur",
-    "surprised":"surpris(e)","excited":"excité(e) / enthousiaste","bored":"ennuyé(e)","tired":"fatigué(e)",
-    "worried":"inquiet/inquiète","relieved":"soulagé(e)","disappointed":"déçu(e)","proud":"fier/fière",
-    "jealous":"jaloux/jalouse","embarrassed":"gêné(e)","confused":"confus(e)","frustrated":"frustré(e)"
-  },
-  "quality": {
-    "good":"bon(ne)","bad":"mauvais(e)","better":"meilleur(e)","worse":"pire","best":"le/la meilleur(e)","worst":"le/la pire",
-    "excellent":"excellent(e)","perfect":"parfait(e)","terrible":"terrible","awful":"affreux/affreuse",
-    "important":"important(e)","necessary":"nécessaire","useful":"utile","useless":"inutile",
-    "easy":"facile","difficult/hard":"difficile","simple":"simple","complicated":"compliqué(e)",
-    "possible":"possible","impossible":"impossible","certain":"certain(e)","uncertain":"incertain(e)",
-    "true":"vrai(e)","false":"faux/fausse","correct":"correct(e)","wrong":"faux/fausse / incorrect(e)"
-  },
-  "physical_state": {
-    "hot":"chaud(e)","cold":"froid(e)","warm":"tiède","cool":"frais/fraîche",
-    "wet":"mouillé(e)","dry":"sec/sèche","clean":"propre","dirty":"sale",
-    "full":"plein(e)","empty":"vide","heavy":"lourd(e)","light":"léger/légère",
-    "hard":"dur(e)","soft":"mou/molle / doux/douce","smooth":"lisse","rough":"rugueux/rugueuse",
-    "sharp":"tranchant(e) / pointu(e)","dull":"émoussé(e)","tight":"serré(e)","loose":"lâche / ample"
-  },
-  "other_common": {
-    "same":"même","different":"différent(e)","similar":"similaire","other":"autre",
-    "first":"premier/première","last":"dernier/dernière","next":"prochain(e)","previous":"précédent(e)",
-    "only":"seul(e)","main":"principal(e)","real":"vrai(e) / réel(le)","fake":"faux/fausse",
-    "free (no cost)":"gratuit(e)","free (available)":"libre","busy":"occupé(e)","available":"disponible",
-    "open":"ouvert(e)","closed":"fermé(e)","public":"public/publique","private":"privé(e)",
-    "safe":"sûr(e) / en sécurité","dangerous":"dangereux/dangereuse","healthy":"sain(e)","sick":"malade",
-    "rich":"riche","poor":"pauvre","expensive":"cher/chère","cheap":"bon marché / pas cher",
-    "fast/quick":"rapide / vite","slow":"lent(e)","loud":"bruyant(e) / fort(e)","quiet":"silencieux/silencieuse / calme",
-    "strong":"fort(e)","weak":"faible","famous":"célèbre / connu(e)","unknown":"inconnu(e)"
-  }
-},
+    // ============================
+    // 4. FAMILY
+    // ============================
+    {
+      id: 'family',
+      name: 'Family',
+      icon: '👨‍👩‍👧‍👦',
+      color: '#ec4899',
+      subcategories: [
+        {
+          name: 'Immediate Family',
+          words: [
+            { fr: 'la famille', en: 'family', gender: 'f' },
+            { fr: 'le père', en: 'father', gender: 'm' },
+            { fr: 'la mère', en: 'mother', gender: 'f' },
+            { fr: 'le fils', en: 'son', gender: 'm' },
+            { fr: 'la fille', en: 'daughter', gender: 'f' },
+            { fr: 'le frère', en: 'brother', gender: 'm' },
+            { fr: 'la sœur', en: 'sister', gender: 'f' },
+            { fr: 'le mari', en: 'husband', gender: 'm' },
+            { fr: 'la femme', en: 'wife / woman', gender: 'f' },
+            { fr: "l'enfant", en: 'child', gender: 'm' },
+            { fr: 'le bébé', en: 'baby', gender: 'm' },
+            { fr: 'les parents', en: 'parents' }
+          ]
+        },
+        {
+          name: 'Extended Family',
+          words: [
+            { fr: 'le grand-père', en: 'grandfather', gender: 'm' },
+            { fr: 'la grand-mère', en: 'grandmother', gender: 'f' },
+            { fr: 'les grands-parents', en: 'grandparents' },
+            { fr: 'le petit-fils', en: 'grandson', gender: 'm' },
+            { fr: 'la petite-fille', en: 'granddaughter', gender: 'f' },
+            { fr: "l'oncle", en: 'uncle', gender: 'm' },
+            { fr: 'la tante', en: 'aunt', gender: 'f' },
+            { fr: 'le cousin', en: 'cousin (male)', gender: 'm' },
+            { fr: 'la cousine', en: 'cousin (female)', gender: 'f' },
+            { fr: 'le neveu', en: 'nephew', gender: 'm' },
+            { fr: 'la nièce', en: 'niece', gender: 'f' },
+            { fr: 'le beau-père', en: 'father-in-law / stepfather', gender: 'm' },
+            { fr: 'la belle-mère', en: 'mother-in-law / stepmother', gender: 'f' },
+            { fr: 'le beau-frère', en: 'brother-in-law', gender: 'm' },
+            { fr: 'la belle-sœur', en: 'sister-in-law', gender: 'f' },
+            { fr: 'le gendre', en: 'son-in-law', gender: 'm' },
+            { fr: 'la belle-fille', en: 'daughter-in-law', gender: 'f' },
+            { fr: 'le demi-frère', en: 'half-brother / stepbrother', gender: 'm' },
+            { fr: 'la demi-sœur', en: 'half-sister / stepsister', gender: 'f' },
+            { fr: 'le parrain', en: 'godfather', gender: 'm' },
+            { fr: 'la marraine', en: 'godmother', gender: 'f' }
+          ]
+        }
+      ]
+    },
 
-// ============================================
-// ADVERBS - 80+
-// ============================================
-adverbs: {
-  "frequency": {
-    "always":"toujours","often":"souvent","usually":"d'habitude / généralement","sometimes":"parfois / quelquefois",
-    "occasionally":"de temps en temps","rarely":"rarement","seldom":"peu souvent","never":"jamais",
-    "ever":"jamais (in questions)","still":"encore / toujours","already":"déjà","not yet":"pas encore"
-  },
-  "manner": {
-    "well":"bien","badly":"mal","quickly":"vite / rapidement","slowly":"lentement",
-    "carefully":"soigneusement","carelessly":"négligemment","easily":"facilement","hardly":"à peine",
-    "loudly":"fort","quietly":"doucement / silencieusement","clearly":"clairement","together":"ensemble",
-    "alone":"seul(e)","directly":"directement","suddenly":"soudain / tout à coup","gradually":"progressivement"
-  },
-  "place": {
-    "here":"ici","there":"là / là-bas","everywhere":"partout","nowhere":"nulle part","somewhere":"quelque part",
-    "inside":"à l'intérieur / dedans","outside":"à l'extérieur / dehors","upstairs":"en haut","downstairs":"en bas",
-    "nearby":"près d'ici / à proximité","far away":"loin","ahead":"devant","behind":"derrière",
-    "above":"au-dessus","below":"en dessous","around":"autour","away":"loin"
-  },
-  "time": {
-    "now":"maintenant","then":"alors / ensuite","soon":"bientôt","later":"plus tard","immediately":"immédiatement / tout de suite",
-    "recently":"récemment","lately":"dernièrement","formerly":"autrefois","finally":"enfin / finalement",
-    "first":"d'abord","next":"ensuite","afterwards":"après / ensuite","meanwhile":"pendant ce temps"
-  },
-  "degree": {
-    "very":"très","really":"vraiment","quite":"assez / plutôt","rather":"plutôt","fairly":"assez",
-    "too (excessive)":"trop","enough":"assez","almost":"presque","completely":"complètement",
-    "totally":"totalement","absolutely":"absolument","extremely":"extrêmement","particularly":"particulièrement",
-    "especially":"surtout / spécialement","only":"seulement","just":"juste","even":"même","also":"aussi"
-  },
-  "opinion": {
-    "maybe/perhaps":"peut-être","probably":"probablement","certainly":"certainement","surely":"sûrement",
-    "obviously":"évidemment","apparently":"apparemment","fortunately":"heureusement","unfortunately":"malheureusement",
-    "hopefully":"avec un peu de chance","honestly":"honnêtement","frankly":"franchement","personally":"personnellement"
-  }
-},
+    // ============================
+    // 5. BODY PARTS
+    // ============================
+    {
+      id: 'body',
+      name: 'Body Parts',
+      icon: '🦴',
+      color: '#f97316',
+      subcategories: [
+        {
+          name: 'Head & Face',
+          words: [
+            { fr: 'la tête', en: 'head', gender: 'f' },
+            { fr: 'le visage', en: 'face', gender: 'm' },
+            { fr: "l'œil (les yeux)", en: 'eye (eyes)', gender: 'm' },
+            { fr: 'le nez', en: 'nose', gender: 'm' },
+            { fr: 'la bouche', en: 'mouth', gender: 'f' },
+            { fr: "l'oreille", en: 'ear', gender: 'f' },
+            { fr: 'les cheveux', en: 'hair' },
+            { fr: 'le front', en: 'forehead', gender: 'm' },
+            { fr: 'la joue', en: 'cheek', gender: 'f' },
+            { fr: 'le menton', en: 'chin', gender: 'm' },
+            { fr: 'la lèvre', en: 'lip', gender: 'f' },
+            { fr: 'la dent', en: 'tooth', gender: 'f' },
+            { fr: 'la langue', en: 'tongue', gender: 'f' },
+            { fr: 'le sourcil', en: 'eyebrow', gender: 'm' },
+            { fr: 'le cou', en: 'neck', gender: 'm' }
+          ]
+        },
+        {
+          name: 'Body',
+          words: [
+            { fr: 'le corps', en: 'body', gender: 'm' },
+            { fr: 'le bras', en: 'arm', gender: 'm' },
+            { fr: 'la main', en: 'hand', gender: 'f' },
+            { fr: 'le doigt', en: 'finger', gender: 'm' },
+            { fr: 'la jambe', en: 'leg', gender: 'f' },
+            { fr: 'le pied', en: 'foot', gender: 'm' },
+            { fr: "l'orteil", en: 'toe', gender: 'm' },
+            { fr: 'le genou', en: 'knee', gender: 'm' },
+            { fr: "l'épaule", en: 'shoulder', gender: 'f' },
+            { fr: 'le dos', en: 'back', gender: 'm' },
+            { fr: 'le ventre', en: 'stomach / belly', gender: 'm' },
+            { fr: 'la poitrine', en: 'chest', gender: 'f' },
+            { fr: 'le cœur', en: 'heart', gender: 'm' },
+            { fr: 'le coude', en: 'elbow', gender: 'm' },
+            { fr: 'le poignet', en: 'wrist', gender: 'm' },
+            { fr: 'la cheville', en: 'ankle', gender: 'f' },
+            { fr: 'la peau', en: 'skin', gender: 'f' },
+            { fr: "l'os", en: 'bone', gender: 'm' },
+            { fr: 'le sang', en: 'blood', gender: 'm' },
+            { fr: 'le muscle', en: 'muscle', gender: 'm' }
+          ]
+        }
+      ]
+    },
 
-// ============================================
-// FAMILY - Complete
-// ============================================
-family: {
-  "immediate": {
-    "mother":"la mère","father":"le père","parents":"les parents (m)","son":"le fils","daughter":"la fille",
-    "children":"les enfants (m)","child":"l'enfant (m/f)","brother":"le frère","sister":"la sœur",
-    "siblings":"les frères et sœurs","husband":"le mari","wife":"la femme / l'épouse","spouse":"le/la conjoint(e)"
-  },
-  "extended": {
-    "grandmother":"la grand-mère","grandfather":"le grand-père","grandparents":"les grands-parents",
-    "grandson":"le petit-fils","granddaughter":"la petite-fille","grandchildren":"les petits-enfants",
-    "great-grandmother":"l'arrière-grand-mère","great-grandfather":"l'arrière-grand-père",
-    "aunt":"la tante","uncle":"l'oncle","cousin (m)":"le cousin","cousin (f)":"la cousine",
-    "nephew":"le neveu","niece":"la nièce","godmother":"la marraine","godfather":"le parrain"
-  },
-  "in_laws": {
-    "mother-in-law":"la belle-mère","father-in-law":"le beau-père","parents-in-law":"les beaux-parents",
-    "brother-in-law":"le beau-frère","sister-in-law":"la belle-sœur",
-    "son-in-law":"le gendre / le beau-fils","daughter-in-law":"la belle-fille"
-  },
-  "blended": {
-    "stepmother":"la belle-mère","stepfather":"le beau-père","stepson":"le beau-fils","stepdaughter":"la belle-fille",
-    "stepbrother":"le demi-frère","stepsister":"la demi-sœur","half-brother":"le demi-frère","half-sister":"la demi-sœur",
-    "adopted child":"l'enfant adopté(e)","foster child":"l'enfant placé(e)"
-  },
-  "relationships": {
-    "boyfriend":"le petit ami / le copain","girlfriend":"la petite amie / la copine","partner":"le/la partenaire",
-    "fiancé":"le fiancé","fiancée":"la fiancée","ex-husband":"l'ex-mari","ex-wife":"l'ex-femme",
-    "widow":"la veuve","widower":"le veuf","single":"célibataire","married":"marié(e)","divorced":"divorcé(e)"
-  }
-},
+    // ============================
+    // 6. FOOD & DRINK
+    // ============================
+    {
+      id: 'food-drink',
+      name: 'Food & Drink',
+      icon: '🍽️',
+      color: '#ef4444',
+      subcategories: [
+        {
+          name: 'Fruits',
+          words: [
+            { fr: 'la pomme', en: 'apple', gender: 'f' },
+            { fr: 'la banane', en: 'banana', gender: 'f' },
+            { fr: "l'orange", en: 'orange', gender: 'f' },
+            { fr: 'la fraise', en: 'strawberry', gender: 'f' },
+            { fr: 'le raisin', en: 'grape', gender: 'm' },
+            { fr: 'la cerise', en: 'cherry', gender: 'f' },
+            { fr: 'la pêche', en: 'peach', gender: 'f' },
+            { fr: 'la poire', en: 'pear', gender: 'f' },
+            { fr: "l'ananas", en: 'pineapple', gender: 'm' },
+            { fr: 'le citron', en: 'lemon', gender: 'm' },
+            { fr: 'la pastèque', en: 'watermelon', gender: 'f' },
+            { fr: 'le melon', en: 'melon', gender: 'm' },
+            { fr: 'la framboise', en: 'raspberry', gender: 'f' },
+            { fr: 'la mangue', en: 'mango', gender: 'f' },
+            { fr: 'le pamplemousse', en: 'grapefruit', gender: 'm' }
+          ]
+        },
+        {
+          name: 'Vegetables',
+          words: [
+            { fr: 'la carotte', en: 'carrot', gender: 'f' },
+            { fr: 'la tomate', en: 'tomato', gender: 'f' },
+            { fr: 'la pomme de terre', en: 'potato', gender: 'f' },
+            { fr: "l'oignon", en: 'onion', gender: 'm' },
+            { fr: "l'ail", en: 'garlic', gender: 'm' },
+            { fr: 'la salade / la laitue', en: 'lettuce / salad', gender: 'f' },
+            { fr: 'le haricot', en: 'bean', gender: 'm' },
+            { fr: 'le petit pois', en: 'pea', gender: 'm' },
+            { fr: 'le champignon', en: 'mushroom', gender: 'm' },
+            { fr: 'le chou', en: 'cabbage', gender: 'm' },
+            { fr: 'le poivron', en: 'bell pepper', gender: 'm' },
+            { fr: 'le concombre', en: 'cucumber', gender: 'm' },
+            { fr: "l'épinard", en: 'spinach', gender: 'm' },
+            { fr: 'le brocoli', en: 'broccoli', gender: 'm' },
+            { fr: "l'aubergine", en: 'eggplant / aubergine', gender: 'f' },
+            { fr: 'la courgette', en: 'zucchini / courgette', gender: 'f' }
+          ]
+        },
+        {
+          name: 'Meat, Fish & Protein',
+          words: [
+            { fr: 'la viande', en: 'meat', gender: 'f' },
+            { fr: 'le poulet', en: 'chicken', gender: 'm' },
+            { fr: 'le bœuf', en: 'beef', gender: 'm' },
+            { fr: 'le porc', en: 'pork', gender: 'm' },
+            { fr: "l'agneau", en: 'lamb', gender: 'm' },
+            { fr: 'le poisson', en: 'fish', gender: 'm' },
+            { fr: 'le saumon', en: 'salmon', gender: 'm' },
+            { fr: 'le thon', en: 'tuna', gender: 'm' },
+            { fr: 'la crevette', en: 'shrimp / prawn', gender: 'f' },
+            { fr: 'le jambon', en: 'ham', gender: 'm' },
+            { fr: 'la saucisse', en: 'sausage', gender: 'f' },
+            { fr: "l'œuf", en: 'egg', gender: 'm' }
+          ]
+        },
+        {
+          name: 'Dairy & Bakery',
+          words: [
+            { fr: 'le lait', en: 'milk', gender: 'm' },
+            { fr: 'le fromage', en: 'cheese', gender: 'm' },
+            { fr: 'le beurre', en: 'butter', gender: 'm' },
+            { fr: 'le yaourt', en: 'yogurt', gender: 'm' },
+            { fr: 'la crème', en: 'cream', gender: 'f' },
+            { fr: 'le pain', en: 'bread', gender: 'm' },
+            { fr: 'la baguette', en: 'baguette', gender: 'f' },
+            { fr: 'le croissant', en: 'croissant', gender: 'm' },
+            { fr: 'le gâteau', en: 'cake', gender: 'm' },
+            { fr: 'la tarte', en: 'pie / tart', gender: 'f' },
+            { fr: 'le biscuit', en: 'biscuit / cookie', gender: 'm' },
+            { fr: 'la glace', en: 'ice cream', gender: 'f' },
+            { fr: 'la confiture', en: 'jam', gender: 'f' },
+            { fr: 'le miel', en: 'honey', gender: 'm' }
+          ]
+        },
+        {
+          name: 'Drinks',
+          words: [
+            { fr: "l'eau", en: 'water', gender: 'f' },
+            { fr: 'le café', en: 'coffee', gender: 'm' },
+            { fr: 'le thé', en: 'tea', gender: 'm' },
+            { fr: 'le jus', en: 'juice', gender: 'm' },
+            { fr: "le jus d'orange", en: 'orange juice', gender: 'm' },
+            { fr: 'le vin', en: 'wine', gender: 'm' },
+            { fr: 'la bière', en: 'beer', gender: 'f' },
+            { fr: 'le lait', en: 'milk', gender: 'm' },
+            { fr: 'le chocolat chaud', en: 'hot chocolate', gender: 'm' },
+            { fr: 'la limonade', en: 'lemonade', gender: 'f' },
+            { fr: "l'eau gazeuse", en: 'sparkling water', gender: 'f' },
+            { fr: 'le soda', en: 'soda', gender: 'm' }
+          ]
+        },
+        {
+          name: 'Meals & Cooking',
+          words: [
+            { fr: 'le petit déjeuner', en: 'breakfast', gender: 'm' },
+            { fr: 'le déjeuner', en: 'lunch', gender: 'm' },
+            { fr: 'le dîner', en: 'dinner', gender: 'm' },
+            { fr: 'le goûter', en: 'snack (afternoon)', gender: 'm' },
+            { fr: 'le repas', en: 'meal', gender: 'm' },
+            { fr: 'la recette', en: 'recipe', gender: 'f' },
+            { fr: 'la cuisine', en: 'kitchen / cooking', gender: 'f' },
+            { fr: 'cuire', en: 'to cook (bake)' },
+            { fr: 'cuisiner', en: 'to cook' },
+            { fr: 'couper', en: 'to cut' },
+            { fr: 'mélanger', en: 'to mix' },
+            { fr: 'bouillir', en: 'to boil' },
+            { fr: 'frire', en: 'to fry' },
+            { fr: 'rôtir', en: 'to roast' },
+            { fr: 'le sel', en: 'salt', gender: 'm' },
+            { fr: 'le poivre', en: 'pepper', gender: 'm' },
+            { fr: 'le sucre', en: 'sugar', gender: 'm' },
+            { fr: "l'huile", en: 'oil', gender: 'f' },
+            { fr: 'le vinaigre', en: 'vinegar', gender: 'm' },
+            { fr: 'la farine', en: 'flour', gender: 'f' },
+            { fr: 'le riz', en: 'rice', gender: 'm' },
+            { fr: 'les pâtes', en: 'pasta', gender: 'f' }
+          ]
+        }
+      ]
+    },
 
-// ============================================
-// BODY - Complete
-// ============================================
-body: {
-  "head": {
-    "head":"la tête","face":"le visage / la figure","hair":"les cheveux (m)","forehead":"le front",
-    "eye":"l'œil (m)","eyes":"les yeux (m)","eyebrow":"le sourcil","eyelash":"le cil","eyelid":"la paupière",
-    "ear":"l'oreille (f)","nose":"le nez","nostril":"la narine","cheek":"la joue","chin":"le menton",
-    "mouth":"la bouche","lip":"la lèvre","tongue":"la langue","tooth":"la dent","teeth":"les dents",
-    "jaw":"la mâchoire","neck":"le cou","throat":"la gorge"
-  },
-  "upper_body": {
-    "shoulder":"l'épaule (f)","arm":"le bras","elbow":"le coude","forearm":"l'avant-bras (m)",
-    "wrist":"le poignet","hand":"la main","palm":"la paume","finger":"le doigt","thumb":"le pouce",
-    "nail":"l'ongle (m)","fist":"le poing","chest":"la poitrine","breast":"le sein","back":"le dos",
-    "spine":"la colonne vertébrale","rib":"la côte","waist":"la taille","stomach/belly":"le ventre"
-  },
-  "lower_body": {
-    "hip":"la hanche","buttocks":"les fesses (f)","leg":"la jambe","thigh":"la cuisse","knee":"le genou",
-    "calf":"le mollet","shin":"le tibia","ankle":"la cheville","foot":"le pied","feet":"les pieds",
-    "toe":"l'orteil (m)","heel":"le talon","sole":"la plante du pied"
-  },
-  "internal": {
-    "brain":"le cerveau","heart":"le cœur","lung":"le poumon","liver":"le foie","kidney":"le rein",
-    "stomach (organ)":"l'estomac (m)","intestine":"l'intestin (m)","blood":"le sang","bone":"l'os (m)",
-    "muscle":"le muscle","skin":"la peau","vein":"la veine","artery":"l'artère (f)","nerve":"le nerf"
-  },
-  "descriptions": {
-    "tall":"grand(e)","short":"petit(e)","fat/overweight":"gros(se)","thin/slim":"mince","muscular":"musclé(e)",
-    "blonde hair":"les cheveux blonds","brown hair":"les cheveux bruns","black hair":"les cheveux noirs","red hair":"les cheveux roux",
-    "curly hair":"les cheveux bouclés","straight hair":"les cheveux raides","bald":"chauve",
-    "blue eyes":"les yeux bleus","green eyes":"les yeux verts","brown eyes":"les yeux marron",
-    "beard":"la barbe","mustache":"la moustache","freckles":"les taches de rousseur"
-  }
-},
+    // ============================
+    // 7. CLOTHES
+    // ============================
+    {
+      id: 'clothes',
+      name: 'Clothes',
+      icon: '👔',
+      color: '#8b5cf6',
+      subcategories: [
+        {
+          name: 'Clothing Items',
+          words: [
+            { fr: 'le pantalon', en: 'trousers / pants', gender: 'm' },
+            { fr: 'le jean', en: 'jeans', gender: 'm' },
+            { fr: 'la chemise', en: 'shirt (formal)', gender: 'f' },
+            { fr: 'le tee-shirt', en: 'T-shirt', gender: 'm' },
+            { fr: 'le pull', en: 'sweater / jumper', gender: 'm' },
+            { fr: 'la veste', en: 'jacket', gender: 'f' },
+            { fr: 'le manteau', en: 'coat', gender: 'm' },
+            { fr: 'la robe', en: 'dress', gender: 'f' },
+            { fr: 'la jupe', en: 'skirt', gender: 'f' },
+            { fr: 'le short', en: 'shorts', gender: 'm' },
+            { fr: 'le costume', en: 'suit', gender: 'm' },
+            { fr: 'le pyjama', en: 'pyjamas', gender: 'm' },
+            { fr: 'le maillot de bain', en: 'swimsuit', gender: 'm' },
+            { fr: 'le sous-vêtement', en: 'underwear', gender: 'm' },
+            { fr: 'la chaussette', en: 'sock', gender: 'f' },
+            { fr: 'la chaussure', en: 'shoe', gender: 'f' },
+            { fr: 'la botte', en: 'boot', gender: 'f' },
+            { fr: 'la sandale', en: 'sandal', gender: 'f' },
+            { fr: 'le chapeau', en: 'hat', gender: 'm' },
+            { fr: 'la casquette', en: 'cap', gender: 'f' },
+            { fr: "l'écharpe", en: 'scarf', gender: 'f' },
+            { fr: 'les gants', en: 'gloves', gender: 'm' },
+            { fr: 'la ceinture', en: 'belt', gender: 'f' },
+            { fr: 'la cravate', en: 'tie', gender: 'f' },
+            { fr: 'le sac à main', en: 'handbag', gender: 'm' },
+            { fr: 'les lunettes', en: 'glasses', gender: 'f' },
+            { fr: 'les lunettes de soleil', en: 'sunglasses', gender: 'f' },
+            { fr: 'le parapluie', en: 'umbrella', gender: 'm' }
+          ]
+        }
+      ]
+    },
 
-// ============================================
-// FOOD & DRINK - Comprehensive
-// ============================================
-food: {
-  "fruits": {
-    "apple":"la pomme","banana":"la banane","orange":"l'orange (f)","lemon":"le citron","lime":"le citron vert",
-    "grape":"le raisin","strawberry":"la fraise","raspberry":"la framboise","blueberry":"la myrtille","blackberry":"la mûre",
-    "cherry":"la cerise","peach":"la pêche","pear":"la poire","plum":"la prune","apricot":"l'abricot (m)",
-    "watermelon":"la pastèque","melon":"le melon","pineapple":"l'ananas (m)","mango":"la mangue","kiwi":"le kiwi",
-    "coconut":"la noix de coco","fig":"la figue","grapefruit":"le pamplemousse","pomegranate":"la grenade"
-  },
-  "vegetables": {
-    "vegetable":"le légume","carrot":"la carotte","potato":"la pomme de terre","tomato":"la tomate",
-    "onion":"l'oignon (m)","garlic":"l'ail (m)","lettuce":"la laitue","salad":"la salade","cabbage":"le chou",
-    "spinach":"les épinards (m)","cucumber":"le concombre","pepper (bell)":"le poivron","zucchini":"la courgette",
-    "eggplant":"l'aubergine (f)","broccoli":"le brocoli","cauliflower":"le chou-fleur","celery":"le céleri",
-    "mushroom":"le champignon","corn":"le maïs","peas":"les petits pois","green beans":"les haricots verts",
-    "asparagus":"l'asperge (f)","artichoke":"l'artichaut (m)","leek":"le poireau","beet":"la betterave",
-    "radish":"le radis","turnip":"le navet","pumpkin":"la citrouille","squash":"la courge"
-  },
-  "meat_protein": {
-    "meat":"la viande","beef":"le bœuf","pork":"le porc","lamb":"l'agneau (m)","veal":"le veau",
-    "chicken":"le poulet","turkey":"la dinde","duck":"le canard","rabbit":"le lapin",
-    "ham":"le jambon","bacon":"le bacon / le lard","sausage":"la saucisse","steak":"le steak / le bifteck",
-    "ground beef":"la viande hachée","roast":"le rôti","chop":"la côtelette","liver":"le foie"
-  },
-  "seafood": {
-    "fish":"le poisson","salmon":"le saumon","tuna":"le thon","cod":"la morue / le cabillaud","trout":"la truite",
-    "sardine":"la sardine","sole":"la sole","sea bass":"le bar / le loup","mackerel":"le maquereau",
-    "shrimp/prawn":"la crevette","lobster":"le homard","crab":"le crabe","mussel":"la moule",
-    "oyster":"l'huître (f)","scallop":"la coquille Saint-Jacques","squid":"le calamar","octopus":"le poulpe"
-  },
-  "dairy_eggs": {
-    "milk":"le lait","cheese":"le fromage","butter":"le beurre","cream":"la crème","yogurt":"le yaourt",
-    "egg":"l'œuf (m)","eggs":"les œufs","ice cream":"la glace","whipped cream":"la crème chantilly",
-    "sour cream":"la crème fraîche"
-  },
-  "bread_bakery": {
-    "bread":"le pain","baguette":"la baguette","croissant":"le croissant","roll":"le petit pain",
-    "toast":"le pain grillé / le toast","slice":"la tranche","crumb":"la miette","crust":"la croûte",
-    "cake":"le gâteau","pie":"la tarte","cookie":"le biscuit","pastry":"la pâtisserie / la viennoiserie",
-    "muffin":"le muffin","donut":"le beignet","pancake":"la crêpe","waffle":"la gaufre"
-  },
-  "grains_pasta": {
-    "rice":"le riz","pasta":"les pâtes (f)","noodles":"les nouilles (f)","spaghetti":"les spaghettis (m)",
-    "flour":"la farine","wheat":"le blé","oats":"l'avoine (f)","cereal":"les céréales (f)",
-    "couscous":"le couscous","quinoa":"le quinoa"
-  },
-  "condiments": {
-    "salt":"le sel","pepper":"le poivre","sugar":"le sucre","oil":"l'huile (f)","olive oil":"l'huile d'olive",
-    "vinegar":"le vinaigre","mustard":"la moutarde","ketchup":"le ketchup","mayonnaise":"la mayonnaise",
-    "sauce":"la sauce","honey":"le miel","jam":"la confiture","syrup":"le sirop"
-  },
-  "herbs_spices": {
-    "parsley":"le persil","basil":"le basilic","thyme":"le thym","rosemary":"le romarin","oregano":"l'origan (m)",
-    "mint":"la menthe","cilantro":"la coriandre","dill":"l'aneth (m)","bay leaf":"la feuille de laurier",
-    "cinnamon":"la cannelle","ginger":"le gingembre","vanilla":"la vanille","nutmeg":"la muscade","cumin":"le cumin"
-  },
-  "drinks": {
-    "water":"l'eau (f)","sparkling water":"l'eau gazeuse","still water":"l'eau plate","mineral water":"l'eau minérale",
-    "juice":"le jus","orange juice":"le jus d'orange","apple juice":"le jus de pomme",
-    "coffee":"le café","espresso":"l'expresso (m)","tea":"le thé","hot chocolate":"le chocolat chaud",
-    "milk":"le lait","soda":"le soda","lemonade":"la limonade / le citron pressé",
-    "wine":"le vin","red wine":"le vin rouge","white wine":"le vin blanc","rosé wine":"le vin rosé",
-    "beer":"la bière","champagne":"le champagne","cocktail":"le cocktail","whiskey":"le whisky","vodka":"la vodka"
-  },
-  "meals": {
-    "meal":"le repas","breakfast":"le petit déjeuner","lunch":"le déjeuner","dinner":"le dîner","snack":"le goûter / le snack",
-    "appetizer":"l'entrée (f) / l'apéritif (m)","main course":"le plat principal","side dish":"l'accompagnement (m)",
-    "dessert":"le dessert","course":"le plat","menu":"le menu / la carte","recipe":"la recette"
-  },
-  "cooking": {
-    "to cook":"cuisiner / faire la cuisine","to bake":"cuire au four","to fry":"frire","to boil":"bouillir",
-    "to grill":"griller","to roast":"rôtir","to steam":"cuire à la vapeur","to mix":"mélanger",
-    "to chop":"couper","to slice":"trancher","to peel":"éplucher / peler","to stir":"remuer",
-    "raw":"cru(e)","cooked":"cuit(e)","fried":"frit(e)","grilled":"grillé(e)","baked":"cuit au four",
-    "boiled":"bouilli(e)","steamed":"cuit à la vapeur","fresh":"frais/fraîche","frozen":"surgelé(e)"
-  }
-},
+    // ============================
+    // 8. HOUSE & HOME
+    // ============================
+    {
+      id: 'house-home',
+      name: 'House & Home',
+      icon: '🏠',
+      color: '#a855f7',
+      subcategories: [
+        {
+          name: 'Rooms',
+          words: [
+            { fr: 'la maison', en: 'house', gender: 'f' },
+            { fr: "l'appartement", en: 'apartment / flat', gender: 'm' },
+            { fr: 'la chambre', en: 'bedroom', gender: 'f' },
+            { fr: 'la cuisine', en: 'kitchen', gender: 'f' },
+            { fr: 'le salon', en: 'living room', gender: 'm' },
+            { fr: 'la salle de bains', en: 'bathroom', gender: 'f' },
+            { fr: 'les toilettes', en: 'toilet / restroom', gender: 'f' },
+            { fr: 'la salle à manger', en: 'dining room', gender: 'f' },
+            { fr: 'le bureau', en: 'office / study', gender: 'm' },
+            { fr: "l'entrée", en: 'entrance / hallway', gender: 'f' },
+            { fr: 'le couloir', en: 'corridor / hallway', gender: 'm' },
+            { fr: 'le garage', en: 'garage', gender: 'm' },
+            { fr: 'le jardin', en: 'garden', gender: 'm' },
+            { fr: 'le balcon', en: 'balcony', gender: 'm' },
+            { fr: 'la cave', en: 'cellar / basement', gender: 'f' },
+            { fr: 'le grenier', en: 'attic', gender: 'm' }
+          ]
+        },
+        {
+          name: 'Furniture & Items',
+          words: [
+            { fr: 'le lit', en: 'bed', gender: 'm' },
+            { fr: 'la table', en: 'table', gender: 'f' },
+            { fr: 'la chaise', en: 'chair', gender: 'f' },
+            { fr: 'le fauteuil', en: 'armchair', gender: 'm' },
+            { fr: 'le canapé', en: 'sofa / couch', gender: 'm' },
+            { fr: "l'armoire", en: 'wardrobe / closet', gender: 'f' },
+            { fr: "l'étagère", en: 'shelf / bookcase', gender: 'f' },
+            { fr: 'le bureau', en: 'desk', gender: 'm' },
+            { fr: 'le miroir', en: 'mirror', gender: 'm' },
+            { fr: 'la lampe', en: 'lamp', gender: 'f' },
+            { fr: 'le tapis', en: 'rug / carpet', gender: 'm' },
+            { fr: 'le rideau', en: 'curtain', gender: 'm' },
+            { fr: 'la fenêtre', en: 'window', gender: 'f' },
+            { fr: 'la porte', en: 'door', gender: 'f' },
+            { fr: "l'escalier", en: 'stairs', gender: 'm' },
+            { fr: 'le mur', en: 'wall', gender: 'm' },
+            { fr: 'le plafond', en: 'ceiling', gender: 'm' },
+            { fr: 'le sol', en: 'floor / ground', gender: 'm' },
+            { fr: 'le réfrigérateur', en: 'refrigerator', gender: 'm' },
+            { fr: 'le four', en: 'oven', gender: 'm' },
+            { fr: 'le lave-linge', en: 'washing machine', gender: 'm' },
+            { fr: 'le lave-vaisselle', en: 'dishwasher', gender: 'm' },
+            { fr: "l'aspirateur", en: 'vacuum cleaner', gender: 'm' },
+            { fr: 'la télévision', en: 'television', gender: 'f' },
+            { fr: 'la clé', en: 'key', gender: 'f' },
+            { fr: 'la serviette', en: 'towel', gender: 'f' },
+            { fr: "l'oreiller", en: 'pillow', gender: 'm' },
+            { fr: 'la couverture', en: 'blanket', gender: 'f' },
+            { fr: 'le drap', en: 'sheet', gender: 'm' }
+          ]
+        }
+      ]
+    },
 
-// ============================================
-// CLOTHING - Complete
-// ============================================
-clothing: {
-  "tops": {
-    "shirt":"la chemise","t-shirt":"le t-shirt / le tee-shirt","blouse":"le chemisier","sweater":"le pull",
-    "sweatshirt":"le sweat","hoodie":"le sweat à capuche","cardigan":"le cardigan","vest":"le gilet",
-    "jacket":"la veste","coat":"le manteau","raincoat":"l'imperméable (m)","winter coat":"le manteau d'hiver",
-    "leather jacket":"la veste en cuir","blazer":"le blazer","suit jacket":"la veste de costume"
-  },
-  "bottoms": {
-    "pants/trousers":"le pantalon","jeans":"le jean","shorts":"le short","skirt":"la jupe","dress":"la robe",
-    "suit":"le costume (m) / le tailleur (f)","tracksuit":"le survêtement","leggings":"le legging",
-    "sweatpants":"le pantalon de jogging"
-  },
-  "underwear_sleepwear": {
-    "underwear":"les sous-vêtements (m)","underpants":"le slip / le caleçon","bra":"le soutien-gorge",
-    "socks":"les chaussettes (f)","tights":"les collants (m)","stockings":"les bas (m)",
-    "pajamas":"le pyjama","nightgown":"la chemise de nuit","bathrobe":"le peignoir"
-  },
-  "footwear": {
-    "shoes":"les chaussures (f)","boots":"les bottes (f)","ankle boots":"les bottines (f)",
-    "sneakers":"les baskets (f) / les tennis (f)","sandals":"les sandales (f)","flip-flops":"les tongs (f)",
-    "heels":"les talons (m)","flats":"les ballerines (f)","slippers":"les pantoufles (f) / les chaussons (m)",
-    "hiking boots":"les chaussures de randonnée"
-  },
-  "accessories": {
-    "hat":"le chapeau","cap":"la casquette","beanie":"le bonnet","scarf":"l'écharpe (f)","gloves":"les gants (m)",
-    "mittens":"les moufles (f)","belt":"la ceinture","tie":"la cravate","bow tie":"le nœud papillon",
-    "watch":"la montre","bracelet":"le bracelet","necklace":"le collier","ring":"la bague","earrings":"les boucles d'oreilles (f)",
-    "glasses":"les lunettes (f)","sunglasses":"les lunettes de soleil","bag":"le sac","purse/handbag":"le sac à main",
-    "backpack":"le sac à dos","wallet":"le portefeuille","umbrella":"le parapluie","handkerchief":"le mouchoir"
-  },
-  "materials": {
-    "cotton":"le coton","wool":"la laine","silk":"la soie","leather":"le cuir","linen":"le lin",
-    "denim":"le jean / le denim","polyester":"le polyester","velvet":"le velours","cashmere":"le cachemire"
-  },
-  "shopping": {
-    "size":"la taille","small":"petit (S)","medium":"moyen (M)","large":"grand (L)","extra large":"très grand (XL)",
-    "fitting room":"la cabine d'essayage","to try on":"essayer","it fits":"ça me va","too tight":"trop serré(e)",
-    "too loose":"trop large","on sale":"en solde","discount":"la réduction"
-  }
-},
+    // ============================
+    // 9. SCHOOL & EDUCATION
+    // ============================
+    {
+      id: 'school',
+      name: 'School & Education',
+      icon: '📚',
+      color: '#14b8a6',
+      subcategories: [
+        {
+          name: 'Subjects',
+          words: [
+            { fr: 'les mathématiques / les maths', en: 'mathematics / maths', gender: 'f' },
+            { fr: 'le français', en: 'French', gender: 'm' },
+            { fr: "l'anglais", en: 'English', gender: 'm' },
+            { fr: "l'histoire", en: 'history', gender: 'f' },
+            { fr: 'la géographie', en: 'geography', gender: 'f' },
+            { fr: 'les sciences', en: 'science', gender: 'f' },
+            { fr: 'la physique', en: 'physics', gender: 'f' },
+            { fr: 'la chimie', en: 'chemistry', gender: 'f' },
+            { fr: 'la biologie', en: 'biology', gender: 'f' },
+            { fr: "l'informatique", en: 'computer science', gender: 'f' },
+            { fr: "l'éducation physique", en: 'physical education', gender: 'f' },
+            { fr: 'la musique', en: 'music', gender: 'f' },
+            { fr: 'le dessin', en: 'art / drawing', gender: 'm' },
+            { fr: 'la philosophie', en: 'philosophy', gender: 'f' }
+          ]
+        },
+        {
+          name: 'School Items & Vocabulary',
+          words: [
+            { fr: "l'école", en: 'school', gender: 'f' },
+            { fr: 'le collège', en: 'middle school', gender: 'm' },
+            { fr: 'le lycée', en: 'high school', gender: 'm' },
+            { fr: "l'université", en: 'university', gender: 'f' },
+            { fr: 'la classe', en: 'class / classroom', gender: 'f' },
+            { fr: 'le cours', en: 'lesson / class', gender: 'm' },
+            { fr: "l'élève", en: 'student (school)' },
+            { fr: "l'étudiant / l'étudiante", en: 'student (university)' },
+            { fr: 'le professeur', en: 'teacher / professor', gender: 'm' },
+            { fr: 'le livre', en: 'book', gender: 'm' },
+            { fr: 'le cahier', en: 'notebook', gender: 'm' },
+            { fr: 'le stylo', en: 'pen', gender: 'm' },
+            { fr: 'le crayon', en: 'pencil', gender: 'm' },
+            { fr: 'la gomme', en: 'eraser', gender: 'f' },
+            { fr: 'la règle', en: 'ruler', gender: 'f' },
+            { fr: 'le sac à dos', en: 'backpack', gender: 'm' },
+            { fr: 'le tableau', en: 'board / blackboard', gender: 'm' },
+            { fr: "l'examen", en: 'exam', gender: 'm' },
+            { fr: 'le devoir', en: 'homework / assignment', gender: 'm' },
+            { fr: 'la note', en: 'grade / mark', gender: 'f' },
+            { fr: 'le diplôme', en: 'diploma / degree', gender: 'm' },
+            { fr: 'la bibliothèque', en: 'library', gender: 'f' },
+            { fr: 'la cantine', en: 'cafeteria', gender: 'f' },
+            { fr: 'la récréation', en: 'break / recess', gender: 'f' },
+            { fr: 'apprendre', en: 'to learn' },
+            { fr: 'étudier', en: 'to study' },
+            { fr: 'enseigner', en: 'to teach' },
+            { fr: 'lire', en: 'to read' },
+            { fr: 'écrire', en: 'to write' }
+          ]
+        }
+      ]
+    },
 
-// ============================================
-// HOUSE & HOME - Complete
-// ============================================
-house: {
-  "types": {
-    "house":"la maison","apartment":"l'appartement (m)","flat":"l'appartement (m)","studio":"le studio",
-    "villa":"la villa","cottage":"le cottage","mansion":"le manoir","building":"l'immeuble (m) / le bâtiment",
-    "floor/story":"l'étage (m)","ground floor":"le rez-de-chaussée","first floor":"le premier étage"
-  },
-  "rooms": {
-    "room":"la pièce / la chambre","living room":"le salon / la salle de séjour","dining room":"la salle à manger",
-    "kitchen":"la cuisine","bedroom":"la chambre","bathroom":"la salle de bains","toilet":"les toilettes (f) / les WC",
-    "hallway":"le couloir","entrance":"l'entrée (f)","office/study":"le bureau",
-    "basement":"le sous-sol","attic":"le grenier","cellar":"la cave","laundry room":"la buanderie",
-    "garage":"le garage","storage room":"le débarras"
-  },
-  "outdoor": {
-    "garden":"le jardin","yard":"la cour","lawn":"la pelouse","terrace":"la terrasse","balcony":"le balcon",
-    "patio":"le patio","pool":"la piscine","driveway":"l'allée (f)","fence":"la clôture","gate":"le portail"
-  },
-  "structure": {
-    "wall":"le mur","ceiling":"le plafond","floor":"le sol / le plancher","roof":"le toit","door":"la porte",
-    "window":"la fenêtre","stairs":"l'escalier (m)","elevator":"l'ascenseur (m)","chimney":"la cheminée",
-    "fireplace":"la cheminée","column":"la colonne"
-  },
-  "furniture": {
-    "furniture":"les meubles (m)","table":"la table","chair":"la chaise","armchair":"le fauteuil",
-    "sofa/couch":"le canapé","bed":"le lit","mattress":"le matelas","pillow":"l'oreiller (m)","blanket":"la couverture",
-    "sheet":"le drap","desk":"le bureau","wardrobe/closet":"l'armoire (f)","dresser":"la commode",
-    "shelf":"l'étagère (f)","bookcase":"la bibliothèque","nightstand":"la table de nuit / la table de chevet",
-    "cabinet":"le placard","drawer":"le tiroir","carpet/rug":"le tapis","curtains":"les rideaux (m)",
-    "lamp":"la lampe","mirror":"le miroir","clock":"l'horloge (f) / la pendule"
-  },
-  "kitchen_items": {
-    "refrigerator":"le réfrigérateur / le frigo","freezer":"le congélateur","oven":"le four","stove":"la cuisinière",
-    "microwave":"le micro-ondes","dishwasher":"le lave-vaisselle","sink":"l'évier (m)","faucet":"le robinet",
-    "counter":"le comptoir / le plan de travail","cabinet":"le placard",
-    "pot":"la casserole","pan":"la poêle","lid":"le couvercle","cutting board":"la planche à découper",
-    "knife":"le couteau","fork":"la fourchette","spoon":"la cuillère","plate":"l'assiette (f)","bowl":"le bol",
-    "glass":"le verre","cup":"la tasse","mug":"le mug","bottle":"la bouteille","pitcher":"la carafe"
-  },
-  "bathroom_items": {
-    "bathtub":"la baignoire","shower":"la douche","sink":"le lavabo","toilet":"les toilettes / les WC",
-    "mirror":"le miroir","towel":"la serviette","soap":"le savon","shampoo":"le shampooing",
-    "conditioner":"l'après-shampooing (m)","toothbrush":"la brosse à dents","toothpaste":"le dentifrice",
-    "razor":"le rasoir","hairdryer":"le sèche-cheveux"
-  },
-  "appliances": {
-    "television/TV":"la télévision / la télé","remote control":"la télécommande","computer":"l'ordinateur (m)",
-    "laptop":"l'ordinateur portable","washing machine":"la machine à laver / le lave-linge",
-    "dryer":"le sèche-linge","iron":"le fer à repasser","vacuum cleaner":"l'aspirateur (m)",
-    "air conditioning":"la climatisation","heater":"le chauffage / le radiateur","fan":"le ventilateur"
-  },
-  "actions": {
-    "to live":"habiter / vivre","to rent":"louer","to buy":"acheter","to sell":"vendre","to move":"déménager",
-    "to clean":"nettoyer","to vacuum":"passer l'aspirateur","to wash dishes":"faire la vaisselle",
-    "to do laundry":"faire la lessive","to cook":"cuisiner / faire la cuisine","to tidy up":"ranger"
-  }
-},
+    // ============================
+    // 10. WORK & PROFESSIONS
+    // ============================
+    {
+      id: 'work',
+      name: 'Work & Professions',
+      icon: '💼',
+      color: '#64748b',
+      subcategories: [
+        {
+          name: 'Professions',
+          words: [
+            { fr: 'le médecin', en: 'doctor', gender: 'm' },
+            { fr: "l'infirmier / l'infirmière", en: 'nurse' },
+            { fr: "l'avocat / l'avocate", en: 'lawyer' },
+            { fr: "l'ingénieur / l'ingénieure", en: 'engineer' },
+            { fr: "l'architecte", en: 'architect' },
+            { fr: 'le/la dentiste', en: 'dentist' },
+            { fr: 'le pharmacien / la pharmacienne', en: 'pharmacist' },
+            { fr: 'le professeur', en: 'teacher / professor', gender: 'm' },
+            { fr: 'le/la journaliste', en: 'journalist' },
+            { fr: 'le policier / la policière', en: 'police officer' },
+            { fr: 'le pompier', en: 'firefighter', gender: 'm' },
+            { fr: 'le cuisinier / la cuisinière', en: 'cook / chef' },
+            { fr: 'le boulanger / la boulangère', en: 'baker' },
+            { fr: 'le boucher / la bouchère', en: 'butcher' },
+            { fr: 'le serveur / la serveuse', en: 'waiter / waitress' },
+            { fr: 'le vendeur / la vendeuse', en: 'salesperson' },
+            { fr: 'le/la comptable', en: 'accountant' },
+            { fr: "l'agriculteur / l'agricultrice", en: 'farmer' },
+            { fr: "le mécanicien / la mécanicienne", en: 'mechanic' },
+            { fr: 'le plombier', en: 'plumber', gender: 'm' },
+            { fr: "l'électricien / l'électricienne", en: 'electrician' },
+            { fr: 'le chauffeur', en: 'driver', gender: 'm' },
+            { fr: 'le/la pilote', en: 'pilot' },
+            { fr: "le musicien / la musicienne", en: 'musician' },
+            { fr: "l'acteur / l'actrice", en: 'actor / actress' },
+            { fr: "l'écrivain / l'écrivaine", en: 'writer' },
+            { fr: 'le/la scientifique', en: 'scientist' },
+            { fr: 'le programmeur / la programmeuse', en: 'programmer' }
+          ]
+        },
+        {
+          name: 'Workplace Vocabulary',
+          words: [
+            { fr: 'le travail', en: 'work / job', gender: 'm' },
+            { fr: 'le bureau', en: 'office', gender: 'm' },
+            { fr: "l'entreprise", en: 'company / business', gender: 'f' },
+            { fr: 'le patron / la patronne', en: 'boss' },
+            { fr: 'le/la collègue', en: 'colleague' },
+            { fr: "l'employé / l'employée", en: 'employee' },
+            { fr: 'le salaire', en: 'salary', gender: 'm' },
+            { fr: 'la réunion', en: 'meeting', gender: 'f' },
+            { fr: "l'entretien", en: 'interview', gender: 'm' },
+            { fr: 'le CV', en: 'résumé / CV', gender: 'm' },
+            { fr: 'la carrière', en: 'career', gender: 'f' },
+            { fr: 'le chômage', en: 'unemployment', gender: 'm' },
+            { fr: 'la retraite', en: 'retirement', gender: 'f' },
+            { fr: 'les vacances', en: 'holidays / vacation', gender: 'f' },
+            { fr: 'travailler', en: 'to work' },
+            { fr: 'gagner', en: 'to earn / to win' }
+          ]
+        }
+      ]
+    },
 
-// ============================================
-// ANIMALS - Complete
-// ============================================
-animals: {
-  "pets": {
-    "pet":"l'animal de compagnie (m)","dog":"le chien","puppy":"le chiot","cat":"le chat","kitten":"le chaton",
-    "fish":"le poisson","goldfish":"le poisson rouge","bird":"l'oiseau (m)","parrot":"le perroquet",
-    "rabbit":"le lapin","hamster":"le hamster","guinea pig":"le cochon d'Inde","mouse":"la souris",
-    "turtle":"la tortue","snake":"le serpent","lizard":"le lézard"
-  },
-  "farm": {
-    "farm animal":"l'animal de ferme","cow":"la vache","bull":"le taureau","calf":"le veau","pig":"le cochon",
-    "horse":"le cheval","pony":"le poney","donkey":"l'âne (m)","sheep":"le mouton","lamb":"l'agneau (m)",
-    "goat":"la chèvre","chicken":"la poule","rooster":"le coq","chick":"le poussin","duck":"le canard",
-    "goose":"l'oie (f)","turkey":"la dinde"
-  },
-  "wild_mammals": {
-    "wild animal":"l'animal sauvage","lion":"le lion","tiger":"le tigre","elephant":"l'éléphant (m)","giraffe":"la girafe",
-    "zebra":"le zèbre","monkey":"le singe","gorilla":"le gorille","bear":"l'ours (m)","polar bear":"l'ours polaire",
-    "wolf":"le loup","fox":"le renard","deer":"le cerf","moose":"l'élan (m)","hippopotamus":"l'hippopotame (m)",
-    "rhinoceros":"le rhinocéros","kangaroo":"le kangourou","koala":"le koala","panda":"le panda"
-  },
-  "birds": {
-    "eagle":"l'aigle (m)","hawk":"le faucon","owl":"le hibou / la chouette","crow":"le corbeau",
-    "pigeon":"le pigeon","sparrow":"le moineau","swan":"le cygne","duck":"le canard","goose":"l'oie (f)",
-    "penguin":"le pingouin / le manchot","flamingo":"le flamant rose","peacock":"le paon","seagull":"la mouette"
-  },
-  "sea_animals": {
-    "whale":"la baleine","dolphin":"le dauphin","shark":"le requin","seal":"le phoque","walrus":"le morse",
-    "octopus":"la pieuvre / le poulpe","jellyfish":"la méduse","starfish":"l'étoile de mer (f)",
-    "crab":"le crabe","lobster":"le homard","shrimp":"la crevette","seahorse":"l'hippocampe (m)"
-  },
-  "insects": {
-    "insect":"l'insecte (m)","bee":"l'abeille (f)","wasp":"la guêpe","butterfly":"le papillon","moth":"le papillon de nuit",
-    "fly":"la mouche","mosquito":"le moustique","ant":"la fourmi","spider":"l'araignée (f)",
-    "beetle":"le scarabée","ladybug":"la coccinelle","grasshopper":"la sauterelle","dragonfly":"la libellule","snail":"l'escargot (m)"
-  },
-  "reptiles_amphibians": {
-    "snake":"le serpent","lizard":"le lézard","crocodile":"le crocodile","alligator":"l'alligator (m)",
-    "turtle":"la tortue","frog":"la grenouille","toad":"le crapaud","salamander":"la salamandre"
-  }
-},
+    // ============================
+    // 11. TRANSPORT
+    // ============================
+    {
+      id: 'transport',
+      name: 'Transport',
+      icon: '🚗',
+      color: '#3b82f6',
+      subcategories: [
+        {
+          name: 'Vehicles',
+          words: [
+            { fr: 'la voiture', en: 'car', gender: 'f' },
+            { fr: 'le bus / l\'autobus', en: 'bus', gender: 'm' },
+            { fr: 'le train', en: 'train', gender: 'm' },
+            { fr: 'le métro', en: 'metro / subway', gender: 'm' },
+            { fr: 'le tramway', en: 'tram', gender: 'm' },
+            { fr: "l'avion", en: 'airplane', gender: 'm' },
+            { fr: 'le bateau', en: 'boat / ship', gender: 'm' },
+            { fr: 'le vélo', en: 'bicycle', gender: 'm' },
+            { fr: 'la moto', en: 'motorcycle', gender: 'f' },
+            { fr: 'le taxi', en: 'taxi', gender: 'm' },
+            { fr: 'le camion', en: 'truck', gender: 'm' },
+            { fr: "l'hélicoptère", en: 'helicopter', gender: 'm' }
+          ]
+        },
+        {
+          name: 'Travel Vocabulary',
+          words: [
+            { fr: 'la gare', en: 'train station', gender: 'f' },
+            { fr: "l'aéroport", en: 'airport', gender: 'm' },
+            { fr: "l'arrêt de bus", en: 'bus stop', gender: 'm' },
+            { fr: 'la station de métro', en: 'metro station', gender: 'f' },
+            { fr: 'le billet', en: 'ticket', gender: 'm' },
+            { fr: "l'aller simple", en: 'one-way ticket', gender: 'm' },
+            { fr: "l'aller-retour", en: 'round trip ticket', gender: 'm' },
+            { fr: 'le quai', en: 'platform', gender: 'm' },
+            { fr: 'le passeport', en: 'passport', gender: 'm' },
+            { fr: 'la valise', en: 'suitcase', gender: 'f' },
+            { fr: 'le bagage', en: 'luggage', gender: 'm' },
+            { fr: 'le voyage', en: 'trip / journey', gender: 'm' },
+            { fr: 'le permis de conduire', en: 'driving license', gender: 'm' },
+            { fr: 'la route', en: 'road', gender: 'f' },
+            { fr: "l'autoroute", en: 'highway / motorway', gender: 'f' },
+            { fr: 'le parking', en: 'parking lot', gender: 'm' },
+            { fr: 'conduire', en: 'to drive' },
+            { fr: 'voyager', en: 'to travel' },
+            { fr: 'décoller', en: 'to take off (plane)' },
+            { fr: 'atterrir', en: 'to land (plane)' }
+          ]
+        }
+      ]
+    },
 
-// ============================================
-// PROFESSIONS - Complete
-// ============================================
-professions: {
-  "medical": {
-    "doctor":"le médecin / le docteur","nurse":"l'infirmier / l'infirmière","surgeon":"le chirurgien / la chirurgienne",
-    "dentist":"le/la dentiste","pharmacist":"le pharmacien / la pharmacienne","veterinarian":"le/la vétérinaire",
-    "psychologist":"le/la psychologue","psychiatrist":"le/la psychiatre","therapist":"le/la thérapeute",
-    "paramedic":"l'ambulancier / l'ambulancière","midwife":"la sage-femme"
-  },
-  "education": {
-    "teacher":"le professeur / l'enseignant(e)","professor":"le professeur","student":"l'étudiant(e)","pupil":"l'élève (m/f)",
-    "principal":"le directeur / la directrice","researcher":"le chercheur / la chercheuse",
-    "librarian":"le/la bibliothécaire","tutor":"le tuteur / la tutrice"
-  },
-  "business": {
-    "businessman/woman":"l'homme / la femme d'affaires","manager":"le directeur / la directrice / le manager",
-    "executive":"le cadre","CEO":"le PDG (président-directeur général)","entrepreneur":"l'entrepreneur / l'entrepreneuse",
-    "accountant":"le/la comptable","banker":"le banquier / la banquière","economist":"l'économiste (m/f)",
-    "consultant":"le/la consultant(e)","secretary":"le/la secrétaire","receptionist":"le/la réceptionniste",
-    "salesperson":"le vendeur / la vendeuse","real estate agent":"l'agent immobilier"
-  },
-  "law_government": {
-    "lawyer":"l'avocat(e)","judge":"le/la juge","politician":"le politicien / la politicienne",
-    "mayor":"le maire / la mairesse","president":"le président / la présidente","minister":"le/la ministre",
-    "diplomat":"le/la diplomate","civil servant":"le/la fonctionnaire"
-  },
-  "trades": {
-    "mechanic":"le mécanicien / la mécanicienne","electrician":"l'électricien(ne)","plumber":"le plombier",
-    "carpenter":"le menuisier / le charpentier","painter":"le peintre","roofer":"le couvreur",
-    "locksmith":"le serrurier","welder":"le soudeur"
-  },
-  "food_service": {
-    "chef":"le chef (cuisinier)","cook":"le cuisinier / la cuisinière","baker":"le boulanger / la boulangère",
-    "pastry chef":"le pâtissier / la pâtissière","butcher":"le boucher / la bouchère",
-    "waiter":"le serveur","waitress":"la serveuse","bartender":"le barman / la barmaid"
-  },
-  "arts_entertainment": {
-    "artist":"l'artiste (m/f)","painter":"le peintre","sculptor":"le sculpteur / la sculptrice",
-    "musician":"le musicien / la musicienne","singer":"le chanteur / la chanteuse","actor":"l'acteur / l'actrice",
-    "director":"le réalisateur / la réalisatrice","writer":"l'écrivain(e)","author":"l'auteur(e)",
-    "journalist":"le/la journaliste","photographer":"le/la photographe","designer":"le/la designer"
-  },
-  "technology": {
-    "engineer":"l'ingénieur(e)","programmer":"le programmeur / la programmeuse","developer":"le développeur / la développeuse",
-    "IT specialist":"l'informaticien(ne)","data scientist":"le/la data scientist","web designer":"le/la webdesigner",
-    "technician":"le technicien / la technicienne"
-  },
-  "services": {
-    "police officer":"le policier / la policière","firefighter":"le pompier / la pompière",
-    "soldier":"le soldat / la soldate","pilot":"le/la pilote","flight attendant":"l'hôtesse de l'air / le steward",
-    "driver":"le chauffeur / le conducteur","taxi driver":"le chauffeur de taxi",
-    "hairdresser":"le coiffeur / la coiffeuse","cleaner":"l'agent d'entretien / la femme de ménage",
-    "gardener":"le jardinier / la jardinière","farmer":"l'agriculteur / l'agricultrice / le fermier"
-  },
-  "science": {
-    "scientist":"le/la scientifique","biologist":"le/la biologiste","chemist":"le/la chimiste",
-    "physicist":"le physicien / la physicienne","mathematician":"le mathématicien / la mathématicienne",
-    "astronaut":"l'astronaute (m/f)","archaeologist":"l'archéologue (m/f)"
-  }
-},
+    // ============================
+    // 12. WEATHER
+    // ============================
+    {
+      id: 'weather',
+      name: 'Weather',
+      icon: '🌤️',
+      color: '#06b6d4',
+      subcategories: [
+        {
+          name: 'Weather Expressions',
+          words: [
+            { fr: 'le temps', en: 'weather', gender: 'm' },
+            { fr: 'Il fait beau', en: 'The weather is nice' },
+            { fr: 'Il fait mauvais', en: 'The weather is bad' },
+            { fr: 'Il fait chaud', en: 'It is hot' },
+            { fr: 'Il fait froid', en: 'It is cold' },
+            { fr: 'Il fait frais', en: 'It is cool' },
+            { fr: 'Il fait doux', en: 'It is mild' },
+            { fr: 'Il pleut', en: 'It is raining' },
+            { fr: 'Il neige', en: 'It is snowing' },
+            { fr: 'Il y a du vent', en: 'It is windy' },
+            { fr: 'Il y a du soleil', en: 'It is sunny' },
+            { fr: 'Il y a des nuages', en: 'It is cloudy' },
+            { fr: 'Il y a du brouillard', en: 'It is foggy' },
+            { fr: "Il y a de l'orage", en: 'There is a storm' },
+            { fr: 'le soleil', en: 'sun', gender: 'm' },
+            { fr: 'la pluie', en: 'rain', gender: 'f' },
+            { fr: 'la neige', en: 'snow', gender: 'f' },
+            { fr: 'le vent', en: 'wind', gender: 'm' },
+            { fr: 'le nuage', en: 'cloud', gender: 'm' },
+            { fr: "l'orage", en: 'storm / thunderstorm', gender: 'm' },
+            { fr: 'le brouillard', en: 'fog', gender: 'm' },
+            { fr: "l'arc-en-ciel", en: 'rainbow', gender: 'm' },
+            { fr: 'la tempête', en: 'storm', gender: 'f' },
+            { fr: 'la température', en: 'temperature', gender: 'f' },
+            { fr: 'le degré', en: 'degree', gender: 'm' },
+            { fr: 'le ciel', en: 'sky', gender: 'm' },
+            { fr: 'la glace', en: 'ice', gender: 'f' },
+            { fr: 'le tonnerre', en: 'thunder', gender: 'm' },
+            { fr: "l'éclair", en: 'lightning', gender: 'm' },
+            { fr: 'la grêle', en: 'hail', gender: 'f' }
+          ]
+        }
+      ]
+    },
 
-// ============================================
-// COUNTRIES & NATIONALITIES - Complete
-// ============================================
-countries: {
-  "europe_west": {
-    "France":"la France / français(e)","England":"l'Angleterre / anglais(e)","United Kingdom":"le Royaume-Uni / britannique",
-    "Germany":"l'Allemagne / allemand(e)","Spain":"l'Espagne / espagnol(e)","Italy":"l'Italie / italien(ne)",
-    "Portugal":"le Portugal / portugais(e)","Belgium":"la Belgique / belge","Netherlands":"les Pays-Bas / néerlandais(e)",
-    "Switzerland":"la Suisse / suisse","Austria":"l'Autriche / autrichien(ne)","Ireland":"l'Irlande / irlandais(e)",
-    "Scotland":"l'Écosse / écossais(e)","Wales":"le Pays de Galles / gallois(e)","Luxembourg":"le Luxembourg / luxembourgeois(e)"
-  },
-  "europe_north": {
-    "Sweden":"la Suède / suédois(e)","Norway":"la Norvège / norvégien(ne)","Denmark":"le Danemark / danois(e)",
-    "Finland":"la Finlande / finlandais(e)","Iceland":"l'Islande / islandais(e)"
-  },
-  "europe_east": {
-    "Poland":"la Pologne / polonais(e)","Russia":"la Russie / russe","Ukraine":"l'Ukraine / ukrainien(ne)",
-    "Czech Republic":"la République tchèque / tchèque","Hungary":"la Hongrie / hongrois(e)",
-    "Romania":"la Roumanie / roumain(e)","Greece":"la Grèce / grec(que)","Turkey":"la Turquie / turc(que)"
-  },
-  "americas": {
-    "United States":"les États-Unis / américain(e)","Canada":"le Canada / canadien(ne)","Mexico":"le Mexique / mexicain(e)",
-    "Brazil":"le Brésil / brésilien(ne)","Argentina":"l'Argentine / argentin(e)","Colombia":"la Colombie / colombien(ne)",
-    "Chile":"le Chili / chilien(ne)","Peru":"le Pérou / péruvien(ne)","Venezuela":"le Venezuela / vénézuélien(ne)",
-    "Cuba":"Cuba / cubain(e)","Jamaica":"la Jamaïque / jamaïcain(e)"
-  },
-  "asia": {
-    "China":"la Chine / chinois(e)","Japan":"le Japon / japonais(e)","South Korea":"la Corée du Sud / coréen(ne)",
-    "India":"l'Inde / indien(ne)","Vietnam":"le Vietnam / vietnamien(ne)","Thailand":"la Thaïlande / thaïlandais(e)",
-    "Indonesia":"l'Indonésie / indonésien(ne)","Philippines":"les Philippines / philippin(e)",
-    "Pakistan":"le Pakistan / pakistanais(e)","Bangladesh":"le Bangladesh / bangladais(e)"
-  },
-  "middle_east": {
-    "Israel":"Israël / israélien(ne)","Lebanon":"le Liban / libanais(e)","Saudi Arabia":"l'Arabie saoudite / saoudien(ne)",
-    "Iran":"l'Iran / iranien(ne)","Iraq":"l'Irak / irakien(ne)","Egypt":"l'Égypte / égyptien(ne)"
-  },
-  "africa": {
-    "Morocco":"le Maroc / marocain(e)","Algeria":"l'Algérie / algérien(ne)","Tunisia":"la Tunisie / tunisien(ne)",
-    "Senegal":"le Sénégal / sénégalais(e)","Ivory Coast":"la Côte d'Ivoire / ivoirien(ne)",
-    "South Africa":"l'Afrique du Sud / sud-africain(e)","Nigeria":"le Nigeria / nigérian(e)","Kenya":"le Kenya / kényan(e)"
-  },
-  "oceania": {
-    "Australia":"l'Australie / australien(ne)","New Zealand":"la Nouvelle-Zélande / néo-zélandais(e)"
-  }
-},
+    // ============================
+    // 13. ANIMALS
+    // ============================
+    {
+      id: 'animals',
+      name: 'Animals',
+      icon: '🐾',
+      color: '#84cc16',
+      subcategories: [
+        {
+          name: 'Pets',
+          words: [
+            { fr: 'le chien', en: 'dog', gender: 'm' },
+            { fr: 'le chat', en: 'cat', gender: 'm' },
+            { fr: 'le poisson', en: 'fish', gender: 'm' },
+            { fr: "l'oiseau", en: 'bird', gender: 'm' },
+            { fr: 'le hamster', en: 'hamster', gender: 'm' },
+            { fr: 'le lapin', en: 'rabbit', gender: 'm' },
+            { fr: 'la tortue', en: 'turtle / tortoise', gender: 'f' },
+            { fr: 'le perroquet', en: 'parrot', gender: 'm' },
+            { fr: 'le cochon d\'Inde', en: 'guinea pig', gender: 'm' }
+          ]
+        },
+        {
+          name: 'Farm Animals',
+          words: [
+            { fr: 'la vache', en: 'cow', gender: 'f' },
+            { fr: 'le cheval', en: 'horse', gender: 'm' },
+            { fr: 'le cochon', en: 'pig', gender: 'm' },
+            { fr: 'le mouton', en: 'sheep', gender: 'm' },
+            { fr: 'la chèvre', en: 'goat', gender: 'f' },
+            { fr: 'la poule', en: 'hen / chicken', gender: 'f' },
+            { fr: 'le coq', en: 'rooster', gender: 'm' },
+            { fr: 'le canard', en: 'duck', gender: 'm' },
+            { fr: "l'âne", en: 'donkey', gender: 'm' },
+            { fr: 'le taureau', en: 'bull', gender: 'm' }
+          ]
+        },
+        {
+          name: 'Wild Animals',
+          words: [
+            { fr: 'le lion', en: 'lion', gender: 'm' },
+            { fr: 'le tigre', en: 'tiger', gender: 'm' },
+            { fr: "l'éléphant", en: 'elephant', gender: 'm' },
+            { fr: 'le singe', en: 'monkey', gender: 'm' },
+            { fr: "l'ours", en: 'bear', gender: 'm' },
+            { fr: 'le loup', en: 'wolf', gender: 'm' },
+            { fr: 'le renard', en: 'fox', gender: 'm' },
+            { fr: 'le cerf', en: 'deer', gender: 'm' },
+            { fr: 'le serpent', en: 'snake', gender: 'm' },
+            { fr: 'le crocodile', en: 'crocodile', gender: 'm' },
+            { fr: 'la girafe', en: 'giraffe', gender: 'f' },
+            { fr: 'le zèbre', en: 'zebra', gender: 'm' },
+            { fr: "l'hippopotame", en: 'hippopotamus', gender: 'm' },
+            { fr: 'le requin', en: 'shark', gender: 'm' },
+            { fr: 'la baleine', en: 'whale', gender: 'f' },
+            { fr: 'le dauphin', en: 'dolphin', gender: 'm' },
+            { fr: 'le papillon', en: 'butterfly', gender: 'm' },
+            { fr: "l'abeille", en: 'bee', gender: 'f' },
+            { fr: 'la fourmi', en: 'ant', gender: 'f' },
+            { fr: "l'araignée", en: 'spider', gender: 'f' },
+            { fr: 'la grenouille', en: 'frog', gender: 'f' },
+            { fr: "l'aigle", en: 'eagle', gender: 'm' }
+          ]
+        }
+      ]
+    },
 
-// ============================================
-// TRAVEL & TRANSPORT
-// ============================================
-travel: {
-  "transport_modes": {
-    "car":"la voiture","bus":"le bus / l'autobus","train":"le train","plane":"l'avion (m)","boat":"le bateau",
-    "ship":"le navire","ferry":"le ferry","subway/metro":"le métro","tram":"le tramway","taxi":"le taxi",
-    "bicycle":"le vélo / la bicyclette","motorcycle":"la moto","scooter":"le scooter","helicopter":"l'hélicoptère (m)"
-  },
-  "transport_places": {
-    "airport":"l'aéroport (m)","train station":"la gare","bus station":"la gare routière","bus stop":"l'arrêt de bus (m)",
-    "metro station":"la station de métro","port":"le port","parking lot":"le parking","gas station":"la station-service",
-    "highway":"l'autoroute (f)","road":"la route","street":"la rue","bridge":"le pont","tunnel":"le tunnel"
-  },
-  "at_airport": {
-    "flight":"le vol","departure":"le départ","arrival":"l'arrivée (f)","gate":"la porte (d'embarquement)",
-    "boarding pass":"la carte d'embarquement","passport":"le passeport","visa":"le visa","customs":"la douane",
-    "luggage/baggage":"les bagages (m)","suitcase":"la valise","carry-on":"le bagage à main",
-    "check-in":"l'enregistrement (m)","security":"la sécurité","delay":"le retard","cancelled":"annulé(e)"
-  },
-  "accommodation": {
-    "hotel":"l'hôtel (m)","hostel":"l'auberge de jeunesse (f)","bed and breakfast":"la chambre d'hôtes",
-    "room":"la chambre","single room":"la chambre simple","double room":"la chambre double",
-    "reservation":"la réservation","reception":"la réception","key":"la clé","floor":"l'étage (m)",
-    "check-in":"l'arrivée / l'enregistrement","check-out":"le départ"
-  },
-  "tourism": {
-    "tourist":"le/la touriste","tourism":"le tourisme","trip":"le voyage","vacation":"les vacances (f)",
-    "tour":"la visite / le tour","guide":"le guide","map":"la carte / le plan","brochure":"la brochure",
-    "monument":"le monument","museum":"le musée","castle":"le château","church":"l'église (f)","cathedral":"la cathédrale",
-    "beach":"la plage","mountain":"la montagne","lake":"le lac","river":"le fleuve / la rivière","forest":"la forêt"
-  },
-  "directions": {
-    "left":"gauche","right":"droite","straight":"tout droit","north":"le nord","south":"le sud",
-    "east":"l'est (m)","west":"l'ouest (m)","corner":"le coin","intersection":"le carrefour",
-    "traffic light":"le feu (de signalisation)","roundabout":"le rond-point","crosswalk":"le passage piéton"
-  }
-},
+    // ============================
+    // 14. NATURE & ENVIRONMENT
+    // ============================
+    {
+      id: 'nature',
+      name: 'Nature & Environment',
+      icon: '🌿',
+      color: '#22c55e',
+      subcategories: [
+        {
+          name: 'Landscapes',
+          words: [
+            { fr: 'la montagne', en: 'mountain', gender: 'f' },
+            { fr: 'la mer', en: 'sea', gender: 'f' },
+            { fr: "l'océan", en: 'ocean', gender: 'm' },
+            { fr: 'la rivière', en: 'river', gender: 'f' },
+            { fr: 'le fleuve', en: 'large river', gender: 'm' },
+            { fr: 'le lac', en: 'lake', gender: 'm' },
+            { fr: 'la forêt', en: 'forest', gender: 'f' },
+            { fr: 'le désert', en: 'desert', gender: 'm' },
+            { fr: 'la plage', en: 'beach', gender: 'f' },
+            { fr: "l'île", en: 'island', gender: 'f' },
+            { fr: 'la colline', en: 'hill', gender: 'f' },
+            { fr: 'la vallée', en: 'valley', gender: 'f' },
+            { fr: 'le champ', en: 'field', gender: 'm' },
+            { fr: 'la campagne', en: 'countryside', gender: 'f' },
+            { fr: 'la cascade', en: 'waterfall', gender: 'f' },
+            { fr: 'la falaise', en: 'cliff', gender: 'f' },
+            { fr: 'le volcan', en: 'volcano', gender: 'm' }
+          ]
+        },
+        {
+          name: 'Plants & Nature',
+          words: [
+            { fr: "l'arbre", en: 'tree', gender: 'm' },
+            { fr: 'la fleur', en: 'flower', gender: 'f' },
+            { fr: 'la rose', en: 'rose', gender: 'f' },
+            { fr: "l'herbe", en: 'grass', gender: 'f' },
+            { fr: 'la feuille', en: 'leaf', gender: 'f' },
+            { fr: 'la branche', en: 'branch', gender: 'f' },
+            { fr: 'la racine', en: 'root', gender: 'f' },
+            { fr: 'la graine', en: 'seed', gender: 'f' },
+            { fr: 'le buisson', en: 'bush', gender: 'm' },
+            { fr: 'la terre', en: 'earth / soil', gender: 'f' },
+            { fr: 'la pierre', en: 'stone / rock', gender: 'f' },
+            { fr: 'le sable', en: 'sand', gender: 'm' }
+          ]
+        },
+        {
+          name: 'Environment',
+          words: [
+            { fr: "l'environnement", en: 'environment', gender: 'm' },
+            { fr: 'la pollution', en: 'pollution', gender: 'f' },
+            { fr: 'le réchauffement climatique', en: 'global warming', gender: 'm' },
+            { fr: 'le recyclage', en: 'recycling', gender: 'm' },
+            { fr: "l'énergie", en: 'energy', gender: 'f' },
+            { fr: "l'énergie solaire", en: 'solar energy', gender: 'f' },
+            { fr: 'la nature', en: 'nature', gender: 'f' },
+            { fr: 'protéger', en: 'to protect' },
+            { fr: 'recycler', en: 'to recycle' },
+            { fr: 'polluer', en: 'to pollute' },
+            { fr: 'les déchets', en: 'waste / rubbish', gender: 'm' }
+          ]
+        }
+      ]
+    },
 
-// ============================================
-// WORK & OFFICE
-// ============================================
-work: {
-  "general": {
-    "work":"le travail","job":"l'emploi (m) / le travail","career":"la carrière","profession":"la profession",
-    "occupation":"le métier","company":"l'entreprise (f) / la société","business":"les affaires (f)",
-    "office":"le bureau","factory":"l'usine (f)","employee":"l'employé(e)","employer":"l'employeur",
-    "boss":"le patron / la patronne / le chef","colleague":"le/la collègue","team":"l'équipe (f)"
-  },
-  "employment": {
-    "to work":"travailler","to hire":"embaucher","to fire":"licencier / renvoyer","to quit":"démissionner",
-    "to retire":"prendre sa retraite","interview":"l'entretien (m)","CV/resume":"le CV",
-    "contract":"le contrat","salary":"le salaire","wages":"le salaire","raise":"l'augmentation (f)",
-    "promotion":"la promotion","bonus":"la prime","full-time":"à temps plein","part-time":"à temps partiel",
-    "unemployed":"au chômage","unemployment":"le chômage","retirement":"la retraite"
-  },
-  "office_items": {
-    "desk":"le bureau","computer":"l'ordinateur (m)","laptop":"l'ordinateur portable","printer":"l'imprimante (f)",
-    "phone":"le téléphone","email":"l'email (m) / le courriel","file":"le dossier / le fichier",
-    "document":"le document","report":"le rapport","meeting":"la réunion","presentation":"la présentation",
-    "pen":"le stylo","pencil":"le crayon","paper":"le papier","folder":"le dossier","stapler":"l'agrafeuse (f)"
-  },
-  "schedule": {
-    "schedule":"l'emploi du temps (m) / l'horaire (m)","working hours":"les heures de travail",
-    "shift":"le poste / l'équipe","day shift":"l'équipe de jour","night shift":"l'équipe de nuit",
-    "overtime":"les heures supplémentaires","break":"la pause","lunch break":"la pause déjeuner",
-    "vacation/holiday":"les vacances (f)","sick leave":"le congé maladie","maternity leave":"le congé maternité"
-  }
-},
+    // ============================
+    // 15. HEALTH & MEDICINE
+    // ============================
+    {
+      id: 'health',
+      name: 'Health & Medicine',
+      icon: '🏥',
+      color: '#ef4444',
+      subcategories: [
+        {
+          name: 'Health & Illness',
+          words: [
+            { fr: 'la santé', en: 'health', gender: 'f' },
+            { fr: 'la maladie', en: 'illness / disease', gender: 'f' },
+            { fr: 'la douleur', en: 'pain', gender: 'f' },
+            { fr: 'la fièvre', en: 'fever', gender: 'f' },
+            { fr: 'le rhume', en: 'cold (illness)', gender: 'm' },
+            { fr: 'la grippe', en: 'flu', gender: 'f' },
+            { fr: 'la toux', en: 'cough', gender: 'f' },
+            { fr: 'le mal de tête', en: 'headache', gender: 'm' },
+            { fr: 'le mal de ventre', en: 'stomachache', gender: 'm' },
+            { fr: 'le mal de gorge', en: 'sore throat', gender: 'm' },
+            { fr: 'le mal de dos', en: 'backache', gender: 'm' },
+            { fr: "J'ai mal à la tête", en: 'I have a headache' },
+            { fr: "J'ai mal au ventre", en: 'I have a stomachache' },
+            { fr: 'être malade', en: 'to be sick' },
+            { fr: 'tousser', en: 'to cough' },
+            { fr: 'éternuer', en: 'to sneeze' },
+            { fr: 'vomir', en: 'to vomit' },
+            { fr: 'se blesser', en: 'to injure oneself' },
+            { fr: 'guérir', en: 'to heal / to recover' },
+            { fr: 'la blessure', en: 'injury / wound', gender: 'f' },
+            { fr: "l'allergie", en: 'allergy', gender: 'f' },
+            { fr: "l'infection", en: 'infection', gender: 'f' }
+          ]
+        },
+        {
+          name: 'Medical Vocabulary',
+          words: [
+            { fr: "l'hôpital", en: 'hospital', gender: 'm' },
+            { fr: 'le médecin', en: 'doctor', gender: 'm' },
+            { fr: "l'infirmier / l'infirmière", en: 'nurse' },
+            { fr: 'le/la pharmacien(ne)', en: 'pharmacist' },
+            { fr: 'la pharmacie', en: 'pharmacy', gender: 'f' },
+            { fr: 'le médicament', en: 'medicine / medication', gender: 'm' },
+            { fr: "l'ordonnance", en: 'prescription', gender: 'f' },
+            { fr: 'le comprimé', en: 'tablet / pill', gender: 'm' },
+            { fr: 'le sirop', en: 'syrup', gender: 'm' },
+            { fr: 'le pansement', en: 'bandage / plaster', gender: 'm' },
+            { fr: 'la piqûre', en: 'injection / sting', gender: 'f' },
+            { fr: 'le vaccin', en: 'vaccine', gender: 'm' },
+            { fr: "l'ambulance", en: 'ambulance', gender: 'f' },
+            { fr: 'les urgences', en: 'emergency room', gender: 'f' },
+            { fr: "l'opération", en: 'operation / surgery', gender: 'f' },
+            { fr: 'le rendez-vous', en: 'appointment', gender: 'm' },
+            { fr: 'le régime', en: 'diet', gender: 'm' },
+            { fr: 'la consultation', en: 'consultation', gender: 'f' }
+          ]
+        }
+      ]
+    },
 
-// ============================================
-// EDUCATION & SCHOOL
-// ============================================
-education: {
-  "levels": {
-    "school":"l'école (f)","preschool":"l'école maternelle","elementary school":"l'école primaire",
-    "middle school":"le collège","high school":"le lycée","university":"l'université (f)",
-    "college":"la faculté / l'école supérieure","graduate school":"les études supérieures"
-  },
-  "people": {
-    "student":"l'étudiant(e) / l'élève","teacher":"le professeur / l'enseignant(e)","professor":"le professeur",
-    "principal":"le directeur / la directrice","dean":"le doyen / la doyenne","classmate":"le/la camarade de classe"
-  },
-  "subjects": {
-    "subject":"la matière","mathematics/math":"les mathématiques / les maths","science":"les sciences",
-    "physics":"la physique","chemistry":"la chimie","biology":"la biologie","history":"l'histoire (f)",
-    "geography":"la géographie","literature":"la littérature","philosophy":"la philosophie",
-    "languages":"les langues","French":"le français","English":"l'anglais","Spanish":"l'espagnol",
-    "art":"l'art / les arts plastiques","music":"la musique","physical education":"l'éducation physique / le sport",
-    "computer science":"l'informatique (f)","economics":"l'économie (f)"
-  },
-  "school_items": {
-    "classroom":"la salle de classe","blackboard":"le tableau","chalk":"la craie","desk":"le bureau / le pupitre",
-    "book":"le livre","textbook":"le manuel","notebook":"le cahier","pen":"le stylo","pencil":"le crayon",
-    "eraser":"la gomme","ruler":"la règle","scissors":"les ciseaux (m)","glue":"la colle",
-    "backpack":"le sac à dos","calculator":"la calculatrice","dictionary":"le dictionnaire"
-  },
-  "academic": {
-    "class":"le cours / la classe","lesson":"la leçon","lecture":"le cours magistral","homework":"les devoirs (m)",
-    "assignment":"le devoir / l'exercice","exam/test":"l'examen (m) / le contrôle","quiz":"l'interrogation (f)",
-    "grade":"la note","to pass":"réussir","to fail":"échouer / rater","diploma":"le diplôme",
-    "degree":"le diplôme","bachelor's":"la licence","master's":"le master","PhD":"le doctorat",
-    "scholarship":"la bourse","semester":"le semestre","term":"le trimestre"
-  }
-},
+    // ============================
+    // 16. SHOPPING & MONEY
+    // ============================
+    {
+      id: 'shopping',
+      name: 'Shopping & Money',
+      icon: '🛒',
+      color: '#f59e0b',
+      subcategories: [
+        {
+          name: 'Shops',
+          words: [
+            { fr: 'le magasin', en: 'shop / store', gender: 'm' },
+            { fr: 'le supermarché', en: 'supermarket', gender: 'm' },
+            { fr: 'le marché', en: 'market', gender: 'm' },
+            { fr: 'le centre commercial', en: 'shopping center / mall', gender: 'm' },
+            { fr: 'la boulangerie', en: 'bakery', gender: 'f' },
+            { fr: 'la pâtisserie', en: 'pastry shop', gender: 'f' },
+            { fr: 'la boucherie', en: 'butcher shop', gender: 'f' },
+            { fr: 'la poissonnerie', en: 'fish shop', gender: 'f' },
+            { fr: 'la pharmacie', en: 'pharmacy', gender: 'f' },
+            { fr: 'la librairie', en: 'bookshop', gender: 'f' },
+            { fr: 'la boutique', en: 'boutique / shop', gender: 'f' },
+            { fr: "l'épicerie", en: 'grocery store', gender: 'f' },
+            { fr: 'le tabac', en: 'tobacco shop / newsstand', gender: 'm' }
+          ]
+        },
+        {
+          name: 'Money & Buying',
+          words: [
+            { fr: "l'argent", en: 'money', gender: 'm' },
+            { fr: "l'euro", en: 'euro', gender: 'm' },
+            { fr: 'le prix', en: 'price', gender: 'm' },
+            { fr: 'le billet', en: 'banknote', gender: 'm' },
+            { fr: 'la pièce', en: 'coin', gender: 'f' },
+            { fr: 'la monnaie', en: 'change / currency', gender: 'f' },
+            { fr: 'la carte bancaire', en: 'bank card / debit card', gender: 'f' },
+            { fr: 'la carte de crédit', en: 'credit card', gender: 'f' },
+            { fr: 'le reçu', en: 'receipt', gender: 'm' },
+            { fr: 'la caisse', en: 'checkout / cash register', gender: 'f' },
+            { fr: 'la réduction', en: 'discount / reduction', gender: 'f' },
+            { fr: 'les soldes', en: 'sales', gender: 'm' },
+            { fr: 'cher / chère', en: 'expensive' },
+            { fr: 'bon marché', en: 'cheap / inexpensive' },
+            { fr: 'gratuit / gratuite', en: 'free (no cost)' },
+            { fr: 'acheter', en: 'to buy' },
+            { fr: 'vendre', en: 'to sell' },
+            { fr: 'payer', en: 'to pay' },
+            { fr: 'dépenser', en: 'to spend (money)' },
+            { fr: 'coûter', en: 'to cost' },
+            { fr: 'Combien ça coûte ?', en: 'How much does it cost?' }
+          ]
+        }
+      ]
+    },
 
-// ============================================
-// HEALTH & MEDICINE
-// ============================================
-health: {
-  "general": {
-    "health":"la santé","healthy":"en bonne santé","sick/ill":"malade","disease":"la maladie",
-    "symptom":"le symptôme","pain":"la douleur","to hurt":"avoir mal / faire mal"
-  },
-  "common_ailments": {
-    "headache":"le mal de tête","stomachache":"le mal de ventre / le mal d'estomac","backache":"le mal de dos",
-    "toothache":"le mal de dents","sore throat":"le mal de gorge","earache":"le mal d'oreille",
-    "cold":"le rhume","flu":"la grippe","fever":"la fièvre","cough":"la toux","sneeze":"l'éternuement (m)",
-    "allergy":"l'allergie (f)","infection":"l'infection (f)","inflammation":"l'inflammation (f)"
-  },
-  "medical_care": {
-    "doctor":"le médecin","hospital":"l'hôpital (m)","clinic":"la clinique","emergency room":"les urgences (f)",
-    "appointment":"le rendez-vous","examination":"l'examen (m)","diagnosis":"le diagnostic",
-    "treatment":"le traitement","surgery":"la chirurgie / l'opération (f)","recovery":"la guérison"
-  },
-  "medicine": {
-    "medicine/medication":"le médicament","pill":"le comprimé / la pilule","tablet":"le cachet",
-    "syrup":"le sirop","injection":"la piqûre / l'injection (f)","vaccine":"le vaccin",
-    "prescription":"l'ordonnance (f)","pharmacy":"la pharmacie","antibiotic":"l'antibiotique (m)",
-    "painkiller":"l'antidouleur (m) / l'analgésique (m)","bandage":"le pansement / le bandage"
-  },
-  "body_conditions": {
-    "tired":"fatigué(e)","exhausted":"épuisé(e)","dizzy":"avoir le vertige","nauseous":"avoir la nausée",
-    "pregnant":"enceinte","allergic":"allergique","diabetic":"diabétique","injured":"blessé(e)"
-  }
-},
+    // ============================
+    // 17. TECHNOLOGY
+    // ============================
+    {
+      id: 'technology',
+      name: 'Technology',
+      icon: '💻',
+      color: '#6366f1',
+      subcategories: [
+        {
+          name: 'Devices & Internet',
+          words: [
+            { fr: "l'ordinateur", en: 'computer', gender: 'm' },
+            { fr: "l'ordinateur portable", en: 'laptop', gender: 'm' },
+            { fr: 'la tablette', en: 'tablet', gender: 'f' },
+            { fr: 'le téléphone', en: 'telephone', gender: 'm' },
+            { fr: 'le téléphone portable', en: 'mobile phone / cell phone', gender: 'm' },
+            { fr: 'le smartphone', en: 'smartphone', gender: 'm' },
+            { fr: "l'écran", en: 'screen', gender: 'm' },
+            { fr: 'le clavier', en: 'keyboard', gender: 'm' },
+            { fr: 'la souris', en: 'mouse (computer)', gender: 'f' },
+            { fr: "l'imprimante", en: 'printer', gender: 'f' },
+            { fr: 'les écouteurs', en: 'headphones / earbuds', gender: 'm' },
+            { fr: "l'appareil photo", en: 'camera', gender: 'm' },
+            { fr: 'Internet', en: 'Internet', gender: 'm' },
+            { fr: 'le site web', en: 'website', gender: 'm' },
+            { fr: 'le Wi-Fi', en: 'Wi-Fi', gender: 'm' },
+            { fr: 'le mot de passe', en: 'password', gender: 'm' },
+            { fr: 'le réseau social', en: 'social network', gender: 'm' },
+            { fr: "l'application", en: 'app / application', gender: 'f' },
+            { fr: 'le courriel / le mail', en: 'email', gender: 'm' },
+            { fr: 'le message', en: 'message', gender: 'm' },
+            { fr: 'le fichier', en: 'file', gender: 'm' },
+            { fr: 'le logiciel', en: 'software', gender: 'm' },
+            { fr: 'télécharger', en: 'to download' },
+            { fr: 'cliquer', en: 'to click' },
+            { fr: 'envoyer', en: 'to send' },
+            { fr: 'recevoir', en: 'to receive' },
+            { fr: 'sauvegarder', en: 'to save' },
+            { fr: 'supprimer', en: 'to delete' },
+            { fr: 'partager', en: 'to share' },
+            { fr: 'chercher', en: 'to search' }
+          ]
+        }
+      ]
+    },
 
-// ============================================
-// TECHNOLOGY & COMMUNICATION
-// ============================================
-technology: {
-  "devices": {
-    "computer":"l'ordinateur (m)","laptop":"l'ordinateur portable","tablet":"la tablette","smartphone":"le smartphone",
-    "phone":"le téléphone","cell phone":"le téléphone portable / le mobile","television":"la télévision",
-    "camera":"l'appareil photo (m)","video camera":"la caméra","headphones":"les écouteurs (m) / le casque",
-    "speaker":"l'enceinte (f) / le haut-parleur","charger":"le chargeur","battery":"la batterie / la pile"
-  },
-  "internet": {
-    "internet":"l'internet (m)","website":"le site web","webpage":"la page web","link":"le lien",
-    "to click":"cliquer","to download":"télécharger","to upload":"mettre en ligne / téléverser",
-    "email":"l'email (m) / le courriel","password":"le mot de passe","username":"le nom d'utilisateur",
-    "account":"le compte","wifi":"le wifi","connection":"la connexion","online":"en ligne","offline":"hors ligne"
-  },
-  "social_media": {
-    "social media":"les réseaux sociaux","to post":"publier / poster","to share":"partager","to like":"aimer",
-    "to follow":"suivre","follower":"l'abonné(e)","profile":"le profil","message":"le message",
-    "comment":"le commentaire","notification":"la notification","hashtag":"le hashtag"
-  },
-  "communication": {
-    "to call":"appeler","to text":"envoyer un texto/SMS","to email":"envoyer un email",
-    "phone call":"l'appel (m)","text message":"le texto / le SMS","voicemail":"la messagerie vocale",
-    "video call":"l'appel vidéo","to answer":"répondre","to hang up":"raccrocher"
-  }
-},
+    // ============================
+    // 18. SPORTS & HOBBIES
+    // ============================
+    {
+      id: 'sports-hobbies',
+      name: 'Sports & Hobbies',
+      icon: '⚽',
+      color: '#10b981',
+      subcategories: [
+        {
+          name: 'Sports',
+          words: [
+            { fr: 'le football', en: 'soccer / football', gender: 'm' },
+            { fr: 'le basket-ball', en: 'basketball', gender: 'm' },
+            { fr: 'le tennis', en: 'tennis', gender: 'm' },
+            { fr: 'le rugby', en: 'rugby', gender: 'm' },
+            { fr: 'le volley-ball', en: 'volleyball', gender: 'm' },
+            { fr: 'la natation', en: 'swimming', gender: 'f' },
+            { fr: "l'athlétisme", en: 'athletics / track and field', gender: 'm' },
+            { fr: 'le cyclisme', en: 'cycling', gender: 'm' },
+            { fr: 'le ski', en: 'skiing', gender: 'm' },
+            { fr: 'la gymnastique', en: 'gymnastics', gender: 'f' },
+            { fr: 'la boxe', en: 'boxing', gender: 'f' },
+            { fr: 'le judo', en: 'judo', gender: 'm' },
+            { fr: "l'escalade", en: 'climbing', gender: 'f' },
+            { fr: "l'équitation", en: 'horse riding', gender: 'f' },
+            { fr: 'la course', en: 'running / race', gender: 'f' },
+            { fr: 'le match', en: 'match / game', gender: 'm' },
+            { fr: "l'équipe", en: 'team', gender: 'f' },
+            { fr: 'le joueur / la joueuse', en: 'player' },
+            { fr: 'gagner', en: 'to win' },
+            { fr: 'perdre', en: 'to lose' },
+            { fr: "s'entraîner", en: 'to train' },
+            { fr: 'le score', en: 'score', gender: 'm' }
+          ]
+        },
+        {
+          name: 'Hobbies & Leisure',
+          words: [
+            { fr: 'la lecture', en: 'reading', gender: 'f' },
+            { fr: 'la musique', en: 'music', gender: 'f' },
+            { fr: 'le cinéma', en: 'cinema / movies', gender: 'm' },
+            { fr: 'la photographie', en: 'photography', gender: 'f' },
+            { fr: 'le dessin', en: 'drawing', gender: 'm' },
+            { fr: 'la peinture', en: 'painting', gender: 'f' },
+            { fr: 'la danse', en: 'dance / dancing', gender: 'f' },
+            { fr: 'la cuisine', en: 'cooking', gender: 'f' },
+            { fr: 'le jardinage', en: 'gardening', gender: 'm' },
+            { fr: 'le voyage', en: 'travelling', gender: 'm' },
+            { fr: 'le jeu vidéo', en: 'video game', gender: 'm' },
+            { fr: 'le jeu de société', en: 'board game', gender: 'm' },
+            { fr: 'la randonnée', en: 'hiking', gender: 'f' },
+            { fr: 'la pêche', en: 'fishing', gender: 'f' },
+            { fr: 'le bricolage', en: 'DIY / crafts', gender: 'm' },
+            { fr: 'jouer', en: 'to play' },
+            { fr: 'chanter', en: 'to sing' },
+            { fr: 'danser', en: 'to dance' },
+            { fr: 'dessiner', en: 'to draw' },
+            { fr: 'peindre', en: 'to paint' },
+            { fr: 'collectionner', en: 'to collect' }
+          ]
+        }
+      ]
+    },
 
-// ============================================
-// SPORTS & HOBBIES
-// ============================================
-sports: {
-  "sports": {
-    "sport":"le sport","to play":"jouer","to practice":"pratiquer","game":"le match / le jeu",
-    "team":"l'équipe (f)","player":"le joueur / la joueuse","coach":"l'entraîneur / l'entraîneuse",
-    "referee":"l'arbitre (m/f)","champion":"le champion / la championne","to win":"gagner","to lose":"perdre",
-    "score":"le score","goal":"le but","point":"le point","stadium":"le stade","gym":"la salle de sport"
-  },
-  "ball_sports": {
-    "football/soccer":"le football / le foot","basketball":"le basket(-ball)","tennis":"le tennis",
-    "volleyball":"le volley(-ball)","rugby":"le rugby","baseball":"le baseball","golf":"le golf",
-    "hockey":"le hockey","cricket":"le cricket","badminton":"le badminton","table tennis":"le ping-pong"
-  },
-  "individual_sports": {
-    "swimming":"la natation","running":"la course à pied","cycling":"le cyclisme","skiing":"le ski",
-    "snowboarding":"le snowboard","skating":"le patinage","surfing":"le surf","boxing":"la boxe",
-    "martial arts":"les arts martiaux","gymnastics":"la gymnastique","athletics":"l'athlétisme (m)",
-    "yoga":"le yoga","climbing":"l'escalade (f)","hiking":"la randonnée"
-  },
-  "hobbies": {
-    "hobby":"le passe-temps / le hobby","reading":"la lecture","writing":"l'écriture (f)","drawing":"le dessin",
-    "painting":"la peinture","photography":"la photographie","music":"la musique","singing":"le chant",
-    "dancing":"la danse","cooking":"la cuisine","gardening":"le jardinage","fishing":"la pêche",
-    "traveling":"les voyages (m)","gaming":"les jeux vidéo","chess":"les échecs (m)","cards":"les cartes (f)"
-  }
-},
+    // ============================
+    // 19. EMOTIONS & PERSONALITY
+    // ============================
+    {
+      id: 'emotions',
+      name: 'Emotions & Personality',
+      icon: '😊',
+      color: '#f472b6',
+      subcategories: [
+        {
+          name: 'Emotions & Feelings',
+          words: [
+            { fr: 'heureux / heureuse', en: 'happy' },
+            { fr: 'triste', en: 'sad' },
+            { fr: 'en colère', en: 'angry' },
+            { fr: 'content / contente', en: 'pleased / glad' },
+            { fr: 'fatigué / fatiguée', en: 'tired' },
+            { fr: 'surpris / surprise', en: 'surprised' },
+            { fr: 'inquiet / inquiète', en: 'worried' },
+            { fr: 'nerveux / nerveuse', en: 'nervous' },
+            { fr: 'jaloux / jalouse', en: 'jealous' },
+            { fr: 'fier / fière', en: 'proud' },
+            { fr: 'déçu / déçue', en: 'disappointed' },
+            { fr: 'stressé / stressée', en: 'stressed' },
+            { fr: 'ennuyé / ennuyée', en: 'bored / annoyed' },
+            { fr: 'amoureux / amoureuse', en: 'in love' },
+            { fr: 'effrayé / effrayée', en: 'frightened / scared' },
+            { fr: 'confus / confuse', en: 'confused' },
+            { fr: "l'amour", en: 'love', gender: 'm' },
+            { fr: 'la joie', en: 'joy', gender: 'f' },
+            { fr: 'la peur', en: 'fear', gender: 'f' },
+            { fr: 'la colère', en: 'anger', gender: 'f' },
+            { fr: 'la tristesse', en: 'sadness', gender: 'f' },
+            { fr: 'le bonheur', en: 'happiness', gender: 'm' }
+          ]
+        },
+        {
+          name: 'Personality Traits',
+          words: [
+            { fr: 'gentil / gentille', en: 'kind / nice' },
+            { fr: 'méchant / méchante', en: 'mean / nasty' },
+            { fr: 'intelligent / intelligente', en: 'intelligent' },
+            { fr: 'drôle', en: 'funny' },
+            { fr: 'sérieux / sérieuse', en: 'serious' },
+            { fr: 'timide', en: 'shy' },
+            { fr: 'bavard / bavarde', en: 'talkative' },
+            { fr: 'courageux / courageuse', en: 'brave / courageous' },
+            { fr: 'paresseux / paresseuse', en: 'lazy' },
+            { fr: 'travailleur / travailleuse', en: 'hardworking' },
+            { fr: 'généreux / généreuse', en: 'generous' },
+            { fr: 'égoïste', en: 'selfish' },
+            { fr: 'patient / patiente', en: 'patient' },
+            { fr: 'impatient / impatiente', en: 'impatient' },
+            { fr: 'curieux / curieuse', en: 'curious' },
+            { fr: 'honnête', en: 'honest' },
+            { fr: 'poli / polie', en: 'polite' },
+            { fr: 'impoli / impolie', en: 'rude / impolite' },
+            { fr: 'sympathique / sympa', en: 'likable / nice' },
+            { fr: 'créatif / créative', en: 'creative' },
+            { fr: 'calme', en: 'calm' },
+            { fr: 'optimiste', en: 'optimistic' },
+            { fr: 'pessimiste', en: 'pessimistic' }
+          ]
+        }
+      ]
+    },
 
-// ============================================
-// NATURE & ENVIRONMENT
-// ============================================
-nature: {
-  "landscape": {
-    "nature":"la nature","landscape":"le paysage","mountain":"la montagne","hill":"la colline","valley":"la vallée",
-    "plain":"la plaine","desert":"le désert","forest":"la forêt","jungle":"la jungle","island":"l'île (f)",
-    "coast":"la côte","beach":"la plage","cliff":"la falaise","cave":"la grotte"
-  },
-  "water": {
-    "water":"l'eau (f)","sea":"la mer","ocean":"l'océan (m)","lake":"le lac","river":"le fleuve / la rivière",
-    "stream":"le ruisseau","waterfall":"la cascade / la chute d'eau","pond":"l'étang (m)","wave":"la vague",
-    "tide":"la marée","current":"le courant"
-  },
-  "weather": {
-    "weather":"le temps / la météo","climate":"le climat","temperature":"la température",
-    "sun":"le soleil","sunny":"ensoleillé(e)","cloud":"le nuage","cloudy":"nuageux / couvert",
-    "rain":"la pluie","rainy":"pluvieux","to rain":"pleuvoir","snow":"la neige","to snow":"neiger",
-    "wind":"le vent","windy":"venteux","storm":"la tempête / l'orage (m)","thunder":"le tonnerre",
-    "lightning":"l'éclair (m)","fog":"le brouillard","foggy":"brumeux","ice":"la glace","frost":"le gel",
-    "hot":"chaud","cold":"froid","warm":"tiède / doux","cool":"frais","humid":"humide","dry":"sec"
-  },
-  "plants": {
-    "plant":"la plante","tree":"l'arbre (m)","flower":"la fleur","grass":"l'herbe (f)","leaf":"la feuille",
-    "branch":"la branche","root":"la racine","seed":"la graine","bush":"le buisson","rose":"la rose",
-    "tulip":"la tulipe","sunflower":"le tournesol","oak":"le chêne","pine":"le pin"
-  },
-  "environment": {
-    "environment":"l'environnement (m)","pollution":"la pollution","climate change":"le changement climatique",
-    "global warming":"le réchauffement climatique","recycling":"le recyclage","to recycle":"recycler",
-    "renewable energy":"l'énergie renouvelable","sustainable":"durable","endangered":"en voie de disparition"
-  }
-},
+    // ============================
+    // 20. CITY & DIRECTIONS
+    // ============================
+    {
+      id: 'city-directions',
+      name: 'City & Directions',
+      icon: '🏙️',
+      color: '#78716c',
+      subcategories: [
+        {
+          name: 'Places in Town',
+          words: [
+            { fr: 'la ville', en: 'city / town', gender: 'f' },
+            { fr: 'le village', en: 'village', gender: 'm' },
+            { fr: 'la rue', en: 'street', gender: 'f' },
+            { fr: "l'avenue", en: 'avenue', gender: 'f' },
+            { fr: 'le boulevard', en: 'boulevard', gender: 'm' },
+            { fr: 'la place', en: 'square / plaza', gender: 'f' },
+            { fr: 'le pont', en: 'bridge', gender: 'm' },
+            { fr: 'le parc', en: 'park', gender: 'm' },
+            { fr: "l'église", en: 'church', gender: 'f' },
+            { fr: 'la cathédrale', en: 'cathedral', gender: 'f' },
+            { fr: 'le musée', en: 'museum', gender: 'm' },
+            { fr: 'le théâtre', en: 'theater', gender: 'm' },
+            { fr: 'le cinéma', en: 'cinema', gender: 'm' },
+            { fr: 'le restaurant', en: 'restaurant', gender: 'm' },
+            { fr: 'le café', en: 'café', gender: 'm' },
+            { fr: "l'hôtel", en: 'hotel', gender: 'm' },
+            { fr: "l'hôpital", en: 'hospital', gender: 'm' },
+            { fr: 'la banque', en: 'bank', gender: 'f' },
+            { fr: 'la poste', en: 'post office', gender: 'f' },
+            { fr: 'la mairie', en: 'town hall / city hall', gender: 'f' },
+            { fr: 'la gare', en: 'train station', gender: 'f' },
+            { fr: 'le commissariat', en: 'police station', gender: 'm' },
+            { fr: 'la bibliothèque', en: 'library', gender: 'f' },
+            { fr: 'le stade', en: 'stadium', gender: 'm' },
+            { fr: 'la piscine', en: 'swimming pool', gender: 'f' },
+            { fr: 'le quartier', en: 'neighborhood / district', gender: 'm' },
+            { fr: 'le trottoir', en: 'sidewalk / pavement', gender: 'm' },
+            { fr: 'le carrefour', en: 'crossroads / intersection', gender: 'm' },
+            { fr: 'le feu (rouge)', en: 'traffic light', gender: 'm' }
+          ]
+        },
+        {
+          name: 'Directions',
+          words: [
+            { fr: 'à gauche', en: 'to the left' },
+            { fr: 'à droite', en: 'to the right' },
+            { fr: 'tout droit', en: 'straight ahead' },
+            { fr: 'en face de', en: 'opposite / facing' },
+            { fr: 'à côté de', en: 'next to / beside' },
+            { fr: 'près de', en: 'near / close to' },
+            { fr: 'loin de', en: 'far from' },
+            { fr: 'entre', en: 'between' },
+            { fr: 'devant', en: 'in front of' },
+            { fr: 'derrière', en: 'behind' },
+            { fr: 'au-dessus de', en: 'above' },
+            { fr: 'au-dessous de', en: 'below / under' },
+            { fr: 'dans', en: 'in / inside' },
+            { fr: 'dehors', en: 'outside' },
+            { fr: 'le nord', en: 'north', gender: 'm' },
+            { fr: 'le sud', en: 'south', gender: 'm' },
+            { fr: "l'est", en: 'east', gender: 'm' },
+            { fr: "l'ouest", en: 'west', gender: 'm' },
+            { fr: 'ici', en: 'here' },
+            { fr: 'là / là-bas', en: 'there / over there' },
+            { fr: 'partout', en: 'everywhere' },
+            { fr: 'nulle part', en: 'nowhere' },
+            { fr: 'tourner', en: 'to turn' },
+            { fr: 'continuer', en: 'to continue' },
+            { fr: 'traverser', en: 'to cross' }
+          ]
+        }
+      ]
+    },
 
-// ============================================
-// SHOPPING & MONEY
-// ============================================
-shopping: {
-  "places": {
-    "shop/store":"le magasin","supermarket":"le supermarché","mall":"le centre commercial",
-    "market":"le marché","bakery":"la boulangerie","butcher":"la boucherie","pharmacy":"la pharmacie",
-    "bookstore":"la librairie","clothing store":"le magasin de vêtements","department store":"le grand magasin"
-  },
-  "actions": {
-    "to buy":"acheter","to sell":"vendre","to pay":"payer","to cost":"coûter","to spend":"dépenser",
-    "to shop":"faire les courses / faire du shopping","to try on":"essayer","to return":"retourner / rendre",
-    "to exchange":"échanger","to order":"commander"
-  },
-  "money": {
-    "money":"l'argent (m)","cash":"l'argent liquide / les espèces","coin":"la pièce","bill/note":"le billet",
-    "credit card":"la carte de crédit","debit card":"la carte de débit","wallet":"le portefeuille",
-    "bank":"la banque","ATM":"le distributeur (automatique)","account":"le compte","to withdraw":"retirer",
-    "to deposit":"déposer","loan":"le prêt","debt":"la dette"
-  },
-  "prices": {
-    "price":"le prix","expensive":"cher/chère","cheap":"bon marché / pas cher","free":"gratuit(e)",
-    "discount":"la réduction / la remise","sale":"les soldes (f)","receipt":"le reçu / le ticket",
-    "change":"la monnaie","tip":"le pourboire","tax":"la taxe"
-  }
-},
+    // ============================
+    // 21. COUNTRIES & NATIONALITIES
+    // ============================
+    {
+      id: 'countries',
+      name: 'Countries & Nationalities',
+      icon: '🌍',
+      color: '#0d9488',
+      subcategories: [
+        {
+          name: 'European Countries',
+          words: [
+            { fr: 'la France — français(e)', en: 'France — French' },
+            { fr: "l'Angleterre — anglais(e)", en: 'England — English' },
+            { fr: "l'Allemagne — allemand(e)", en: 'Germany — German' },
+            { fr: "l'Espagne — espagnol(e)", en: 'Spain — Spanish' },
+            { fr: "l'Italie — italien(ne)", en: 'Italy — Italian' },
+            { fr: 'le Portugal — portugais(e)', en: 'Portugal — Portuguese' },
+            { fr: 'la Belgique — belge', en: 'Belgium — Belgian' },
+            { fr: 'la Suisse — suisse', en: 'Switzerland — Swiss' },
+            { fr: 'les Pays-Bas — néerlandais(e)', en: 'Netherlands — Dutch' },
+            { fr: 'la Russie — russe', en: 'Russia — Russian' },
+            { fr: 'la Grèce — grec / grecque', en: 'Greece — Greek' },
+            { fr: 'la Pologne — polonais(e)', en: 'Poland — Polish' },
+            { fr: 'la Suède — suédois(e)', en: 'Sweden — Swedish' },
+            { fr: "l'Irlande — irlandais(e)", en: 'Ireland — Irish' }
+          ]
+        },
+        {
+          name: 'World Countries',
+          words: [
+            { fr: 'les États-Unis — américain(e)', en: 'United States — American' },
+            { fr: 'le Canada — canadien(ne)', en: 'Canada — Canadian' },
+            { fr: 'le Mexique — mexicain(e)', en: 'Mexico — Mexican' },
+            { fr: 'le Brésil — brésilien(ne)', en: 'Brazil — Brazilian' },
+            { fr: "l'Argentine — argentin(e)", en: 'Argentina — Argentinian' },
+            { fr: 'la Chine — chinois(e)', en: 'China — Chinese' },
+            { fr: 'le Japon — japonais(e)', en: 'Japan — Japanese' },
+            { fr: "l'Inde — indien(ne)", en: 'India — Indian' },
+            { fr: "l'Australie — australien(ne)", en: 'Australia — Australian' },
+            { fr: "l'Égypte — égyptien(ne)", en: 'Egypt — Egyptian' },
+            { fr: 'le Maroc — marocain(e)', en: 'Morocco — Moroccan' },
+            { fr: 'le Sénégal — sénégalais(e)', en: 'Senegal — Senegalese' },
+            { fr: "l'Algérie — algérien(ne)", en: 'Algeria — Algerian' },
+            { fr: 'la Tunisie — tunisien(ne)', en: 'Tunisia — Tunisian' },
+            { fr: 'la Corée — coréen(ne)', en: 'Korea — Korean' },
+            { fr: 'la Turquie — turc / turque', en: 'Turkey — Turkish' }
+          ]
+        }
+      ]
+    },
 
-// ============================================
-// EXPRESSIONS & IDIOMS
-// ============================================
-expressions: {
-  "common_expressions": {
-    "of course":"bien sûr","maybe/perhaps":"peut-être","it depends":"ça dépend","no problem":"pas de problème",
-    "it doesn't matter":"ce n'est pas grave / ça ne fait rien","I don't mind":"ça m'est égal",
-    "I don't care":"je m'en fiche","in my opinion":"à mon avis","by the way":"au fait",
-    "actually":"en fait","anyway":"de toute façon","on the other hand":"par contre / en revanche",
-    "for example":"par exemple","in general":"en général","at least":"au moins","at most":"au maximum"
-  },
-  "agreement_disagreement": {
-    "I agree":"je suis d'accord","I disagree":"je ne suis pas d'accord","you're right":"tu as raison / vous avez raison",
-    "you're wrong":"tu as tort / vous avez tort","exactly":"exactement","absolutely":"absolument",
-    "not at all":"pas du tout","I think so":"je pense que oui","I don't think so":"je ne pense pas"
-  },
-  "feelings_reactions": {
-    "I'm happy":"je suis content(e) / heureux(euse)","I'm sad":"je suis triste","I'm tired":"je suis fatigué(e)",
-    "I'm bored":"je m'ennuie","I'm excited":"je suis excité(e)","I'm worried":"je suis inquiet/inquiète",
-    "what a pity":"quel dommage","that's great":"c'est super / c'est génial","that's terrible":"c'est terrible",
-    "how nice":"comme c'est gentil","how strange":"comme c'est bizarre"
-  },
-  "useful_idioms": {
-    "to cost an arm and a leg":"coûter les yeux de la tête","to be in a good mood":"être de bonne humeur",
-    "to be in a bad mood":"être de mauvaise humeur","to feel under the weather":"ne pas être dans son assiette",
-    "to have a lot on one's plate":"avoir du pain sur la planche","once in a blue moon":"tous les 36 du mois",
-    "to kill two birds with one stone":"faire d'une pierre deux coups","better late than never":"mieux vaut tard que jamais",
-    "to rain cats and dogs":"pleuvoir des cordes","to break the ice":"briser la glace"
-  }
-},
+    // ============================
+    // 22. QUESTION WORDS
+    // ============================
+    {
+      id: 'question-words',
+      name: 'Question Words',
+      icon: '❓',
+      color: '#f97316',
+      subcategories: [
+        {
+          name: 'Interrogative Words',
+          words: [
+            { fr: 'qui', en: 'who' },
+            { fr: 'que / quoi', en: 'what' },
+            { fr: "qu'est-ce que", en: 'what (+ clause)' },
+            { fr: 'où', en: 'where' },
+            { fr: 'quand', en: 'when' },
+            { fr: 'comment', en: 'how' },
+            { fr: 'pourquoi', en: 'why' },
+            { fr: 'combien', en: 'how much / how many' },
+            { fr: 'quel / quelle', en: 'which / what' },
+            { fr: 'quels / quelles', en: 'which / what (plural)' },
+            { fr: 'lequel / laquelle', en: 'which one' },
+            { fr: 'est-ce que', en: '(question marker — turns statement into question)' },
+            { fr: "n'est-ce pas", en: "isn't it / right?" },
+            { fr: 'Combien ça coûte ?', en: 'How much does it cost?' },
+            { fr: "Qu'est-ce que c'est ?", en: 'What is it?' },
+            { fr: 'Comment ça va ?', en: 'How are you?' },
+            { fr: 'Où est... ?', en: 'Where is...?' },
+            { fr: "Quelle heure est-il ?", en: 'What time is it?' }
+          ]
+        }
+      ]
+    },
 
-// ============================================
-// FALSE FRIENDS (English-French)
-// ============================================
-false_friends: {
-  "common_mistakes": {
-    "actually (en fait, NOT actuellement)":"actuellement = currently","attend (assister à, NOT attendre)":"attendre = to wait",
-    "library (bibliothèque, NOT librairie)":"librairie = bookstore","coin (pièce, NOT coin)":"coin = corner",
-    "lecture (conférence, NOT lecture)":"lecture = reading","preservative (conservateur, NOT préservatif)":"préservatif = condom",
-    "sensible (raisonnable, NOT sensible)":"sensible = sensitive","sympathetic (compatissant, NOT sympathique)":"sympathique = nice/friendly",
-    "eventually (finalement, NOT éventuellement)":"éventuellement = possibly","résumé (CV, NOT résumé)":"résumé = summary",
-    "introduce (présenter, NOT introduire)":"introduire = to insert","demand (exiger, NOT demander)":"demander = to ask"
-  }
-}
+    // ============================
+    // 23. COMMON ADJECTIVES
+    // ============================
+    {
+      id: 'adjectives',
+      name: 'Common Adjectives',
+      icon: '📝',
+      color: '#8b5cf6',
+      subcategories: [
+        {
+          name: 'Size & Quantity',
+          words: [
+            { fr: 'grand / grande', en: 'big / tall' },
+            { fr: 'petit / petite', en: 'small / short' },
+            { fr: 'gros / grosse', en: 'fat / big' },
+            { fr: 'mince', en: 'thin / slim' },
+            { fr: 'long / longue', en: 'long' },
+            { fr: 'court / courte', en: 'short (length)' },
+            { fr: 'large', en: 'wide / broad' },
+            { fr: 'étroit / étroite', en: 'narrow' },
+            { fr: 'énorme', en: 'huge / enormous' },
+            { fr: 'minuscule', en: 'tiny' },
+            { fr: 'plein / pleine', en: 'full' },
+            { fr: 'vide', en: 'empty' },
+            { fr: 'lourd / lourde', en: 'heavy' },
+            { fr: 'léger / légère', en: 'light (weight)' }
+          ]
+        },
+        {
+          name: 'Quality & Appearance',
+          words: [
+            { fr: 'bon / bonne', en: 'good' },
+            { fr: 'mauvais / mauvaise', en: 'bad' },
+            { fr: 'beau / belle', en: 'beautiful / handsome' },
+            { fr: 'laid / laide', en: 'ugly' },
+            { fr: 'joli / jolie', en: 'pretty' },
+            { fr: 'nouveau / nouvelle', en: 'new' },
+            { fr: 'vieux / vieille', en: 'old' },
+            { fr: 'jeune', en: 'young' },
+            { fr: 'propre', en: 'clean / own' },
+            { fr: 'sale', en: 'dirty' },
+            { fr: 'chaud / chaude', en: 'hot / warm' },
+            { fr: 'froid / froide', en: 'cold' },
+            { fr: 'sec / sèche', en: 'dry' },
+            { fr: 'mouillé / mouillée', en: 'wet' },
+            { fr: 'dur / dure', en: 'hard' },
+            { fr: 'mou / molle', en: 'soft' },
+            { fr: 'rapide', en: 'fast' },
+            { fr: 'lent / lente', en: 'slow' },
+            { fr: 'fort / forte', en: 'strong' },
+            { fr: 'faible', en: 'weak' }
+          ]
+        },
+        {
+          name: 'Other Common Adjectives',
+          words: [
+            { fr: 'facile', en: 'easy' },
+            { fr: 'difficile', en: 'difficult' },
+            { fr: 'possible', en: 'possible' },
+            { fr: 'impossible', en: 'impossible' },
+            { fr: 'important / importante', en: 'important' },
+            { fr: 'intéressant / intéressante', en: 'interesting' },
+            { fr: 'ennuyeux / ennuyeuse', en: 'boring' },
+            { fr: 'dangereux / dangereuse', en: 'dangerous' },
+            { fr: 'sûr / sûre', en: 'safe / sure' },
+            { fr: 'seul / seule', en: 'alone / only' },
+            { fr: 'même', en: 'same / even' },
+            { fr: 'autre', en: 'other' },
+            { fr: 'chaque', en: 'each / every' },
+            { fr: 'tout / toute', en: 'all / every' },
+            { fr: 'premier / première', en: 'first' },
+            { fr: 'dernier / dernière', en: 'last' },
+            { fr: 'prochain / prochaine', en: 'next' },
+            { fr: 'ouvert / ouverte', en: 'open' },
+            { fr: 'fermé / fermée', en: 'closed' },
+            { fr: 'vrai / vraie', en: 'true / real' },
+            { fr: 'faux / fausse', en: 'false / wrong' },
+            { fr: 'libre', en: 'free (available)' },
+            { fr: 'occupé / occupée', en: 'busy / occupied' },
+            { fr: 'prêt / prête', en: 'ready' }
+          ]
+        }
+      ]
+    },
 
+    // ============================
+    // 24. COMMON ADVERBS
+    // ============================
+    {
+      id: 'adverbs',
+      name: 'Common Adverbs',
+      icon: '🔤',
+      color: '#059669',
+      subcategories: [
+        {
+          name: 'Frequency',
+          words: [
+            { fr: 'toujours', en: 'always' },
+            { fr: 'souvent', en: 'often' },
+            { fr: 'quelquefois / parfois', en: 'sometimes' },
+            { fr: 'rarement', en: 'rarely' },
+            { fr: 'jamais', en: 'never' },
+            { fr: 'généralement', en: 'generally' },
+            { fr: 'habituellement', en: 'usually' },
+            { fr: 'de temps en temps', en: 'from time to time' },
+            { fr: 'tous les jours', en: 'every day' },
+            { fr: 'une fois', en: 'once' },
+            { fr: 'deux fois', en: 'twice' }
+          ]
+        },
+        {
+          name: 'Manner',
+          words: [
+            { fr: 'bien', en: 'well' },
+            { fr: 'mal', en: 'badly' },
+            { fr: 'vite', en: 'quickly / fast' },
+            { fr: 'lentement', en: 'slowly' },
+            { fr: 'doucement', en: 'softly / gently' },
+            { fr: 'facilement', en: 'easily' },
+            { fr: 'difficilement', en: 'with difficulty' },
+            { fr: 'ensemble', en: 'together' },
+            { fr: 'surtout', en: 'especially / above all' },
+            { fr: 'seulement', en: 'only' },
+            { fr: 'exactement', en: 'exactly' },
+            { fr: 'vraiment', en: 'really / truly' },
+            { fr: 'absolument', en: 'absolutely' },
+            { fr: 'complètement', en: 'completely' },
+            { fr: 'environ', en: 'approximately / about' },
+            { fr: 'presque', en: 'almost' }
+          ]
+        },
+        {
+          name: 'Time & Place',
+          words: [
+            { fr: 'maintenant', en: 'now' },
+            { fr: "aujourd'hui", en: 'today' },
+            { fr: 'hier', en: 'yesterday' },
+            { fr: 'demain', en: 'tomorrow' },
+            { fr: 'tôt', en: 'early' },
+            { fr: 'tard', en: 'late' },
+            { fr: 'bientôt', en: 'soon' },
+            { fr: 'déjà', en: 'already' },
+            { fr: 'encore', en: 'still / again' },
+            { fr: "d'abord", en: 'first / at first' },
+            { fr: 'ensuite / puis', en: 'then / next' },
+            { fr: 'enfin / finalement', en: 'finally' },
+            { fr: 'ici', en: 'here' },
+            { fr: 'là', en: 'there' },
+            { fr: 'là-bas', en: 'over there' },
+            { fr: 'partout', en: 'everywhere' },
+            { fr: 'nulle part', en: 'nowhere' },
+            { fr: 'quelque part', en: 'somewhere' },
+            { fr: 'ailleurs', en: 'elsewhere' },
+            { fr: 'dedans', en: 'inside' },
+            { fr: 'dehors', en: 'outside' }
+          ]
+        },
+        {
+          name: 'Quantity & Degree',
+          words: [
+            { fr: 'très', en: 'very' },
+            { fr: 'trop', en: 'too / too much' },
+            { fr: 'assez', en: 'enough / quite' },
+            { fr: 'beaucoup', en: 'a lot / much' },
+            { fr: 'un peu', en: 'a little' },
+            { fr: 'peu', en: 'few / little' },
+            { fr: 'plus', en: 'more' },
+            { fr: 'moins', en: 'less' },
+            { fr: 'aussi', en: 'also / as' },
+            { fr: 'autant', en: 'as much / as many' },
+            { fr: 'si / tellement', en: 'so (much)' },
+            { fr: 'combien', en: 'how much / how many' }
+          ]
+        }
+      ]
+    }
+  ]
 };
