@@ -501,7 +501,12 @@ h+='<div class="cat-card mb-8" onclick="openVCat(\''+c.id+'\')"><div class="cat-
 b.innerHTML=h||'<p class="subtitle">No matches.</p>';}
 
 function openVCat(id){const c=VOCAB.categories.find(x=>x.id===id);if(!c)return;
+const cnt=c.subcategories.reduce((a,s)=>a+s.words.length,0);
+const studied=c.subcategories.reduce((a,s)=>a+s.words.filter(w=>srs.items['vocab_'+c.id+'_'+w.fr.replace(/\s/g,'_')]).length,0);
+const mastered=c.subcategories.reduce((a,s)=>a+s.words.filter(w=>{const it=srs.items['vocab_'+c.id+'_'+w.fr.replace(/\s/g,'_')];return it&&it.str>=4;}).length,0);
 let h='<div class="overlay-header"><h2>'+c.icon+' '+c.name+'</h2><button class="overlay-close" onclick="closeOverlay()">&times;</button></div>';
+h+='<div style="display:flex;gap:8px;margin-bottom:12px"><div class="stat-card" style="flex:1;padding:10px"><div class="val" style="font-size:20px">'+cnt+'</div><div class="label">words</div></div><div class="stat-card" style="flex:1;padding:10px"><div class="val" style="font-size:20px">'+studied+'</div><div class="label">studied</div></div><div class="stat-card" style="flex:1;padding:10px"><div class="val" style="font-size:20px">'+mastered+'</div><div class="label">mastered</div></div></div>';
+h+='<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px"><button class="btn btn-primary btn-sm" onclick="closeOverlay();practiceCategory(\''+c.id+'\',\'mcq\')">Quiz</button><button class="btn btn-ghost btn-sm" onclick="closeOverlay();practiceCategory(\''+c.id+'\',\'fc\')">Flashcards</button><button class="btn btn-ghost btn-sm" onclick="closeOverlay();practiceCategory(\''+c.id+'\',\'type\')">Type</button><button class="btn btn-ghost btn-sm" onclick="closeOverlay();practiceCategory(\''+c.id+'\',\'match\')">Match</button><button class="btn btn-ghost btn-sm" onclick="closeOverlay();practiceCategory(\''+c.id+'\',\'listen\')">Listen</button></div>';
 c.subcategories.forEach(sc=>{h+='<h3 class="mt-12 mb-8">'+sc.name+'</h3>';
 sc.words.forEach(w=>{const k='vocab_'+c.id+'_'+w.fr.replace(/\s/g,'_');const s=srs.items[k];const cl=s&&s.str>=4?'var(--success)':s?'var(--primary)':'var(--text3)';
 h+='<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)"><div><span style="font-weight:600">'+w.fr+'</span> <button class="audio-btn" onclick="event.stopPropagation();speak(\''+esc(w.fr)+'\')">&#128266;</button><br><span style="font-size:12px;color:var(--text2)">'+w.en+'</span></div><div style="width:8px;height:8px;border-radius:50%;background:'+cl+'"></div></div>';});});
@@ -630,12 +635,17 @@ let PS=null,studyStart=null;
 function resetPractice(){document.getElementById('practice-hub').classList.remove('hidden');document.getElementById('practice-config').classList.add('hidden');document.getElementById('practice-active').classList.add('hidden');
 if(PS&&PS._timer)clearInterval(PS._timer);if(studyStart){srs.stats.studyTime+=Math.round((Date.now()-studyStart)/1000);save();studyStart=null;}}
 function startTimer(){studyStart=Date.now();}
-function getAllItems(types){let r=[];
-if(types.includes('vocab'))VOCAB.categories.forEach(c=>c.subcategories.forEach(s=>s.words.forEach(w=>r.push({fr:w.fr,en:w.en,type:'vocab',key:'vocab_'+c.id+'_'+w.fr.replace(/\s/g,'_')}))));
+function getAllItems(types,vocabCats){let r=[];
+if(types.includes('vocab')){const cats=vocabCats&&vocabCats.length?VOCAB.categories.filter(c=>vocabCats.includes(c.id)):VOCAB.categories;cats.forEach(c=>c.subcategories.forEach(s=>s.words.forEach(w=>r.push({fr:w.fr,en:w.en,type:'vocab',cat:c.id,catName:c.name,key:'vocab_'+c.id+'_'+w.fr.replace(/\s/g,'_')}))));}
 if(types.includes('phrases'))PHRASES.categories.forEach(c=>c.phrases.forEach(p=>r.push({fr:p.fr,en:p.en,type:'phrase',key:'phrase_'+c.id+'_'+p.fr.replace(/\s/g,'_').substring(0,30)})));
 if(types.includes('connectives'))CONNECTIVES.categories.forEach(c=>c.words.forEach(w=>r.push({fr:w.fr,en:w.en,type:'conn',key:'conn_'+c.id+'_'+w.fr.replace(/\s/g,'_')})));
 if(types.includes('verbs'))VERB_DATA.verbs.forEach(v=>r.push({fr:v.infinitive,en:v.english,type:'verb',key:'verb_'+v.infinitive.replace(/\s/g,'_')}));
 return r;}
+function getSelectedVocabCats(id){return [...document.querySelectorAll('#'+id+' .pill.active')].map(p=>p.dataset.v).filter(v=>v!=='_all');}
+function vocabCatPicker(id){return '<h3 class="mb-8" id="'+id+'-label" style="display:none">Vocab Categories <span style="font-size:11px;color:var(--text3);font-weight:400">(optional — leave blank for all)</span></h3><div class="pills mb-12" id="'+id+'" style="display:none;max-height:140px;overflow-y:auto">'+VOCAB.categories.map(c=>'<div class="pill" onclick="this.classList.toggle(\'active\')" data-v="'+c.id+'">'+c.icon+' '+c.name+'</div>').join('')+'</div>';}
+function toggleVocabCats(contentPillsId,catPickerId){const vocabActive=[...document.querySelectorAll('#'+contentPillsId+' .pill.active')].some(p=>p.dataset.v==='vocab');
+const el=document.getElementById(catPickerId);const lb=document.getElementById(catPickerId+'-label');
+if(el){el.style.display=vocabActive?'flex':'none';}if(lb){lb.style.display=vocabActive?'block':'none';}}
 
 function openPracticeMode(mode){document.getElementById('practice-hub').classList.add('hidden');document.getElementById('practice-config').classList.remove('hidden');
 if(mode==='flashcards')cfgFlash();else if(mode==='mcq')cfgMCQ();else if(mode==='type')cfgType();else if(mode==='conjugation')cfgConj();
@@ -644,13 +654,14 @@ else if(mode==='sentence')cfgSentence();else if(mode==='grammarquiz')cfgGrammarQ
 
 // ── FLASHCARDS ──
 function cfgFlash(){document.getElementById('practice-config').innerHTML=
-'<h2 class="mb-12">Flashcards</h2><h3 class="mb-8">Content</h3><div class="pills mb-12" id="fc-t"><div class="pill active" onclick="this.classList.toggle(\'active\')" data-v="vocab">Vocabulary</div><div class="pill" onclick="this.classList.toggle(\'active\')" data-v="verbs">Verbs</div><div class="pill" onclick="this.classList.toggle(\'active\')" data-v="phrases">Phrases</div><div class="pill" onclick="this.classList.toggle(\'active\')" data-v="connectives">Connectives</div></div><h3 class="mb-8">Count</h3><div class="pills mb-12" id="fc-n"><div class="pill active" data-v="20" onclick="selPill(this,\'fc-n\')">20</div><div class="pill" data-v="40" onclick="selPill(this,\'fc-n\')">40</div><div class="pill" data-v="80" onclick="selPill(this,\'fc-n\')">80</div></div><button class="btn btn-primary btn-full mt-16" onclick="goFlash()">Start</button><button class="btn btn-ghost btn-full mt-8" onclick="resetPractice()">Back</button>';}
+'<h2 class="mb-12">Flashcards</h2><h3 class="mb-8">Content</h3><div class="pills mb-12" id="fc-t"><div class="pill active" onclick="this.classList.toggle(\'active\');toggleVocabCats(\'fc-t\',\'fc-vc\')" data-v="vocab">Vocabulary</div><div class="pill" onclick="this.classList.toggle(\'active\')" data-v="verbs">Verbs</div><div class="pill" onclick="this.classList.toggle(\'active\')" data-v="phrases">Phrases</div><div class="pill" onclick="this.classList.toggle(\'active\')" data-v="connectives">Connectives</div></div>'+vocabCatPicker('fc-vc')+'<h3 class="mb-8">Count</h3><div class="pills mb-12" id="fc-n"><div class="pill active" data-v="20" onclick="selPill(this,\'fc-n\')">20</div><div class="pill" data-v="40" onclick="selPill(this,\'fc-n\')">40</div><div class="pill" data-v="80" onclick="selPill(this,\'fc-n\')">80</div></div><button class="btn btn-primary btn-full mt-16" onclick="goFlash()">Start</button><button class="btn btn-ghost btn-full mt-8" onclick="resetPractice()">Back</button>';toggleVocabCats('fc-t','fc-vc');}
 function selPill(el,cid){document.querySelectorAll('#'+cid+' .pill').forEach(p=>p.classList.remove('active'));el.classList.add('active');}
 
 function goFlash(){const types=[...document.querySelectorAll('#fc-t .pill.active')].map(p=>p.dataset.v);
 if(!types.length){toast('Pick at least one type');return;}
 const n=+(document.querySelector('#fc-n .pill.active')?.dataset.v||20);
-const items=shuffle(getAllItems(types)).slice(0,n);if(!items.length){toast('No items');return;}
+const vc=getSelectedVocabCats('fc-vc');
+const items=shuffle(getAllItems(types,vc)).slice(0,n);if(!items.length){toast('No items');return;}
 PS={mode:'fc',items,i:0,known:0};startTimer();document.getElementById('practice-config').classList.add('hidden');rFC();}
 
 function rFC(){const b=document.getElementById('practice-active');b.classList.remove('hidden');
@@ -662,13 +673,14 @@ function fcAns(ok){record(PS.items[PS.i].key,ok);if(ok)PS.known++;PS.i++;rFC();}
 
 // ── MCQ ──
 function cfgMCQ(){document.getElementById('practice-config').innerHTML=
-'<h2 class="mb-12">Multiple Choice Quiz</h2><h3 class="mb-8">Content</h3><div class="pills mb-12" id="mq-t"><div class="pill active" onclick="this.classList.toggle(\'active\')" data-v="vocab">Vocabulary</div><div class="pill" onclick="this.classList.toggle(\'active\')" data-v="verbs">Verbs</div><div class="pill" onclick="this.classList.toggle(\'active\')" data-v="phrases">Phrases</div><div class="pill" onclick="this.classList.toggle(\'active\')" data-v="connectives">Connectives</div></div><h3 class="mb-8">Questions</h3><div class="pills mb-12" id="mq-n"><div class="pill active" data-v="10" onclick="selPill(this,\'mq-n\')">10</div><div class="pill" data-v="20" onclick="selPill(this,\'mq-n\')">20</div><div class="pill" data-v="50" onclick="selPill(this,\'mq-n\')">50</div></div><h3 class="mb-8">Direction</h3><div class="pills mb-12" id="mq-d"><div class="pill active" data-v="f2e" onclick="selPill(this,\'mq-d\')">FR &rarr; EN</div><div class="pill" data-v="e2f" onclick="selPill(this,\'mq-d\')">EN &rarr; FR</div><div class="pill" data-v="mix" onclick="selPill(this,\'mq-d\')">Mixed</div></div><button class="btn btn-primary btn-full mt-16" onclick="goMCQ()">Start Quiz</button><button class="btn btn-ghost btn-full mt-8" onclick="resetPractice()">Back</button>';}
+'<h2 class="mb-12">Multiple Choice Quiz</h2><h3 class="mb-8">Content</h3><div class="pills mb-12" id="mq-t"><div class="pill active" onclick="this.classList.toggle(\'active\');toggleVocabCats(\'mq-t\',\'mq-vc\')" data-v="vocab">Vocabulary</div><div class="pill" onclick="this.classList.toggle(\'active\')" data-v="verbs">Verbs</div><div class="pill" onclick="this.classList.toggle(\'active\')" data-v="phrases">Phrases</div><div class="pill" onclick="this.classList.toggle(\'active\')" data-v="connectives">Connectives</div></div>'+vocabCatPicker('mq-vc')+'<h3 class="mb-8">Questions</h3><div class="pills mb-12" id="mq-n"><div class="pill active" data-v="10" onclick="selPill(this,\'mq-n\')">10</div><div class="pill" data-v="20" onclick="selPill(this,\'mq-n\')">20</div><div class="pill" data-v="50" onclick="selPill(this,\'mq-n\')">50</div></div><h3 class="mb-8">Direction</h3><div class="pills mb-12" id="mq-d"><div class="pill active" data-v="f2e" onclick="selPill(this,\'mq-d\')">FR &rarr; EN</div><div class="pill" data-v="e2f" onclick="selPill(this,\'mq-d\')">EN &rarr; FR</div><div class="pill" data-v="mix" onclick="selPill(this,\'mq-d\')">Mixed</div></div><button class="btn btn-primary btn-full mt-16" onclick="goMCQ()">Start Quiz</button><button class="btn btn-ghost btn-full mt-8" onclick="resetPractice()">Back</button>';toggleVocabCats('mq-t','mq-vc');}
 
 function goMCQ(){const types=[...document.querySelectorAll('#mq-t .pill.active')].map(p=>p.dataset.v);
 if(!types.length){toast('Pick a type');return;}
 const n=+(document.querySelector('#mq-n .pill.active')?.dataset.v||10);
 const dir=document.querySelector('#mq-d .pill.active')?.dataset.v||'f2e';
-const all=shuffle(getAllItems(types)),items=all.slice(0,n);if(!items.length){toast('No items');return;}
+const vc=getSelectedVocabCats('mq-vc');
+const all=shuffle(getAllItems(types,vc)),items=all.slice(0,n);if(!items.length){toast('No items');return;}
 PS={mode:'mcq',items,all,i:0,sc:0,dir,ans:[]};startTimer();document.getElementById('practice-config').classList.add('hidden');rMCQ();}
 
 function rMCQ(){const b=document.getElementById('practice-active');b.classList.remove('hidden');
@@ -689,12 +701,13 @@ PS.ans.push({q:PS._q,sel,ca,ok});PS.i++;setTimeout(rMCQ,800);}
 
 // ── TYPE ANSWER ──
 function cfgType(){document.getElementById('practice-config').innerHTML=
-'<h2 class="mb-12">Type the Answer</h2><h3 class="mb-8">Content</h3><div class="pills mb-12" id="ty-t"><div class="pill active" onclick="this.classList.toggle(\'active\')" data-v="vocab">Vocabulary</div><div class="pill" onclick="this.classList.toggle(\'active\')" data-v="verbs">Verbs</div><div class="pill" onclick="this.classList.toggle(\'active\')" data-v="connectives">Connectives</div></div><h3 class="mb-8">Questions</h3><div class="pills mb-12" id="ty-n"><div class="pill active" data-v="10" onclick="selPill(this,\'ty-n\')">10</div><div class="pill" data-v="20" onclick="selPill(this,\'ty-n\')">20</div></div><button class="btn btn-primary btn-full mt-16" onclick="goType()">Start</button><button class="btn btn-ghost btn-full mt-8" onclick="resetPractice()">Back</button>';}
+'<h2 class="mb-12">Type the Answer</h2><h3 class="mb-8">Content</h3><div class="pills mb-12" id="ty-t"><div class="pill active" onclick="this.classList.toggle(\'active\');toggleVocabCats(\'ty-t\',\'ty-vc\')" data-v="vocab">Vocabulary</div><div class="pill" onclick="this.classList.toggle(\'active\')" data-v="verbs">Verbs</div><div class="pill" onclick="this.classList.toggle(\'active\')" data-v="connectives">Connectives</div></div>'+vocabCatPicker('ty-vc')+'<h3 class="mb-8">Questions</h3><div class="pills mb-12" id="ty-n"><div class="pill active" data-v="10" onclick="selPill(this,\'ty-n\')">10</div><div class="pill" data-v="20" onclick="selPill(this,\'ty-n\')">20</div></div><button class="btn btn-primary btn-full mt-16" onclick="goType()">Start</button><button class="btn btn-ghost btn-full mt-8" onclick="resetPractice()">Back</button>';toggleVocabCats('ty-t','ty-vc');}
 
 function goType(){const types=[...document.querySelectorAll('#ty-t .pill.active')].map(p=>p.dataset.v);
 if(!types.length){toast('Pick a type');return;}
 const n=+(document.querySelector('#ty-n .pill.active')?.dataset.v||10);
-const items=shuffle(getAllItems(types)).slice(0,n);if(!items.length){toast('No items');return;}
+const vc=getSelectedVocabCats('ty-vc');
+const items=shuffle(getAllItems(types,vc)).slice(0,n);if(!items.length){toast('No items');return;}
 PS={mode:'type',items,i:0,sc:0,ans:[]};startTimer();document.getElementById('practice-config').classList.add('hidden');rType();}
 
 function rType(){const b=document.getElementById('practice-active');b.classList.remove('hidden');
@@ -788,12 +801,13 @@ document.getElementById('practice-active').innerHTML='<div class="text-center mt
 
 // ── LISTENING ──
 function cfgListen(){document.getElementById('practice-config').innerHTML=
-'<h2 class="mb-12">Listening Practice</h2><p class="subtitle mb-16">Listen and identify the word or phrase</p><h3 class="mb-8">Content</h3><div class="pills mb-12" id="li-t"><div class="pill active" onclick="this.classList.toggle(\'active\')" data-v="vocab">Vocabulary</div><div class="pill" onclick="this.classList.toggle(\'active\')" data-v="phrases">Phrases</div></div><h3 class="mb-8">Questions</h3><div class="pills mb-12" id="li-n"><div class="pill active" data-v="10" onclick="selPill(this,\'li-n\')">10</div><div class="pill" data-v="20" onclick="selPill(this,\'li-n\')">20</div></div><button class="btn btn-primary btn-full mt-16" onclick="goListen()">Start</button><button class="btn btn-ghost btn-full mt-8" onclick="resetPractice()">Back</button>';}
+'<h2 class="mb-12">Listening Practice</h2><p class="subtitle mb-16">Listen and identify the word or phrase</p><h3 class="mb-8">Content</h3><div class="pills mb-12" id="li-t"><div class="pill active" onclick="this.classList.toggle(\'active\');toggleVocabCats(\'li-t\',\'li-vc\')" data-v="vocab">Vocabulary</div><div class="pill" onclick="this.classList.toggle(\'active\')" data-v="phrases">Phrases</div></div>'+vocabCatPicker('li-vc')+'<h3 class="mb-8">Questions</h3><div class="pills mb-12" id="li-n"><div class="pill active" data-v="10" onclick="selPill(this,\'li-n\')">10</div><div class="pill" data-v="20" onclick="selPill(this,\'li-n\')">20</div></div><button class="btn btn-primary btn-full mt-16" onclick="goListen()">Start</button><button class="btn btn-ghost btn-full mt-8" onclick="resetPractice()">Back</button>';toggleVocabCats('li-t','li-vc');}
 
 function goListen(){const types=[...document.querySelectorAll('#li-t .pill.active')].map(p=>p.dataset.v);
 if(!types.length){toast('Pick a type');return;}
 const n=+(document.querySelector('#li-n .pill.active')?.dataset.v||10);
-const all=shuffle(getAllItems(types)),items=all.slice(0,n);if(!items.length){toast('No items');return;}
+const vc=getSelectedVocabCats('li-vc');
+const all=shuffle(getAllItems(types,vc)),items=all.slice(0,n);if(!items.length){toast('No items');return;}
 PS={mode:'listen',items,all,i:0,sc:0};startTimer();document.getElementById('practice-config').classList.add('hidden');rListen();}
 
 function rListen(){const b=document.getElementById('practice-active');b.classList.remove('hidden');
@@ -823,6 +837,18 @@ if(!weak.length){toast('No weak areas');return;}nav('practice');
 setTimeout(()=>{document.getElementById('practice-hub').classList.add('hidden');
 const items=weak.map(([k])=>{const p=k.split('_');return{fr:p.slice(1).join(' '),en:p.slice(1).join(' '),type:p[0],key:k};});
 PS={mode:'fc',items:shuffle(items),i:0,known:0};startTimer();document.getElementById('practice-config').classList.add('hidden');rFC();},50);}
+
+function practiceCategory(catId,mode){const items=shuffle(getAllItems(['vocab'],[catId]));
+if(!items.length){toast('No items in this category');return;}
+nav('practice');setTimeout(()=>{document.getElementById('practice-hub').classList.add('hidden');document.getElementById('practice-config').classList.add('hidden');
+if(mode==='fc'){PS={mode:'fc',items:items.slice(0,30),i:0,known:0};startTimer();rFC();}
+else if(mode==='mcq'){const all=items;PS={mode:'mcq',items:all.slice(0,15),all,i:0,sc:0,dir:'f2e',ans:[]};startTimer();rMCQ();}
+else if(mode==='type'){PS={mode:'type',items:items.slice(0,15),i:0,sc:0,ans:[]};startTimer();rType();}
+else if(mode==='match'){const n=Math.min(8,items.length);const sel=items.slice(0,n);
+const left=shuffle(sel.map((it,i)=>({id:i,text:it.fr,side:'fr'})));const right=shuffle(sel.map((it,i)=>({id:i,text:it.en,side:'en'})));
+PS={mode:'match',items:sel,left,right,matched:[],sel:null,attempts:0,startTime:Date.now()};startTimer();rMatch();}
+else if(mode==='listen'){const all=items;PS={mode:'listen',items:all.slice(0,15),all,i:0,sc:0};startTimer();rListen();}
+},100);}
 
 // ── SENTENCE BUILDER ──
 function cfgSentence(){document.getElementById('practice-config').innerHTML=
@@ -920,10 +946,13 @@ if(ok)PS.sc++;record(q.key,ok);PS.ans.push({word:q.word,choice,correct:q.article
 
 // ── MATCHING ──
 function cfgMatching(){document.getElementById('practice-config').innerHTML=
-'<h2 class="mb-12">Matching</h2><p class="subtitle mb-16">Match French words with their English translations</p><h3 class="mb-8">Pairs</h3><div class="pills mb-12" id="ma-n"><div class="pill active" data-v="6" onclick="selPill(this,\'ma-n\')">6</div><div class="pill" data-v="8" onclick="selPill(this,\'ma-n\')">8</div><div class="pill" data-v="10" onclick="selPill(this,\'ma-n\')">10</div></div><button class="btn btn-primary btn-full mt-16" onclick="goMatching()">Start</button><button class="btn btn-ghost btn-full mt-8" onclick="resetPractice()">Back</button>';}
+'<h2 class="mb-12">Matching</h2><p class="subtitle mb-16">Match French words with their English translations</p><h3 class="mb-8">Content</h3><div class="pills mb-12" id="ma-t"><div class="pill active" onclick="this.classList.toggle(\'active\');toggleVocabCats(\'ma-t\',\'ma-vc\')" data-v="vocab">Vocabulary</div><div class="pill" onclick="this.classList.toggle(\'active\')" data-v="verbs">Verbs</div></div>'+vocabCatPicker('ma-vc')+'<h3 class="mb-8">Pairs</h3><div class="pills mb-12" id="ma-n"><div class="pill active" data-v="6" onclick="selPill(this,\'ma-n\')">6</div><div class="pill" data-v="8" onclick="selPill(this,\'ma-n\')">8</div><div class="pill" data-v="10" onclick="selPill(this,\'ma-n\')">10</div></div><button class="btn btn-primary btn-full mt-16" onclick="goMatching()">Start</button><button class="btn btn-ghost btn-full mt-8" onclick="resetPractice()">Back</button>';toggleVocabCats('ma-t','ma-vc');}
 
 function goMatching(){const n=+(document.querySelector('#ma-n .pill.active')?.dataset.v||6);
-const items=shuffle(getAllItems(['vocab','verbs'])).slice(0,n);if(items.length<3){toast('Not enough items');resetPractice();return;}
+const types=[...document.querySelectorAll('#ma-t .pill.active')].map(p=>p.dataset.v);
+if(!types.length){toast('Pick a type');return;}
+const vc=getSelectedVocabCats('ma-vc');
+const items=shuffle(getAllItems(types,vc)).slice(0,n);if(items.length<3){toast('Not enough items');resetPractice();return;}
 const left=shuffle(items.map((it,i)=>({id:i,text:it.fr,side:'fr'})));
 const right=shuffle(items.map((it,i)=>({id:i,text:it.en,side:'en'})));
 PS={mode:'match',items,left,right,matched:[],sel:null,attempts:0,startTime:Date.now()};
