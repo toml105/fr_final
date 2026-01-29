@@ -1,9 +1,9 @@
-const CACHE = 'french-master-v4';
+const CACHE = 'french-master-v5';
 const FILES = [
-  './', './index.html', './manifest.json',
-  './icon-192.png', './icon-512.png', './icon-1024.png', './apple-touch-icon.png',
-  './data-verbs.js', './data-vocab.js', './data-grammar.js',
-  './data-connectives.js', './data-phrases.js'
+  '.', 'index.html', 'manifest.json',
+  'icon-192.png', 'icon-512.png', 'icon-1024.png', 'apple-touch-icon.png',
+  'data-verbs.js', 'data-vocab.js', 'data-grammar.js',
+  'data-connectives.js', 'data-phrases.js'
 ];
 
 self.addEventListener('install', e => {
