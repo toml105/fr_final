@@ -1,4 +1,4 @@
-const CACHE = 'french-master-v9';
+const CACHE = 'french-master-v10';
 const FILES = [
   'index.html', 'manifest.json',
   'icon-192.png', 'icon-512.png', 'icon-1024.png', 'apple-touch-icon.png',

@@ -656,7 +656,7 @@ const GRAMMAR = {
         { type: 'error', q: 'Il ne mange pas rien.', correction: 'Il ne mange rien.', errorWord: 'pas rien', fixWord: 'rien', hint: 'Don\'t combine pas with rien' },
         { type: 'choice', q: '"Je ne mange jamais de viande" means...', options: ['I never eat meat', 'I no longer eat meat', 'I eat nothing'], answer: 'I never eat meat', hint: 'ne...jamais = never' },
         { type: 'transform', instruction: 'Make negative using "jamais"', q: 'Elle arrive en retard.', answer: "Elle n'arrive jamais en retard.", hint: 'ne...jamais = never' },
-        { type: 'order', words: ['personne', 'ne', 'est', 'venu'], answer: 'Personne ne est venu', hint: 'Personne starts the sentence with ne...personne' },
+        { type: 'choice', q: '"Nobody came" in French is...', options: ["Personne n'est venu.", 'Ne personne est venu.', 'Personne ne est venu.'], answer: "Personne n'est venu.", hint: 'Personne starts, ne before verb, elision before vowel' },
         { type: 'fill', q: 'Je ne vois ___.', options: ['personne', 'pas', 'rien', 'jamais'], answer: 'personne', hint: 'I see nobody' }
       ]
     },
@@ -750,7 +750,7 @@ const GRAMMAR = {
         { type: 'fill', q: "J'ai ___ un bon film.", options: ['vu', 'venu', 'voulu', 'vécu'], answer: 'vu', hint: 'voir → vu' },
         { type: 'choice', q: 'Which is correct?', options: ['Les filles sont venues.', 'Les filles sont venus.'], answer: 'Les filles sont venues.', hint: 'With être, past participle agrees: feminine plural → -es' },
         { type: 'fill', q: 'Tu ___ bien dormi?', options: ['as', 'es', 'a', 'est'], answer: 'as', hint: 'dormir uses avoir' },
-        { type: 'order', words: ['pas', "n'", 'mangé', 'ai', 'Je'], answer: "Je n' ai pas mangé", hint: 'ne...pas wraps the auxiliary avoir' }
+        { type: 'order', words: ['pas', 'ne', 'mangé', 'ai', 'Je'], answer: 'Je ne ai pas mangé', hint: "ne...pas wraps the auxiliary avoir (n'ai in speech)" }
       ]
     },
 
@@ -881,7 +881,7 @@ const GRAMMAR = {
         { type: 'fill', q: 'Demain, je ___ au marché.', options: ['irai', 'vais', 'allais', 'suis allé'], answer: 'irai', hint: 'aller future: j\'irai' },
         { type: 'fill', q: 'Nous ___ en vacances en juillet.', options: ['partirons', 'partons', 'sommes partis', 'partions'], answer: 'partirons', hint: 'Future: partir → partir + -ons' },
         { type: 'transform', instruction: 'Put in future tense', q: 'Je mange une pizza.', answer: 'Je mangerai une pizza.', hint: 'Infinitive + -ai ending' },
-        { type: 'error', q: 'Tu seras content demain.', correction: 'Tu seras content demain.', errorWord: '', fixWord: '', hint: 'This sentence is actually correct!' },
+        { type: 'error', q: 'Demain, je va aller au marché.', correction: 'Demain, je vais aller au marché.', errorWord: 'va', fixWord: 'vais', hint: 'aller: je vais (not je va)' },
         { type: 'fill', q: 'Il ___ beau demain.', options: ['fera', 'fait', 'faisait', 'a fait'], answer: 'fera', hint: 'faire future: il fera' },
         { type: 'choice', q: 'Which is the future of "avoir"?', options: ["j'aurai", "j'avrai", "j'avoirai"], answer: "j'aurai", hint: 'avoir has irregular future stem: aur-' },
         { type: 'fill', q: 'Vous ___ la réponse bientôt.', options: ['saurez', 'savez', 'saviez', 'avez su'], answer: 'saurez', hint: 'savoir future: saur-' },
@@ -1072,7 +1072,7 @@ const GRAMMAR = {
         { type: 'fill', q: 'Tu ___ connais? (ces filles)', options: ['les', 'leur', 'la', 'lui'], answer: 'les', hint: 'connaître qqn → direct object, plural = les' },
         { type: 'choice', q: 'Which is correct?', options: ['Je vais le faire.', 'Je le vais faire.'], answer: 'Je vais le faire.', hint: 'With infinitive, pronoun goes before the infinitive' },
         { type: 'fill', q: "J'___ ai parlé hier.", options: ['leur', 'les', 'lui', 'le'], answer: 'leur', hint: 'parler à eux/elles → leur (plural indirect)' },
-        { type: 'order', words: ['en', 'Je', 'veux'], answer: 'Je en veux', hint: 'en replaces de + noun, goes before verb' }
+        { type: 'fill', q: "J'___ veux.", options: ['en', 'y', 'le', 'lui'], answer: 'en', hint: 'en replaces de + noun' }
       ]
     },
 
@@ -1534,7 +1534,7 @@ const GRAMMAR = {
         { type: 'transform', instruction: 'Complete the sentence', q: "Si tu étudies, tu ___ (réussir).", answer: 'Si tu étudies, tu réussiras.', hint: 'Si + present → future' },
         { type: 'error', q: 'Si je suis riche, je voyagerais.', correction: 'Si je suis riche, je voyagerai.', errorWord: 'voyagerais', fixWord: 'voyagerai', hint: 'Si + present → future, not conditional' },
         { type: 'fill', q: "Si nous ___ plus tôt, nous aurions eu des places.", options: ['étions arrivés', 'arrivions', 'sommes arrivés', 'arriverions'], answer: 'étions arrivés', hint: 'Type 3: si + plus-que-parfait' },
-        { type: 'order', words: ['avais', 'Si', 'le', 'temps', 'je', "j'", 'irais'], answer: "Si j' avais le temps je irais", hint: 'Si + imparfait, conditional' },
+        { type: 'fill', q: "Si j'___ le temps, j'irais.", options: ['avais', 'aurais', 'ai', 'aurai'], answer: 'avais', hint: 'Si + imparfait (never conditional after si)' },
         { type: 'choice', q: 'Which si-clause type is hypothetical (unlikely)?', options: ['Si + imparfait → conditional', 'Si + present → future', 'Si + PQP → cond. passé'], answer: 'Si + imparfait → conditional', hint: 'Type 2 = unlikely/hypothetical' }
       ]
     },

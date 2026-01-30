@@ -433,7 +433,7 @@ h3{font-size:15px;font-weight:700;letter-spacing:-.2px;}
 'use strict';
 // ─────────── SRS ───────────
 const SRS_KEY='frenchMasterPro';
-const SRS_INT=[3600000,86400000,259200000,604800000,1209600000,2592000000];
+const SRS_INT=[600000,14400000,86400000,259200000,604800000,2592000000];
 let srs;
 function loadSRS(){try{srs=JSON.parse(localStorage.getItem(SRS_KEY))}catch(e){}
 if(!srs)srs={items:{},stats:{totalQ:0,totalC:0,streak:0,best:0,lastDate:null,studyTime:0,sessions:0,dailyGoal:20,dailyDone:0,dailyReset:null,_lastDay:null},acts:[]};
@@ -457,7 +457,7 @@ function toast(m){const t=document.getElementById('toast');t.textContent=m;t.cla
 function openOverlay(h){const o=document.getElementById('overlay');document.getElementById('overlay-content').innerHTML=h;o.classList.add('show');}
 function closeOverlay(){document.getElementById('overlay').classList.remove('show');}
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
-function norm(s){return s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();}
+function norm(s){return s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\s+/g,' ').trim();}
 function timeAgo(ts){const d=Date.now()-ts,m=Math.floor(d/6e4),h=Math.floor(d/36e5);if(m<1)return'now';if(m<60)return m+'m';if(h<24)return h+'h';return Math.floor(h/24)+'d';}
 function esc(s){return s.replace(/'/g,"\\'");}
 const ACCENTS='e\u0301 e\u0300 e\u0302 e\u0308 a\u0300 a\u0302 u\u0300 u\u0302 c\u0327 i\u0302 i\u0308 o\u0302 \u0153'.split(' ').map(s=>s.normalize('NFC'));
@@ -699,8 +699,8 @@ const opts=shuffle([ca,...wrongs]);PS._ca=ca;PS._q=q;
 b.innerHTML='<div class="flex-between mb-12"><span style="font-size:13px;color:var(--text2)">'+(PS.i+1)+'/'+PS.items.length+'</span><span style="font-size:13px;color:var(--primary2);font-weight:700">Score: '+PS.sc+'</span></div><div class="prog-bar mb-12"><div class="prog-fill" style="width:'+PS.i/PS.items.length*100+'%"></div></div><div class="quiz-q">'+q+(f2e?' <button class="audio-btn" onclick="speak(\''+esc(it.fr)+'\')">&#128266;</button>':'')+'</div><div class="quiz-options">'+opts.map(o=>'<button class="quiz-opt" data-a="'+o.replace(/"/g,'&quot;')+'" onclick="mcqAns(this)">'+o+'</button>').join('')+'</div>';}
 
 function mcqAns(el){const sel=el.dataset.a,ca=PS._ca;
-document.querySelectorAll('.quiz-opt').forEach(o=>{o.style.pointerEvents='none';if(o.dataset.a===ca)o.classList.add('correct');else if(o===el)o.classList.add('wrong');});
-const ok=sel===ca;if(ok)PS.sc++;record(PS.items[PS.i].key,ok);
+document.querySelectorAll('.quiz-opt').forEach(o=>{o.style.pointerEvents='none';if(norm(o.dataset.a)===norm(ca))o.classList.add('correct');else if(o===el)o.classList.add('wrong');});
+const ok=norm(sel)===norm(ca);if(ok)PS.sc++;record(PS.items[PS.i].key,ok);
 PS.ans.push({q:PS._q,sel,ca,ok});PS.i++;setTimeout(rMCQ,800);}
 
 // ── TYPE ANSWER ──
@@ -979,13 +979,14 @@ return h;}
 
 function renderErrorEx(ex){
 let h='<div class="quiz-q" style="flex-direction:column"><span style="font-size:15px;font-weight:600">Spot &amp; fix the error</span><span style="font-size:16px;margin-top:8px;line-height:1.6;color:var(--danger)">'+ex.q+'</span></div>';
-const opts=[ex.correction];
-// Generate wrong "corrections" by keeping the error or making other changes
-const wrongFixes=[ex.q];
-if(ex.q.replace(ex.errorWord,ex.fixWord)!==ex.correction){wrongFixes.push(ex.q.replace(ex.errorWord,ex.fixWord));}
-// Add a plausible wrong option
-const words=ex.correction.split(' ');if(words.length>2){const w2=[...words];const ri=Math.floor(Math.random()*w2.length);w2[ri]=shuffle(ex.q.split(' '))[0];wrongFixes.push(w2.join(' '));}
-const allOpts=shuffle([ex.correction,...wrongFixes.filter(w=>w!==ex.correction).slice(0,2)]);
+// Build wrong options: the original sentence (which has the error) + variants
+const wrongSet=new Set();wrongSet.add(ex.q);
+// Partial fix attempt
+const partial=ex.q.replace(ex.errorWord,ex.fixWord);if(partial!==ex.correction)wrongSet.add(partial);
+// Swap a random word in the correction to create another wrong answer
+const words=ex.correction.split(' ');if(words.length>2){const w2=[...words];const ri=Math.floor(Math.random()*w2.length);const srcWords=ex.q.split(' ').filter(w=>w!==ex.fixWord);if(srcWords.length)w2[ri]=srcWords[Math.floor(Math.random()*srcWords.length)];const gen=w2.join(' ');if(gen!==ex.correction)wrongSet.add(gen);}
+const wrongs=[...wrongSet].slice(0,2);
+const allOpts=shuffle([ex.correction,...wrongs]);
 h+='<div class="quiz-options">'+allOpts.map(o=>'<button class="quiz-opt" style="font-size:13px;text-align:left" data-a="'+esc(o)+'" onclick="geAns(this,\'error\')">'+o+'</button>').join('')+'</div>';
 return h;}
 
@@ -1222,7 +1223,7 @@ const soon=Object.entries(srs.items).filter(([k,v])=>v.next&&v.next>now&&v.next<
 if(due.length===0&&soon.length===0){sec.innerHTML='';return;}
 let h='<div class="card"><div class="flex-between mb-8"><h3>Smart Review</h3></div>';
 if(due.length>0)h+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span class="review-badge review-due">'+due.length+' due now</span><button class="btn btn-primary btn-sm" onclick="startSmartReview(\'due\')">Review</button></div>';
-if(soon.length>0)h+='<div style="display:flex;align-items:center;gap:8px"><span class="review-badge review-soon">'+soon.length+' due today</span></div>';
+if(soon.length>0)h+='<div style="display:flex;align-items:center;gap:8px"><span class="review-badge review-soon">'+soon.length+' due today</span><button class="btn btn-ghost btn-sm" onclick="startSmartReview(\'soon\')">Practice Early</button></div>';
 h+='</div>';sec.innerHTML=h;}
 
 function startSmartReview(type){
