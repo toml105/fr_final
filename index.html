@@ -608,8 +608,9 @@ return '<div class="chart-bar-wrap"><div class="chart-bar-label"><span>'+d.l+'</
 
 const areaAcc={};Object.entries(srs.items).forEach(([k,v])=>{const a=k.split('_')[0];if(!areaAcc[a])areaAcc[a]={c:0,t:0};areaAcc[a].c+=v.c;areaAcc[a].t+=v.c+v.w;});
 const ac={verb:'var(--primary)',vocab:'var(--success)',phrase:'var(--cyan)',grammar:'var(--orange)',conn:'var(--pink)',conj:'var(--purple)'};
+const areaNames={verb:'Verbs',vocab:'Vocabulary',phrase:'Phrases',grammar:'Grammar',conn:'Connectives',conj:'Conjugation'};
 document.getElementById('stats-accuracy').innerHTML=Object.entries(areaAcc).map(([k,v])=>{const p=v.t?Math.round(v.c/v.t*100):0;
-return '<div class="chart-bar-wrap"><div class="chart-bar-label"><span>'+k+'</span><span>'+p+'%</span></div><div class="chart-bar"><div class="chart-bar-inner" style="width:'+p+'%;background:'+(ac[k]||'var(--text3)')+'"></div></div></div>';}).join('')||'<p class="subtitle">No data yet.</p>';
+return '<div class="chart-bar-wrap"><div class="chart-bar-label"><span>'+(areaNames[k]||k)+'</span><span>'+p+'%</span></div><div class="chart-bar"><div class="chart-bar-inner" style="width:'+p+'%;background:'+(ac[k]||'var(--text3)')+'"></div></div></div>';}).join('')||'<p class="subtitle">No data yet.</p>';
 
 const weak=Object.entries(srs.items).filter(([k,v])=>v.w>0&&v.str<3).sort((a,b)=>a[1].str-b[1].str||b[1].w-a[1].w).slice(0,15);
 const allForLookup=getAllItems(['vocab','verbs','phrases','connectives']);
