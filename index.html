@@ -368,6 +368,7 @@ h3{font-size:15px;font-weight:700;letter-spacing:-.2px;}
     <div class="cat-card mb-8" onclick="openPracticeMode('grammarquiz')"><div class="cat-icon" style="background:rgba(168,85,247,.15)">&#128218;</div><div class="cat-info"><h3>Grammar Quiz</h3><div class="sub">Test grammar rules</div></div></div>
     <div class="cat-card mb-8" onclick="openPracticeMode('gender')"><div class="cat-icon" style="background:rgba(236,72,153,.15)">&#9892;</div><div class="cat-info"><h3>Gender Drill</h3><div class="sub">Le or La? Master noun genders</div></div></div>
     <div class="cat-card mb-8" onclick="openPracticeMode('matching')"><div class="cat-icon" style="background:rgba(249,115,22,.15)">&#128279;</div><div class="cat-info"><h3>Matching</h3><div class="sub">Match French to English pairs</div></div></div>
+    <div class="cat-card mb-8" onclick="openPracticeMode('grammarex')"><div class="cat-icon" style="background:rgba(34,197,94,.15)">&#129504;</div><div class="cat-info"><h3>Grammar Exercises</h3><div class="sub">Fill gaps, fix errors, transform sentences</div></div></div>
   </div>
   <div id="practice-config" class="hidden"></div>
   <div id="practice-active" class="hidden"></div>
@@ -568,7 +569,7 @@ h+='</table></details>';});openOverlay(h);}
 function renderGrammar(){filterGrammar();}
 function filterGrammar(){const q=document.getElementById('grammar-search').value.toLowerCase();
 let ts=GRAMMAR.topics;if(q)ts=ts.filter(t=>t.name.toLowerCase().includes(q)||t.sections.some(s=>s.title.toLowerCase().includes(q)));
-document.getElementById('grammar-list').innerHTML=ts.map(t=>'<div class="grammar-card" onclick="openGrammar(\''+t.id+'\')"><div style="display:flex;align-items:center;gap:10px"><span style="font-size:22px">'+t.icon+'</span><div><h3>'+t.name+'</h3><span class="conn-level level-'+t.level+'" style="display:inline-block;margin-top:4px">'+t.level+'</span></div></div></div>').join('')||'<p class="subtitle">No topics found.</p>';}
+document.getElementById('grammar-list').innerHTML=ts.map(t=>'<div class="grammar-card" onclick="openGrammar(\''+t.id+'\')"><div style="display:flex;align-items:center;gap:10px"><span style="font-size:22px">'+t.icon+'</span><div><h3>'+t.name+'</h3><div style="display:flex;align-items:center;gap:6px;margin-top:4px"><span class="conn-level level-'+t.level+'">'+t.level+'</span>'+(t.exercises&&t.exercises.length?'<span style="font-size:10px;background:rgba(34,197,94,.15);color:#34d399;padding:2px 8px;border-radius:20px;font-weight:600">'+t.exercises.length+' exercises</span>':'')+'</div></div></div></div>').join('')||'<p class="subtitle">No topics found.</p>';}
 
 function openGrammar(id){const t=GRAMMAR.topics.find(x=>x.id===id);if(!t)return;
 let h='<div class="overlay-header"><h2>'+t.icon+' '+t.name+'</h2><button class="overlay-close" onclick="closeOverlay()">&times;</button></div>';
@@ -578,6 +579,7 @@ if(sec.content)h+='<p style="font-size:13px;color:var(--text2);line-height:1.6;m
 if(sec.rules&&sec.rules.length){h+='<ul class="rule-list">';sec.rules.forEach(r=>h+='<li>'+r+'</li>');h+='</ul>';}
 if(sec.examples&&sec.examples.length)sec.examples.forEach(ex=>{h+='<div class="example-box"><div class="fr">'+ex.fr+' <button class="audio-btn" onclick="event.stopPropagation();speak(\''+esc(ex.fr)+'\')">&#128266;</button></div><div class="en">'+ex.en+'</div>'+(ex.note?'<div class="note">'+ex.note+'</div>':'')+'</div>';});
 if(sec.tip)h+='<div class="tip-box">&#128161; '+sec.tip+'</div>';});
+if(t.exercises&&t.exercises.length>0){h+='<div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border)"><h3 class="mb-8">&#129504; Practice This Topic</h3><p style="font-size:13px;color:var(--text2);margin-bottom:12px">'+t.exercises.length+' interactive exercises available</p><button class="btn btn-primary btn-full" onclick="closeOverlay();nav(\'practice\');setTimeout(()=>{openPracticeMode(\'grammarex\');setTimeout(()=>cfgGrammarEx(\''+t.id+'\'),50);},100)">Start Exercises</button></div>';}
 openOverlay(h);}
 
 // ─────────── STATS ───────────
@@ -636,11 +638,13 @@ function resetPractice(){document.getElementById('practice-hub').classList.remov
 if(PS&&PS._timer)clearInterval(PS._timer);if(studyStart){srs.stats.studyTime+=Math.round((Date.now()-studyStart)/1000);save();studyStart=null;}}
 function startTimer(){studyStart=Date.now();}
 function getAllItems(types,vocabCats){let r=[];
-if(types.includes('vocab')){const cats=vocabCats&&vocabCats.length?VOCAB.categories.filter(c=>vocabCats.includes(c.id)):VOCAB.categories;cats.forEach(c=>c.subcategories.forEach(s=>s.words.forEach(w=>r.push({fr:w.fr,en:w.en,type:'vocab',cat:c.id,catName:c.name,key:'vocab_'+c.id+'_'+w.fr.replace(/\s/g,'_')}))));}
-if(types.includes('phrases'))PHRASES.categories.forEach(c=>c.phrases.forEach(p=>r.push({fr:p.fr,en:p.en,type:'phrase',key:'phrase_'+c.id+'_'+p.fr.replace(/\s/g,'_').substring(0,30)})));
-if(types.includes('connectives'))CONNECTIVES.categories.forEach(c=>c.words.forEach(w=>r.push({fr:w.fr,en:w.en,type:'conn',key:'conn_'+c.id+'_'+w.fr.replace(/\s/g,'_')})));
-if(types.includes('verbs'))VERB_DATA.verbs.forEach(v=>r.push({fr:v.infinitive,en:v.english,type:'verb',key:'verb_'+v.infinitive.replace(/\s/g,'_')}));
+if(types.includes('vocab')){const cats=vocabCats&&vocabCats.length?VOCAB.categories.filter(c=>vocabCats.includes(c.id)):VOCAB.categories;cats.forEach(c=>c.subcategories.forEach(s=>s.words.forEach(w=>r.push({fr:w.fr,en:w.en,p:w.p||2,type:'vocab',cat:c.id,catName:c.name,key:'vocab_'+c.id+'_'+w.fr.replace(/\s/g,'_')}))));}
+if(types.includes('phrases'))PHRASES.categories.forEach(c=>c.phrases.forEach(p=>r.push({fr:p.fr,en:p.en,p:1,type:'phrase',key:'phrase_'+c.id+'_'+p.fr.replace(/\s/g,'_').substring(0,30)})));
+if(types.includes('connectives'))CONNECTIVES.categories.forEach(c=>c.words.forEach(w=>r.push({fr:w.fr,en:w.en,p:w.level==='beginner'?1:w.level==='advanced'?3:2,type:'conn',key:'conn_'+c.id+'_'+w.fr.replace(/\s/g,'_')})));
+if(types.includes('verbs'))VERB_DATA.verbs.forEach(v=>r.push({fr:v.infinitive,en:v.english,p:2,type:'verb',key:'verb_'+v.infinitive.replace(/\s/g,'_')}));
 return r;}
+// Priority-weighted shuffle: p1 items 3x more likely to appear early, p2 2x, p3 1x
+function weightedShuffle(arr){const w=arr.map(x=>({item:x,sort:Math.random()*({1:3,2:2,3:1}[x.p||2]||2)}));w.sort((a,b)=>b.sort-a.sort);return w.map(x=>x.item);}
 function getSelectedVocabCats(id){return [...document.querySelectorAll('#'+id+' .pill.active')].map(p=>p.dataset.v).filter(v=>v!=='_all');}
 function vocabCatPicker(id){return '<h3 class="mb-8" id="'+id+'-label" style="display:none">Vocab Categories <span style="font-size:11px;color:var(--text3);font-weight:400">(optional — leave blank for all)</span></h3><div class="pills mb-12" id="'+id+'" style="display:none;max-height:140px;overflow-y:auto">'+VOCAB.categories.map(c=>'<div class="pill" onclick="this.classList.toggle(\'active\')" data-v="'+c.id+'">'+c.icon+' '+c.name+'</div>').join('')+'</div>';}
 function toggleVocabCats(contentPillsId,catPickerId){const vocabActive=[...document.querySelectorAll('#'+contentPillsId+' .pill.active')].some(p=>p.dataset.v==='vocab');
@@ -650,7 +654,7 @@ if(el){el.style.display=vocabActive?'flex':'none';}if(lb){lb.style.display=vocab
 function openPracticeMode(mode){document.getElementById('practice-hub').classList.add('hidden');document.getElementById('practice-config').classList.remove('hidden');
 if(mode==='flashcards')cfgFlash();else if(mode==='mcq')cfgMCQ();else if(mode==='type')cfgType();else if(mode==='conjugation')cfgConj();
 else if(mode==='fillblank')cfgFill();else if(mode==='speed')goSpeed();else if(mode==='listening')cfgListen();
-else if(mode==='sentence')cfgSentence();else if(mode==='grammarquiz')cfgGrammarQuiz();else if(mode==='gender')cfgGender();else if(mode==='matching')cfgMatching();}
+else if(mode==='sentence')cfgSentence();else if(mode==='grammarquiz')cfgGrammarQuiz();else if(mode==='gender')cfgGender();else if(mode==='matching')cfgMatching();else if(mode==='grammarex')cfgGrammarEx();}
 
 // ── FLASHCARDS ──
 function cfgFlash(){document.getElementById('practice-config').innerHTML=
@@ -661,7 +665,7 @@ function goFlash(){const types=[...document.querySelectorAll('#fc-t .pill.active
 if(!types.length){toast('Pick at least one type');return;}
 const n=+(document.querySelector('#fc-n .pill.active')?.dataset.v||20);
 const vc=getSelectedVocabCats('fc-vc');
-const items=shuffle(getAllItems(types,vc)).slice(0,n);if(!items.length){toast('No items');return;}
+const items=weightedShuffle(getAllItems(types,vc)).slice(0,n);if(!items.length){toast('No items');return;}
 PS={mode:'fc',items,i:0,known:0};startTimer();document.getElementById('practice-config').classList.add('hidden');rFC();}
 
 function rFC(){const b=document.getElementById('practice-active');b.classList.remove('hidden');
@@ -680,7 +684,7 @@ if(!types.length){toast('Pick a type');return;}
 const n=+(document.querySelector('#mq-n .pill.active')?.dataset.v||10);
 const dir=document.querySelector('#mq-d .pill.active')?.dataset.v||'f2e';
 const vc=getSelectedVocabCats('mq-vc');
-const all=shuffle(getAllItems(types,vc)),items=all.slice(0,n);if(!items.length){toast('No items');return;}
+const all=weightedShuffle(getAllItems(types,vc)),items=all.slice(0,n);if(!items.length){toast('No items');return;}
 PS={mode:'mcq',items,all,i:0,sc:0,dir,ans:[]};startTimer();document.getElementById('practice-config').classList.add('hidden');rMCQ();}
 
 function rMCQ(){const b=document.getElementById('practice-active');b.classList.remove('hidden');
@@ -707,7 +711,7 @@ function goType(){const types=[...document.querySelectorAll('#ty-t .pill.active'
 if(!types.length){toast('Pick a type');return;}
 const n=+(document.querySelector('#ty-n .pill.active')?.dataset.v||10);
 const vc=getSelectedVocabCats('ty-vc');
-const items=shuffle(getAllItems(types,vc)).slice(0,n);if(!items.length){toast('No items');return;}
+const items=weightedShuffle(getAllItems(types,vc)).slice(0,n);if(!items.length){toast('No items');return;}
 PS={mode:'type',items,i:0,sc:0,ans:[]};startTimer();document.getElementById('practice-config').classList.add('hidden');rType();}
 
 function rType(){const b=document.getElementById('practice-active');b.classList.remove('hidden');
@@ -784,7 +788,7 @@ if(ok)PS.sc++;record(q.key,ok);PS.ans.push({q:q.sent,g:el.value,ca:q.ans,ok});PS
 
 // ── SPEED ROUND ──
 function goSpeed(){document.getElementById('practice-config').classList.add('hidden');
-const items=shuffle(getAllItems(['vocab','verbs','connectives']));if(!items.length){toast('No items');resetPractice();return;}
+const items=weightedShuffle(getAllItems(['vocab','verbs','connectives']));if(!items.length){toast('No items');resetPractice();return;}
 PS={mode:'speed',items,i:0,sc:0,tl:60};startTimer();rSpeed();
 PS._timer=setInterval(()=>{PS.tl--;const te=document.getElementById('sp-time');if(te)te.textContent=PS.tl;if(PS.tl<=0){clearInterval(PS._timer);endSpeed();}},1000);}
 
@@ -807,7 +811,7 @@ function goListen(){const types=[...document.querySelectorAll('#li-t .pill.activ
 if(!types.length){toast('Pick a type');return;}
 const n=+(document.querySelector('#li-n .pill.active')?.dataset.v||10);
 const vc=getSelectedVocabCats('li-vc');
-const all=shuffle(getAllItems(types,vc)),items=all.slice(0,n);if(!items.length){toast('No items');return;}
+const all=weightedShuffle(getAllItems(types,vc)),items=all.slice(0,n);if(!items.length){toast('No items');return;}
 PS={mode:'listen',items,all,i:0,sc:0};startTimer();document.getElementById('practice-config').classList.add('hidden');rListen();}
 
 function rListen(){const b=document.getElementById('practice-active');b.classList.remove('hidden');
@@ -823,11 +827,11 @@ const ok=el.dataset.a===ca;if(ok)PS.sc++;record(PS.items[PS.i].key,ok);PS.i++;se
 
 // ── QUICK ACTIONS ──
 function startQuickQuiz(){nav('practice');setTimeout(()=>{document.getElementById('practice-hub').classList.add('hidden');
-const all=shuffle(getAllItems(['vocab','verbs'])),items=all.slice(0,10);if(!items.length){toast('No items');return;}
+const all=weightedShuffle(getAllItems(['vocab','verbs'])),items=all.slice(0,10);if(!items.length){toast('No items');return;}
 PS={mode:'mcq',items,all,i:0,sc:0,dir:'f2e',ans:[]};startTimer();document.getElementById('practice-config').classList.add('hidden');rMCQ();},50);}
 
 function startQuickFlash(){nav('practice');setTimeout(()=>{document.getElementById('practice-hub').classList.add('hidden');
-const items=shuffle(getAllItems(['vocab','verbs'])).slice(0,20);if(!items.length){toast('No items');return;}
+const items=weightedShuffle(getAllItems(['vocab','verbs'])).slice(0,20);if(!items.length){toast('No items');return;}
 PS={mode:'fc',items,i:0,known:0};startTimer();document.getElementById('practice-config').classList.add('hidden');rFC();},50);}
 
 function showRandomVerb(){const v=VERB_DATA.verbs[Math.floor(Math.random()*VERB_DATA.verbs.length)];openVerb(v.infinitive);}
@@ -838,7 +842,7 @@ setTimeout(()=>{document.getElementById('practice-hub').classList.add('hidden');
 const items=weak.map(([k])=>{const p=k.split('_');return{fr:p.slice(1).join(' '),en:p.slice(1).join(' '),type:p[0],key:k};});
 PS={mode:'fc',items:shuffle(items),i:0,known:0};startTimer();document.getElementById('practice-config').classList.add('hidden');rFC();},50);}
 
-function practiceCategory(catId,mode){const items=shuffle(getAllItems(['vocab'],[catId]));
+function practiceCategory(catId,mode){const items=weightedShuffle(getAllItems(['vocab'],[catId]));
 if(!items.length){toast('No items in this category');return;}
 nav('practice');setTimeout(()=>{document.getElementById('practice-hub').classList.add('hidden');document.getElementById('practice-config').classList.add('hidden');
 if(mode==='fc'){PS={mode:'fc',items:items.slice(0,30),i:0,known:0};startTimer();rFC();}
@@ -914,6 +918,147 @@ document.querySelectorAll('.quiz-opt').forEach(o=>{o.style.pointerEvents='none';
 const ok=sel.toLowerCase()===ca.toLowerCase()||norm(sel)===norm(ca);if(ok)PS.sc++;
 record(PS.items[PS.i].key,ok);PS.ans.push({q:PS.items[PS.i].sent,sel,ca,ok});PS.i++;setTimeout(rGQ,800);}
 
+// ── GRAMMAR EXERCISES (Interactive) ──
+function cfgGrammarEx(preselectedTopic){
+const topics=GRAMMAR.topics.filter(t=>t.exercises&&t.exercises.length>0);
+if(!topics.length){toast('No grammar exercises available yet');resetPractice();return;}
+let h='<h2 class="mb-12">Grammar Exercises</h2><p class="subtitle mb-12">Fill gaps, spot errors, transform sentences &amp; more</p>';
+h+='<h3 class="mb-8">Topics</h3><div class="pills mb-12" id="ge-topics" style="max-height:200px;overflow-y:auto;flex-wrap:wrap">';
+topics.forEach(t=>{h+='<div class="pill'+(preselectedTopic===t.id?' active':'')+'" data-v="'+t.id+'" onclick="this.classList.toggle(\'active\')">'+t.icon+' '+t.name+'</div>';});
+h+='</div>';
+h+='<h3 class="mb-8">Exercise Types</h3><div class="pills mb-12" id="ge-types">';
+h+='<div class="pill active" data-v="all" onclick="selPill(this,\'ge-types\')">All Types</div>';
+h+='<div class="pill" data-v="fill" onclick="selPill(this,\'ge-types\')">Fill the Gap</div>';
+h+='<div class="pill" data-v="error" onclick="selPill(this,\'ge-types\')">Spot the Error</div>';
+h+='<div class="pill" data-v="transform" onclick="selPill(this,\'ge-types\')">Transform</div>';
+h+='<div class="pill" data-v="order" onclick="selPill(this,\'ge-types\')">Word Order</div>';
+h+='<div class="pill" data-v="choice" onclick="selPill(this,\'ge-types\')">Quick Choice</div>';
+h+='</div>';
+h+='<h3 class="mb-8">Questions</h3><div class="pills mb-12" id="ge-n"><div class="pill active" data-v="10" onclick="selPill(this,\'ge-n\')">10</div><div class="pill" data-v="20" onclick="selPill(this,\'ge-n\')">20</div><div class="pill" data-v="all" onclick="selPill(this,\'ge-n\')">All</div></div>';
+h+='<button class="btn btn-primary btn-full mt-16" onclick="goGrammarEx()">Start Exercises</button><button class="btn btn-ghost btn-full mt-8" onclick="resetPractice()">Back</button>';
+document.getElementById('practice-config').innerHTML=h;}
+
+function goGrammarEx(){
+const selTopics=[...document.querySelectorAll('#ge-topics .pill.active')].map(p=>p.dataset.v);
+const exType=document.querySelector('#ge-types .pill.active')?.dataset.v||'all';
+const nVal=document.querySelector('#ge-n .pill.active')?.dataset.v||'10';
+let exercises=[];
+const topics=GRAMMAR.topics.filter(t=>t.exercises&&t.exercises.length>0);
+const filtered=selTopics.length?topics.filter(t=>selTopics.includes(t.id)):topics;
+filtered.forEach(t=>{t.exercises.forEach(ex=>{exercises.push({...ex,topicName:t.name,topicId:t.id});});});
+if(exType!=='all')exercises=exercises.filter(e=>e.type===exType);
+exercises=shuffle(exercises);
+const n=nVal==='all'?exercises.length:Math.min(parseInt(nVal),exercises.length);
+exercises=exercises.slice(0,n);
+if(!exercises.length){toast('No exercises match your selection');return;}
+PS={mode:'grammarex',items:exercises,i:0,sc:0,ans:[]};startTimer();
+document.getElementById('practice-config').classList.add('hidden');rGrammarEx();}
+
+function rGrammarEx(){const b=document.getElementById('practice-active');b.classList.remove('hidden');
+if(PS.i>=PS.items.length){
+const p=Math.round(PS.sc/PS.items.length*100);
+addAct('quiz','Grammar Exercises: '+PS.sc+'/'+PS.items.length+' ('+p+'%)',p+'%');
+let rev='';PS.ans.filter(a=>!a.ok).forEach(a=>{
+rev+='<div style="padding:8px 0;border-bottom:1px solid var(--border);font-size:12px"><span style="color:var(--danger)">&#10007;</span> <b>'+a.topic+'</b><br>'+a.q+'<br><span style="color:var(--success)">&#10140; '+a.correct+'</span>'+(a.hint?'<br><span style="color:var(--text3);font-style:italic">'+a.hint+'</span>':'')+'</div>';});
+b.innerHTML='<div class="text-center mt-20"><h2>Exercises Complete!</h2><div class="score-big">'+p+'%</div><p class="subtitle mb-8">'+PS.sc+'/'+PS.items.length+'</p></div>'+(rev?'<div class="card mt-16"><h3 class="mb-8">Review Mistakes</h3>'+rev+'</div>':'')+'<button class="btn btn-primary btn-full mt-16" onclick="resetPractice()">Done</button>';checkAchievements();return;}
+const ex=PS.items[PS.i];
+let h='<div class="flex-between mb-12"><span style="font-size:13px;color:var(--text2)">'+(PS.i+1)+'/'+PS.items.length+'</span><span style="font-size:13px;color:var(--primary2);font-weight:700">Score: '+PS.sc+'</span></div>';
+h+='<div class="prog-bar mb-12"><div class="prog-fill" style="width:'+PS.i/PS.items.length*100+'%"></div></div>';
+h+='<p style="font-size:11px;color:var(--text3);text-align:center;margin-bottom:4px">'+ex.topicName+'</p>';
+if(ex.type==='fill')h+=renderFillEx(ex);
+else if(ex.type==='error')h+=renderErrorEx(ex);
+else if(ex.type==='transform')h+=renderTransformEx(ex);
+else if(ex.type==='order')h+=renderOrderEx(ex);
+else if(ex.type==='choice')h+=renderChoiceEx(ex);
+b.innerHTML=h;}
+
+function renderFillEx(ex){
+let h='<div class="quiz-q" style="flex-direction:column"><span style="font-size:15px;font-weight:600">Fill in the blank</span><span style="font-size:16px;margin-top:8px;line-height:1.6">'+ex.q.replace('___','<span style="color:var(--primary);font-weight:700;border-bottom:2px solid var(--primary)"> ___ </span>')+'</span></div>';
+h+='<div class="quiz-options">'+shuffle(ex.options.slice()).map(o=>'<button class="quiz-opt" data-a="'+esc(o)+'" onclick="geAns(this,\'fill\')">'+o+'</button>').join('')+'</div>';
+return h;}
+
+function renderErrorEx(ex){
+let h='<div class="quiz-q" style="flex-direction:column"><span style="font-size:15px;font-weight:600">Spot &amp; fix the error</span><span style="font-size:16px;margin-top:8px;line-height:1.6;color:var(--danger)">'+ex.q+'</span></div>';
+const opts=[ex.correction];
+// Generate wrong "corrections" by keeping the error or making other changes
+const wrongFixes=[ex.q];
+if(ex.q.replace(ex.errorWord,ex.fixWord)!==ex.correction){wrongFixes.push(ex.q.replace(ex.errorWord,ex.fixWord));}
+// Add a plausible wrong option
+const words=ex.correction.split(' ');if(words.length>2){const w2=[...words];const ri=Math.floor(Math.random()*w2.length);w2[ri]=shuffle(ex.q.split(' '))[0];wrongFixes.push(w2.join(' '));}
+const allOpts=shuffle([ex.correction,...wrongFixes.filter(w=>w!==ex.correction).slice(0,2)]);
+h+='<div class="quiz-options">'+allOpts.map(o=>'<button class="quiz-opt" style="font-size:13px;text-align:left" data-a="'+esc(o)+'" onclick="geAns(this,\'error\')">'+o+'</button>').join('')+'</div>';
+return h;}
+
+function renderTransformEx(ex){
+let h='<div class="quiz-q" style="flex-direction:column"><span style="font-size:15px;font-weight:600">'+ex.instruction+'</span><span style="font-size:16px;margin-top:8px;line-height:1.6">'+ex.q+'</span></div>';
+h+='<div style="padding:0 16px"><input type="text" class="input-field" id="ge-transform-input" placeholder="Type your answer..." autocomplete="off" autocapitalize="off" spellcheck="false" style="width:100%;padding:12px;border-radius:10px;border:1px solid var(--border);background:var(--surface1);color:var(--text);font-size:15px;margin-bottom:12px">';
+h+='<button class="btn btn-primary btn-full" onclick="geTransformCheck()">Check</button>';
+if(ex.hint)h+='<p style="font-size:11px;color:var(--text3);margin-top:8px;text-align:center;font-style:italic">Hint: '+ex.hint+'</p>';
+h+='</div>';
+return h;}
+
+function renderOrderEx(ex){
+let h='<div class="quiz-q" style="flex-direction:column"><span style="font-size:15px;font-weight:600">Put the words in order</span></div>';
+h+='<div id="ge-order-bank" style="display:flex;flex-wrap:wrap;gap:8px;padding:0 16px;margin-bottom:12px;justify-content:center">';
+shuffle(ex.words.slice()).forEach((w,i)=>{h+='<button class="pill" style="cursor:pointer;font-size:14px" onclick="geOrderPick(this)" data-w="'+esc(w)+'">'+w+'</button>';});
+h+='</div>';
+h+='<div id="ge-order-result" style="min-height:44px;padding:12px 16px;margin:0 16px 12px;border-radius:10px;border:2px dashed var(--border);display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center"><span style="color:var(--text3);font-size:13px">Tap words to build the sentence</span></div>';
+h+='<div style="padding:0 16px"><button class="btn btn-primary btn-full" onclick="geOrderCheck()">Check</button></div>';
+return h;}
+
+function renderChoiceEx(ex){
+let h='<div class="quiz-q" style="flex-direction:column"><span style="font-size:15px;font-weight:600">Which is correct?</span>'+(ex.q&&!ex.options.includes(ex.q)?'<span style="font-size:14px;margin-top:6px;color:var(--text2)">'+ex.q+'</span>':'')+'</div>';
+h+='<div class="quiz-options">'+shuffle(ex.options.slice()).map(o=>'<button class="quiz-opt" style="font-size:13px;text-align:left" data-a="'+esc(o)+'" onclick="geAns(this,\'choice\')">'+o+'</button>').join('')+'</div>';
+return h;}
+
+// Answer handlers
+function geAns(el,type){
+const ex=PS.items[PS.i];
+const sel=el.dataset.a;
+const correct=type==='fill'?ex.answer:type==='error'?ex.correction:ex.answer;
+const ok=norm(sel)===norm(correct);
+document.querySelectorAll('.quiz-opt').forEach(o=>{o.style.pointerEvents='none';if(norm(o.dataset.a)===norm(correct))o.classList.add('correct');else if(o===el)o.classList.add('wrong');});
+if(ok)PS.sc++;
+record('grammar_'+ex.topicId+'_'+PS.i,ok);
+PS.ans.push({q:ex.q,topic:ex.topicName,correct,hint:ex.hint,ok});PS.i++;setTimeout(rGrammarEx,900);}
+
+function geTransformCheck(){
+const ex=PS.items[PS.i];
+const input=document.getElementById('ge-transform-input').value.trim();
+if(!input){toast('Type your answer');return;}
+const ok=norm(input)===norm(ex.answer);
+const fb=document.getElementById('ge-transform-input');
+fb.disabled=true;fb.style.borderColor=ok?'var(--success)':'var(--danger)';
+if(!ok){const hint=document.createElement('p');hint.style.cssText='font-size:14px;color:var(--success);padding:8px 16px;margin-top:4px';hint.innerHTML='&#10140; '+ex.answer;fb.parentNode.insertBefore(hint,fb.nextSibling);}
+if(ok)PS.sc++;
+record('grammar_'+ex.topicId+'_'+PS.i,ok);
+PS.ans.push({q:ex.q+' → '+ex.instruction,topic:ex.topicName,correct:ex.answer,hint:ex.hint,ok});PS.i++;setTimeout(rGrammarEx,ok?900:1800);}
+
+function geOrderPick(el){
+const res=document.getElementById('ge-order-result');
+if(res.querySelector('span'))res.innerHTML='';
+if(el.parentNode.id==='ge-order-bank'){el.remove();
+const btn=document.createElement('button');btn.className='pill active';btn.style.cssText='cursor:pointer;font-size:14px';btn.dataset.w=el.dataset.w;btn.textContent=el.dataset.w;
+btn.onclick=function(){geOrderUnpick(this);};res.appendChild(btn);}
+}
+function geOrderUnpick(el){
+el.remove();const bank=document.getElementById('ge-order-bank');
+const btn=document.createElement('button');btn.className='pill';btn.style.cssText='cursor:pointer;font-size:14px';btn.dataset.w=el.dataset.w;btn.textContent=el.dataset.w;
+btn.onclick=function(){geOrderPick(this);};bank.appendChild(btn);}
+
+function geOrderCheck(){
+const ex=PS.items[PS.i];
+const res=document.getElementById('ge-order-result');
+const built=[...res.querySelectorAll('button')].map(b=>b.dataset.w).join(' ');
+if(!built){toast('Tap words to build the sentence');return;}
+const ok=norm(built)===norm(ex.answer);
+res.style.borderColor=ok?'var(--success)':'var(--danger)';
+res.querySelectorAll('button').forEach(b=>b.style.pointerEvents='none');
+if(!ok){const hint=document.createElement('p');hint.style.cssText='font-size:14px;color:var(--success);padding:8px 16px;margin-top:4px;text-align:center';hint.innerHTML='&#10140; '+ex.answer;res.parentNode.appendChild(hint);}
+if(ok)PS.sc++;
+record('grammar_'+ex.topicId+'_'+PS.i,ok);
+PS.ans.push({q:'Order: '+ex.words.join(', '),topic:ex.topicName,correct:ex.answer,hint:ex.hint,ok});PS.i++;setTimeout(rGrammarEx,ok?900:1800);}
+
 // ── GENDER DRILL ──
 function cfgGender(){document.getElementById('practice-config').innerHTML=
 '<h2 class="mb-12">Gender Drill</h2><p class="subtitle mb-16">Is it <b style="color:#60a5fa">Le</b> (masculine) or <b style="color:var(--pink)">La</b> (feminine)?</p><h3 class="mb-8">Questions</h3><div class="pills mb-12" id="gd-n"><div class="pill active" data-v="15" onclick="selPill(this,\'gd-n\')">15</div><div class="pill" data-v="30" onclick="selPill(this,\'gd-n\')">30</div><div class="pill" data-v="50" onclick="selPill(this,\'gd-n\')">50</div></div><button class="btn btn-primary btn-full mt-16" onclick="goGender()">Start</button><button class="btn btn-ghost btn-full mt-8" onclick="resetPractice()">Back</button>';}
@@ -952,7 +1097,7 @@ function goMatching(){const n=+(document.querySelector('#ma-n .pill.active')?.da
 const types=[...document.querySelectorAll('#ma-t .pill.active')].map(p=>p.dataset.v);
 if(!types.length){toast('Pick a type');return;}
 const vc=getSelectedVocabCats('ma-vc');
-const items=shuffle(getAllItems(types,vc)).slice(0,n);if(items.length<3){toast('Not enough items');resetPractice();return;}
+const items=weightedShuffle(getAllItems(types,vc)).slice(0,n);if(items.length<3){toast('Not enough items');resetPractice();return;}
 const left=shuffle(items.map((it,i)=>({id:i,text:it.fr,side:'fr'})));
 const right=shuffle(items.map((it,i)=>({id:i,text:it.en,side:'en'})));
 PS={mode:'match',items,left,right,matched:[],sel:null,attempts:0,startTime:Date.now()};

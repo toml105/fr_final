@@ -78,6 +78,20 @@ const GRAMMAR = {
           ],
           tip: 'If you can insert "some" or "a portion of" before the noun in English, use the partitive in French. "I want bread" → "Je veux du pain" (I want some bread).'
         }
+      ],
+      exercises: [
+        { type: 'fill', q: 'Je mange ___ pain.', options: ['du', 'de la', 'des', 'le'], answer: 'du', hint: 'Partitive + masculine noun' },
+        { type: 'fill', q: 'Elle boit ___ eau.', options: ["de l'", 'du', 'de la', 'des'], answer: "de l'", hint: 'Before a vowel sound' },
+        { type: 'fill', q: 'Il y a ___ fleurs dans le jardin.', options: ['des', 'les', 'du', 'de la'], answer: 'des', hint: 'Indefinite plural' },
+        { type: 'fill', q: '___ liberté est importante.', options: ['La', 'Une', 'De la', 'Le'], answer: 'La', hint: 'Abstract concept = definite article' },
+        { type: 'error', q: 'Je bois de la café.', correction: 'Je bois du café.', errorWord: 'de la', fixWord: 'du', hint: 'café is masculine' },
+        { type: 'error', q: "Je n'ai pas des amis.", correction: "Je n'ai pas d'amis.", errorWord: 'des', fixWord: "d'", hint: 'After negation: des → de/d\'' },
+        { type: 'choice', q: 'Which is correct?', options: ["J'aime le chocolat.", "J'aime chocolat."], answer: "J'aime le chocolat.", hint: 'General likes need a definite article in French' },
+        { type: 'choice', q: 'Which is correct?', options: ['Je ne mange pas de viande.', 'Je ne mange pas de la viande.'], answer: 'Je ne mange pas de viande.', hint: 'Partitive becomes de after negation' },
+        { type: 'fill', q: 'Vous avez ___ sœurs?', options: ['des', 'les', 'de', 'la'], answer: 'des', hint: 'Indefinite plural: some sisters' },
+        { type: 'transform', instruction: 'Make this sentence negative', q: "J'ai des enfants.", answer: "Je n'ai pas d'enfants.", hint: 'des → de/d\' after negation' },
+        { type: 'fill', q: 'Il mange ___ confiture.', options: ['de la', 'du', 'la', 'des'], answer: 'de la', hint: 'Partitive + feminine noun' },
+        { type: 'error', q: 'Elle aime le musique.', correction: 'Elle aime la musique.', errorWord: 'le', fixWord: 'la', hint: 'musique is feminine' }
       ]
     },
 
@@ -155,6 +169,18 @@ const GRAMMAR = {
           ],
           tip: 'When the masculine form already ends in -e, the feminine is often identical — only the article changes: un artiste / une artiste.'
         }
+      ],
+      exercises: [
+        { type: 'choice', q: 'le or la? ___ maison', options: ['la maison', 'le maison'], answer: 'la maison', hint: 'Words ending in -son are usually feminine' },
+        { type: 'choice', q: 'le or la? ___ problème', options: ['le problème', 'la problème'], answer: 'le problème', hint: 'Words ending in -ème are masculine' },
+        { type: 'fill', q: '___ soleil brille.', options: ['Le', 'La', 'Les', "L'"], answer: 'Le', hint: 'soleil is masculine' },
+        { type: 'choice', q: 'Masculine or feminine? liberté', options: ['la liberté (feminine)', 'le liberté (masculine)'], answer: 'la liberté (feminine)', hint: 'Words ending in -té are feminine' },
+        { type: 'choice', q: 'Masculine or feminine? garage', options: ['le garage (masculine)', 'la garage (feminine)'], answer: 'le garage (masculine)', hint: 'Words ending in -age are usually masculine' },
+        { type: 'fill', q: '___ université est grande.', options: ["L'", 'La', 'Le', 'Les'], answer: "L'", hint: 'Before a vowel, use l\'' },
+        { type: 'transform', instruction: 'Make plural', q: 'le journal', answer: 'les journaux', hint: '-al → -aux in plural' },
+        { type: 'transform', instruction: 'Make plural', q: "l'œil", answer: 'les yeux', hint: 'Irregular plural' },
+        { type: 'choice', q: 'Masculine or feminine? boulangerie', options: ['la boulangerie (feminine)', 'le boulangerie (masculine)'], answer: 'la boulangerie (feminine)', hint: 'Words ending in -ie are feminine' },
+        { type: 'error', q: 'La garage est fermé.', correction: 'Le garage est fermé.', errorWord: 'La', fixWord: 'Le', hint: 'garage is masculine (-age ending)' }
       ]
     },
 
@@ -240,6 +266,18 @@ const GRAMMAR = {
           ],
           tip: 'Think of "bel, nouvel, vieil" as existing purely for pronunciation ease. French avoids two vowel sounds colliding, so it uses these smoother forms.'
         }
+      ],
+      exercises: [
+        { type: 'fill', q: 'Elle est très ___.', options: ['heureuse', 'heureux', 'heureuses', 'heureus'], answer: 'heureuse', hint: 'Feminine singular form needed' },
+        { type: 'transform', instruction: 'Change to feminine', q: 'Il est grand.', answer: 'Elle est grande.', hint: 'Add -e for feminine' },
+        { type: 'transform', instruction: 'Change to feminine', q: 'Il est beau.', answer: 'Elle est belle.', hint: 'beau → belle (irregular)' },
+        { type: 'order', words: ['une', 'belle', 'grande', 'maison'], answer: 'une belle grande maison', hint: 'Beauty adjectives go before the noun' },
+        { type: 'choice', q: 'Which is correct?', options: ['une robe bleue', 'une bleue robe'], answer: 'une robe bleue', hint: 'Color adjectives go after the noun' },
+        { type: 'fill', q: 'Les filles sont ___.', options: ['intelligentes', 'intelligent', 'intelligente', 'intelligents'], answer: 'intelligentes', hint: 'Feminine plural: add -es' },
+        { type: 'error', q: 'Un nouveau maison.', correction: 'Une nouvelle maison.', errorWord: 'Un nouveau', fixWord: 'Une nouvelle', hint: 'maison is feminine' },
+        { type: 'order', words: ['un', 'vieux', 'petit', 'chat', 'noir'], answer: 'un vieux petit chat noir', hint: 'BANGS before, colors after' },
+        { type: 'transform', instruction: 'Change to plural', q: 'un beau château', answer: 'de beaux châteaux', hint: 'beau → beaux, -eau → -eaux' },
+        { type: 'fill', q: "C'est une ___ idée.", options: ['bonne', 'bon', 'bons', 'bonnes'], answer: 'bonne', hint: 'idée is feminine singular' }
       ]
     },
 
@@ -297,6 +335,16 @@ const GRAMMAR = {
           ],
           tip: 'To decide between mon/ma/mes (or ton/ta/tes, son/sa/ses), look at the NOUN that follows, not the person who owns it. Ask: "Is the noun masculine, feminine, or plural?"'
         }
+      ],
+      exercises: [
+        { type: 'fill', q: '___ mère est gentille.', options: ['Ma', 'Mon', 'Mes', 'Sa'], answer: 'Ma', hint: 'My + feminine singular' },
+        { type: 'fill', q: '___ amie est française.', options: ['Mon', 'Ma', 'Mes', 'Sa'], answer: 'Mon', hint: 'Before feminine starting with vowel, use mon' },
+        { type: 'fill', q: 'Il aime ___ enfants.', options: ['ses', 'son', 'sa', 'leur'], answer: 'ses', hint: 'His/her + plural' },
+        { type: 'error', q: 'Elle aime sa chien.', correction: 'Elle aime son chien.', errorWord: 'sa', fixWord: 'son', hint: 'chien is masculine' },
+        { type: 'choice', q: 'Which is correct?', options: ['notre maison', 'nos maison'], answer: 'notre maison', hint: 'Singular noun → notre' },
+        { type: 'fill', q: 'Nous adorons ___ professeur.', options: ['notre', 'nos', 'votre', 'son'], answer: 'notre', hint: 'Our + singular' },
+        { type: 'transform', instruction: 'Change "je" to "nous"', q: "J'adore mon chat.", answer: 'Nous adorons notre chat.', hint: 'mon → notre' },
+        { type: 'fill', q: 'Vous avez ___ livres?', options: ['vos', 'votre', 'nos', 'leurs'], answer: 'vos', hint: 'Your (formal/plural) + plural' }
       ]
     },
 
@@ -335,6 +383,16 @@ const GRAMMAR = {
           ],
           tip: '"Cet" exists for the same reason as "bel/nouvel/vieil" — French avoids awkward vowel collisions. You would never say "ce ami" because it sounds choppy; "cet ami" flows better.'
         }
+      ],
+      exercises: [
+        { type: 'fill', q: '___ homme est grand.', options: ['Cet', 'Ce', 'Cette', 'Ces'], answer: 'Cet', hint: 'Before masculine + vowel = cet' },
+        { type: 'fill', q: '___ fille est intelligente.', options: ['Cette', 'Ce', 'Cet', 'Ces'], answer: 'Cette', hint: 'Feminine singular = cette' },
+        { type: 'fill', q: 'Tu vois ___ étoiles?', options: ['ces', 'cette', 'ce', 'cet'], answer: 'ces', hint: 'Plural = ces' },
+        { type: 'error', q: 'Ce idée est bonne.', correction: 'Cette idée est bonne.', errorWord: 'Ce', fixWord: 'Cette', hint: 'idée is feminine' },
+        { type: 'choice', q: 'Which is correct?', options: ['cet arbre', 'ce arbre'], answer: 'cet arbre', hint: 'Before masculine noun starting with vowel' },
+        { type: 'fill', q: 'Je préfère ___ livre-ci.', options: ['ce', 'cet', 'cette', 'ces'], answer: 'ce', hint: 'Masculine singular + consonant = ce' },
+        { type: 'fill', q: '___ hôtel est cher.', options: ['Cet', 'Ce', 'Cette', 'Ces'], answer: 'Cet', hint: 'Before masculine + silent h = cet' },
+        { type: 'error', q: 'Ces garçon est sympa.', correction: 'Ce garçon est sympa.', errorWord: 'Ces', fixWord: 'Ce', hint: 'Singular noun needs singular demonstrative' }
       ]
     },
 
@@ -394,6 +452,16 @@ const GRAMMAR = {
           ],
           tip: 'A helpful rule of thumb: if you would address someone by their first name in a professional English context, "tu" is probably okay. If you would use "Mr./Ms. + last name," use "vous."'
         }
+      ],
+      exercises: [
+        { type: 'fill', q: '___ suis français.', options: ['Je', 'Tu', 'Il', 'Nous'], answer: 'Je', hint: 'I am = je suis' },
+        { type: 'fill', q: 'Marie? ___ est très gentille.', options: ['Elle', 'Il', 'Elles', 'Ils'], answer: 'Elle', hint: 'Marie is feminine singular' },
+        { type: 'choice', q: 'Marie et Sophie → which pronoun?', options: ['Elles', 'Ils', 'Elle', 'Nous'], answer: 'Elles', hint: 'All feminine group = elles' },
+        { type: 'choice', q: 'Pierre et Marie → which pronoun?', options: ['Ils', 'Elles', 'Il', 'Nous'], answer: 'Ils', hint: 'Mixed group = ils (masculine wins)' },
+        { type: 'fill', q: '___ parlons français.', options: ['Nous', 'Vous', 'Ils', 'Je'], answer: 'Nous', hint: 'We speak = nous parlons' },
+        { type: 'transform', instruction: 'Replace the subject with a pronoun', q: 'Les enfants jouent.', answer: 'Ils jouent.', hint: 'les enfants (mixed/masculine plural) → ils' },
+        { type: 'fill', q: '___, vous êtes prêts?', options: ['Vous', 'Tu', 'Nous', 'Ils'], answer: 'Vous', hint: 'You (plural/formal) with êtes' },
+        { type: 'choice', q: '"On mange?" means...', options: ['Shall we eat? (informal we)', 'They eat?', 'You eat?'], answer: 'Shall we eat? (informal we)', hint: 'On is commonly used as informal nous' }
       ]
     },
 
@@ -502,6 +570,20 @@ const GRAMMAR = {
           ],
           tip: 'Focus on être, avoir, aller, and faire first — they account for a huge portion of everyday French. You will use them hundreds of times before you need rarer irregulars.'
         }
+      ],
+      exercises: [
+        { type: 'fill', q: 'Je ___ français.', options: ['parle', 'parles', 'parlons', 'parlent'], answer: 'parle', hint: '-er verbs: je → -e' },
+        { type: 'fill', q: 'Nous ___ le dîner.', options: ['finissons', 'finissez', 'finit', 'finis'], answer: 'finissons', hint: '-ir verbs: nous → -issons' },
+        { type: 'fill', q: 'Ils ___ du café.', options: ['boivent', 'boit', 'bois', 'buvons'], answer: 'boivent', hint: 'boire is irregular: ils boivent' },
+        { type: 'fill', q: 'Tu ___ au cinéma?', options: ['vas', 'va', 'vais', 'allez'], answer: 'vas', hint: 'aller: tu vas' },
+        { type: 'error', q: 'Nous mangons ensemble.', correction: 'Nous mangeons ensemble.', errorWord: 'mangons', fixWord: 'mangeons', hint: '-ger verbs keep the e before -ons' },
+        { type: 'transform', instruction: 'Conjugate for "nous"', q: 'Je fais du sport.', answer: 'Nous faisons du sport.', hint: 'faire: nous faisons' },
+        { type: 'fill', q: 'Elle ___ très bien.', options: ['comprend', 'comprends', 'comprenons', 'comprennent'], answer: 'comprend', hint: 'comprendre: il/elle comprend' },
+        { type: 'order', words: ['ne', 'mangent', 'Ils', 'pas'], answer: 'Ils ne mangent pas', hint: 'ne...pas wraps the verb' },
+        { type: 'error', q: 'Tu prens le bus?', correction: 'Tu prends le bus?', errorWord: 'prens', fixWord: 'prends', hint: 'prendre: tu prends (with d)' },
+        { type: 'fill', q: 'Vous ___ à quelle heure?', options: ['venez', 'viens', 'vient', 'venons'], answer: 'venez', hint: 'venir: vous venez' },
+        { type: 'transform', instruction: 'Conjugate for "elle"', q: "J'écris une lettre.", answer: 'Elle écrit une lettre.', hint: 'écrire: elle écrit' },
+        { type: 'fill', q: 'Je ___ mes devoirs.', options: ['fais', 'fait', 'faisons', 'font'], answer: 'fais', hint: 'faire: je fais' }
       ]
     },
 
@@ -564,6 +646,18 @@ const GRAMMAR = {
           ],
           tip: 'Remember that "ne...que" is not a true negation — it means "only." "Je n\'ai que cinq euros" = "I only have five euros." You can combine it with other negatives: "Je n\'ai plus que cinq euros" = "I only have five euros left."'
         }
+      ],
+      exercises: [
+        { type: 'transform', instruction: 'Make negative', q: 'Je parle français.', answer: 'Je ne parle pas français.', hint: 'ne + verb + pas' },
+        { type: 'transform', instruction: 'Make negative', q: "J'ai mangé.", answer: "Je n'ai pas mangé.", hint: 'ne wraps the auxiliary, not the participle' },
+        { type: 'order', words: ['ne', 'rien', 'Je', 'comprends'], answer: 'Je ne comprends rien', hint: 'ne...rien = nothing' },
+        { type: 'fill', q: "Il n'a ___ mangé.", options: ['pas', 'rien', 'plus', 'jamais'], answer: 'pas', hint: 'Simple negation of an action' },
+        { type: 'fill', q: 'Je ne bois ___ de café.', options: ['plus', 'pas', 'jamais', 'rien'], answer: 'plus', hint: 'No longer / no more' },
+        { type: 'error', q: 'Il ne mange pas rien.', correction: 'Il ne mange rien.', errorWord: 'pas rien', fixWord: 'rien', hint: 'Don\'t combine pas with rien' },
+        { type: 'choice', q: '"Je ne mange jamais de viande" means...', options: ['I never eat meat', 'I no longer eat meat', 'I eat nothing'], answer: 'I never eat meat', hint: 'ne...jamais = never' },
+        { type: 'transform', instruction: 'Make negative using "jamais"', q: 'Elle arrive en retard.', answer: "Elle n'arrive jamais en retard.", hint: 'ne...jamais = never' },
+        { type: 'order', words: ['personne', 'ne', 'est', 'venu'], answer: 'Personne ne est venu', hint: 'Personne starts the sentence with ne...personne' },
+        { type: 'fill', q: 'Je ne vois ___.', options: ['personne', 'pas', 'rien', 'jamais'], answer: 'personne', hint: 'I see nobody' }
       ]
     },
 
@@ -643,6 +737,20 @@ const GRAMMAR = {
           ],
           tip: 'When DR MRS VANDERTRAMP verbs take a direct object, they switch to "avoir" and their meaning often shifts. "Je suis sorti" = I went out. "J\'ai sorti les poubelles" = I took out the trash. The direct object changes both the auxiliary and the meaning.'
         }
+      ],
+      exercises: [
+        { type: 'fill', q: "J'___ mangé une pomme.", options: ['ai', 'suis', 'as', 'a'], answer: 'ai', hint: 'manger uses avoir' },
+        { type: 'fill', q: 'Elle ___ allée au cinéma.', options: ['est', 'a', 'as', 'sont'], answer: 'est', hint: 'aller uses être (motion verb)' },
+        { type: 'choice', q: 'Which is correct?', options: ['Elle est partie.', 'Elle a partie.'], answer: 'Elle est partie.', hint: 'partir uses être' },
+        { type: 'error', q: 'Nous avons allés au parc.', correction: 'Nous sommes allés au parc.', errorWord: 'avons', fixWord: 'sommes', hint: 'aller uses être, not avoir' },
+        { type: 'fill', q: 'Ils ___ arrivés hier.', options: ['sont', 'ont', 'est', 'a'], answer: 'sont', hint: 'arriver uses être' },
+        { type: 'error', q: 'Elle a descendu les escaliers.', correction: 'Elle est descendue les escaliers.', errorWord: 'a descendu', fixWord: 'est descendue', hint: 'descendre uses être for movement + feminine agreement' },
+        { type: 'transform', instruction: 'Put in passé composé', q: 'Je mange du pain.', answer: "J'ai mangé du pain.", hint: 'manger → mangé (avoir)' },
+        { type: 'transform', instruction: 'Put in passé composé', q: 'Elle part à 8h.', answer: 'Elle est partie à 8h.', hint: 'partir → parti(e) with être + feminine agreement' },
+        { type: 'fill', q: "J'ai ___ un bon film.", options: ['vu', 'venu', 'voulu', 'vécu'], answer: 'vu', hint: 'voir → vu' },
+        { type: 'choice', q: 'Which is correct?', options: ['Les filles sont venues.', 'Les filles sont venus.'], answer: 'Les filles sont venues.', hint: 'With être, past participle agrees: feminine plural → -es' },
+        { type: 'fill', q: 'Tu ___ bien dormi?', options: ['as', 'es', 'a', 'est'], answer: 'as', hint: 'dormir uses avoir' },
+        { type: 'order', words: ['pas', "n'", 'mangé', 'ai', 'Je'], answer: "Je n' ai pas mangé", hint: 'ne...pas wraps the auxiliary avoir' }
       ]
     },
 
@@ -699,6 +807,18 @@ const GRAMMAR = {
           ],
           tip: 'Ask yourself: "Did this happen at a specific moment and end?" → passé composé. "Was this an ongoing state, a description, or a habit?" → imparfait. "It was raining" (imparfait) "when I arrived" (passé composé).'
         }
+      ],
+      exercises: [
+        { type: 'fill', q: 'Quand j\'étais petit, je ___ au foot.', options: ['jouais', 'joue', 'ai joué', 'jouerai'], answer: 'jouais', hint: 'Habitual past action = imparfait' },
+        { type: 'choice', q: 'Which tense? "Il pleuvait quand je suis sorti."', options: ['Imparfait for pleuvait (ongoing background)', 'Passé composé for pleuvait'], answer: 'Imparfait for pleuvait (ongoing background)', hint: 'Background/ongoing = imparfait' },
+        { type: 'fill', q: 'Nous ___ en France en 2010.', options: ['habitions', 'avons habité', 'habitons', 'habiterons'], answer: 'habitions', hint: 'Living somewhere (state) = imparfait' },
+        { type: 'transform', instruction: 'Change to imparfait', q: 'Je mange du pain.', answer: 'Je mangeais du pain.', hint: 'Stem: mange- + -ais' },
+        { type: 'error', q: 'Quand il pleuvait, je suis resté à la maison.', correction: 'Quand il pleuvait, je restais à la maison.', errorWord: 'suis resté', fixWord: 'restais', hint: 'Both actions are habitual/repeated → both imparfait' },
+        { type: 'fill', q: 'Avant, tu ___ du café tous les jours.', options: ['buvais', 'as bu', 'bois', 'boiras'], answer: 'buvais', hint: 'Repeated habit in the past = imparfait' },
+        { type: 'choice', q: '"Hier, il faisait beau." — why imparfait?', options: ['Describing weather (background state)', 'A completed action yesterday'], answer: 'Describing weather (background state)', hint: 'Descriptions and states use imparfait' },
+        { type: 'fill', q: 'Elle ___ 10 ans quand elle a déménagé.', options: ['avait', 'a eu', 'a', 'aura'], answer: 'avait', hint: 'Age (state) = imparfait' },
+        { type: 'transform', instruction: 'Change to imparfait', q: 'Nous faisons du sport.', answer: 'Nous faisions du sport.', hint: 'faire stem for imparfait: fais- (from nous faisons)' },
+        { type: 'fill', q: "Ils ___ quand je suis arrivé.", options: ['dormaient', 'ont dormi', 'dorment', 'dormiront'], answer: 'dormaient', hint: 'Ongoing action interrupted = imparfait' }
       ]
     },
 
@@ -756,6 +876,18 @@ const GRAMMAR = {
           ],
           tip: 'In English we say "When you arrive, call me" (present tense after "when"). In French, you MUST use the future: "Quand tu arriveras, appelle-moi." This is a very common mistake for English speakers.'
         }
+      ],
+      exercises: [
+        { type: 'fill', q: 'Demain, je ___ au marché.', options: ['irai', 'vais', 'allais', 'suis allé'], answer: 'irai', hint: 'aller future: j\'irai' },
+        { type: 'fill', q: 'Nous ___ en vacances en juillet.', options: ['partirons', 'partons', 'sommes partis', 'partions'], answer: 'partirons', hint: 'Future: partir → partir + -ons' },
+        { type: 'transform', instruction: 'Put in future tense', q: 'Je mange une pizza.', answer: 'Je mangerai une pizza.', hint: 'Infinitive + -ai ending' },
+        { type: 'error', q: 'Tu seras content demain.', correction: 'Tu seras content demain.', errorWord: '', fixWord: '', hint: 'This sentence is actually correct!' },
+        { type: 'fill', q: 'Il ___ beau demain.', options: ['fera', 'fait', 'faisait', 'a fait'], answer: 'fera', hint: 'faire future: il fera' },
+        { type: 'choice', q: 'Which is the future of "avoir"?', options: ["j'aurai", "j'avrai", "j'avoirai"], answer: "j'aurai", hint: 'avoir has irregular future stem: aur-' },
+        { type: 'fill', q: 'Vous ___ la réponse bientôt.', options: ['saurez', 'savez', 'saviez', 'avez su'], answer: 'saurez', hint: 'savoir future: saur-' },
+        { type: 'transform', instruction: 'Put in future tense', q: 'Elle vient chez nous.', answer: 'Elle viendra chez nous.', hint: 'venir future stem: viendr-' },
+        { type: 'fill', q: 'Quand tu ___ grand, tu comprendras.', options: ['seras', 'es', 'étais', 'as été'], answer: 'seras', hint: 'être future: tu seras' },
+        { type: 'order', words: ['ne', 'pas', 'Je', 'viendrai'], answer: 'Je ne viendrai pas', hint: 'ne...pas wraps the future verb' }
       ]
     },
 
@@ -811,6 +943,18 @@ const GRAMMAR = {
           ],
           tip: 'The #1 rule: NEVER use the conditional right after "si" (if). It is always "Si + imparfait, conditionnel" — never "Si + conditionnel." "Si j\'avais..." (correct) vs. "Si j\'aurais..." (WRONG). This is a common mistake even native speakers sometimes make in casual speech.'
         }
+      ],
+      exercises: [
+        { type: 'fill', q: 'Je ___ un café, s\'il vous plaît.', options: ['voudrais', 'veux', 'voulais', 'voudrai'], answer: 'voudrais', hint: 'Polite request = conditional' },
+        { type: 'fill', q: 'Si j\'avais de l\'argent, j\' ___ une maison.', options: ['achèterais', 'achète', 'achetais', 'achèterai'], answer: 'achèterais', hint: 'Si + imparfait → conditional' },
+        { type: 'choice', q: 'Which is correct?', options: ["Si j'étais riche, je voyagerais.", "Si je serais riche, je voyagerais."], answer: "Si j'étais riche, je voyagerais.", hint: 'Never use conditional after si' },
+        { type: 'transform', instruction: 'Make polite with conditional', q: 'Je veux un croissant.', answer: 'Je voudrais un croissant.', hint: 'vouloir conditional: voudrais' },
+        { type: 'fill', q: 'Si tu étais là, ce ___ mieux.', options: ['serait', 'sera', 'est', 'était'], answer: 'serait', hint: 'Si + imparfait → conditional in result clause' },
+        { type: 'error', q: "Si j'aurais le temps, je lirais.", correction: "Si j'avais le temps, je lirais.", errorWord: 'aurais', fixWord: 'avais', hint: 'After si, use imparfait not conditional' },
+        { type: 'fill', q: 'Tu ___ venir demain?', options: ['pourrais', 'peux', 'pouvais', 'pourras'], answer: 'pourrais', hint: 'Polite suggestion = conditional' },
+        { type: 'transform', instruction: 'Complete the si clause', q: "Si nous avions le temps, nous ___ (partir).", answer: 'Si nous avions le temps, nous partirions.', hint: 'Conditional of partir: partirions' },
+        { type: 'fill', q: "À ta place, j'___ plus tôt.", options: ['arriverais', 'arrive', 'arrivais', 'arriverai'], answer: 'arriverais', hint: 'Advice/suggestion = conditional' },
+        { type: 'choice', q: '"Il devrait étudier" means...', options: ['He should study', 'He must study', 'He will study'], answer: 'He should study', hint: 'devoir conditional = should' }
       ]
     },
 
@@ -917,6 +1061,18 @@ const GRAMMAR = {
           ],
           tip: 'A helpful mnemonic for the order: think of it as concentric circles from the speaker outward. First come the pronouns closest to the speaker (me, te, nous, vous), then the specific ones (le, la, les), then the ones going "to" someone (lui, leur), then location (y) and quantity (en).'
         }
+      ],
+      exercises: [
+        { type: 'fill', q: 'Ce livre, je ___ lis souvent.', options: ['le', 'la', 'lui', 'les'], answer: 'le', hint: 'le livre = masculine → le (direct object)' },
+        { type: 'fill', q: 'Ma sœur, je ___ téléphone.', options: ['lui', 'la', 'le', 'les'], answer: 'lui', hint: 'téléphoner à qqn → indirect object = lui' },
+        { type: 'order', words: ['les', 'Je', 'pas', 'ne', 'aime'], answer: 'Je ne les aime pas', hint: 'Pronoun goes before the verb, inside ne...pas' },
+        { type: 'fill', q: 'Ces fleurs, il ___ a achetées.', options: ['les', 'leur', 'le', 'la'], answer: 'les', hint: 'Direct object pronoun for plural: les' },
+        { type: 'transform', instruction: 'Replace the underlined object with a pronoun', q: 'Je donne le livre à Marie.', answer: 'Je lui donne le livre.', hint: 'à Marie → lui (indirect)' },
+        { type: 'error', q: 'Je le parle.', correction: 'Je lui parle.', errorWord: 'le', fixWord: 'lui', hint: 'parler à qqn → indirect object pronoun' },
+        { type: 'fill', q: 'Tu ___ connais? (ces filles)', options: ['les', 'leur', 'la', 'lui'], answer: 'les', hint: 'connaître qqn → direct object, plural = les' },
+        { type: 'choice', q: 'Which is correct?', options: ['Je vais le faire.', 'Je le vais faire.'], answer: 'Je vais le faire.', hint: 'With infinitive, pronoun goes before the infinitive' },
+        { type: 'fill', q: "J'___ ai parlé hier.", options: ['leur', 'les', 'lui', 'le'], answer: 'leur', hint: 'parler à eux/elles → leur (plural indirect)' },
+        { type: 'order', words: ['en', 'Je', 'veux'], answer: 'Je en veux', hint: 'en replaces de + noun, goes before verb' }
       ]
     },
 
@@ -974,6 +1130,16 @@ const GRAMMAR = {
           ],
           tip: 'If you can rephrase the sentence using "de" or "about/of" in the underlying structure, use "dont." "The book I need" → "I need [de] the book" → "Le livre dont j\'ai besoin."'
         }
+      ],
+      exercises: [
+        { type: 'fill', q: "L'homme ___ parle est mon père.", options: ['qui', 'que', 'où', 'dont'], answer: 'qui', hint: 'Subject of the relative clause → qui' },
+        { type: 'fill', q: 'Le film ___ nous avons vu était bon.', options: ['que', 'qui', 'où', 'dont'], answer: 'que', hint: 'Direct object of the relative clause → que' },
+        { type: 'fill', q: 'La ville ___ je suis né est petite.', options: ['où', 'que', 'qui', 'dont'], answer: 'où', hint: 'Place → où' },
+        { type: 'fill', q: 'Le livre ___ tu as besoin est ici.', options: ['dont', 'que', 'qui', 'où'], answer: 'dont', hint: 'avoir besoin DE → dont' },
+        { type: 'choice', q: 'Which is correct?', options: ["C'est la femme dont je parle.", "C'est la femme que je parle."], answer: "C'est la femme dont je parle.", hint: 'parler DE → dont' },
+        { type: 'fill', q: 'Le jour ___ il est arrivé, il pleuvait.', options: ['où', 'que', 'qui', 'dont'], answer: 'où', hint: 'Time reference → où' },
+        { type: 'error', q: "L'homme qui je connais.", correction: "L'homme que je connais.", errorWord: 'qui', fixWord: 'que', hint: 'je connais → I know HIM → direct object → que' },
+        { type: 'fill', q: "C'est l'acteur ___ tout le monde parle.", options: ['dont', 'que', 'qui', 'où'], answer: 'dont', hint: 'parler DE → dont' }
       ]
     },
 
@@ -1036,6 +1202,18 @@ const GRAMMAR = {
           ],
           tip: 'Watch the placement! If the adjective normally goes BEFORE the noun (BANGS adjectives), the superlative also goes before: "la plus belle ville." If it normally goes AFTER, the superlative goes after with a repeated article: "la ville la plus moderne."'
         }
+      ],
+      exercises: [
+        { type: 'fill', q: 'Elle est ___ grande que moi.', options: ['plus', 'le plus', 'moins que', 'la plus'], answer: 'plus', hint: 'Comparative: more...than = plus...que' },
+        { type: 'fill', q: 'Il est ___ intelligent de la classe.', options: ['le plus', 'plus', 'le moins', 'aussi'], answer: 'le plus', hint: 'Superlative: the most = le plus' },
+        { type: 'error', q: 'Elle est plus bonne que sa sœur.', correction: 'Elle est meilleure que sa sœur.', errorWord: 'plus bonne', fixWord: 'meilleure', hint: 'plus bon(ne) → meilleur(e) (irregular)' },
+        { type: 'transform', instruction: 'Make a comparison using "aussi...que"', q: 'Pierre est grand. Marie est grande.', answer: 'Pierre est aussi grand que Marie.', hint: 'As...as = aussi...que' },
+        { type: 'fill', q: 'Ce film est ___ que le premier.', options: ['meilleur', 'plus bon', 'le meilleur', 'mieux'], answer: 'meilleur', hint: 'better (adjective) = meilleur' },
+        { type: 'choice', q: '"Elle chante mieux que moi" means...', options: ['She sings better than me', 'She sings best of all', 'She sings as well as me'], answer: 'She sings better than me', hint: 'mieux = better (adverb)' },
+        { type: 'fill', q: "C'est ___ restaurant de la ville.", options: ['le meilleur', 'le plus bon', 'meilleur', 'mieux'], answer: 'le meilleur', hint: 'The best (superlative) = le meilleur' },
+        { type: 'transform', instruction: 'Make a comparison using "moins...que"', q: 'Le train est rapide. Le bus est lent.', answer: 'Le bus est moins rapide que le train.', hint: 'Less...than = moins...que' },
+        { type: 'error', q: 'Il parle plus bien français.', correction: 'Il parle mieux français.', errorWord: 'plus bien', fixWord: 'mieux', hint: 'plus bien → mieux (irregular adverb)' },
+        { type: 'fill', q: "C'est la ___ belle ville que j'ai vue.", options: ['plus', 'le plus', 'la plus', 'moins'], answer: 'plus', hint: 'la plus belle = the most beautiful' }
       ]
     },
 
@@ -1094,6 +1272,16 @@ const GRAMMAR = {
           ],
           tip: 'The agreement rule simplified: the participle agrees with whatever comes BEFORE the verb. In "Elle s\'est lavée," "se" (= elle, direct object) comes before → agreement. In "Elle s\'est lavé les mains," "les mains" (direct object) comes AFTER → no agreement.'
         }
+      ],
+      exercises: [
+        { type: 'fill', q: 'Je ___ lève à 7 heures.', options: ['me', 'se', 'te', 'nous'], answer: 'me', hint: 'je + reflexive = me' },
+        { type: 'fill', q: 'Ils ___ couchent tard.', options: ['se', 'me', 'nous', 'te'], answer: 'se', hint: 'ils + reflexive = se' },
+        { type: 'error', q: 'Elle se a lavée.', correction: "Elle s'est lavée.", errorWord: 'se a', fixWord: "s'est", hint: 'Passé composé of reflexive: se + être' },
+        { type: 'order', words: ['se', 'ne', 'pas', 'Il', 'lève'], answer: 'Il ne se lève pas', hint: 'ne + reflexive pronoun + verb + pas' },
+        { type: 'transform', instruction: 'Put in passé composé', q: 'Elle se réveille tôt.', answer: "Elle s'est réveillée tôt.", hint: 'Reflexive verbs use être + agreement' },
+        { type: 'fill', q: 'Nous ___ promenons dans le parc.', options: ['nous', 'se', 'me', 'vous'], answer: 'nous', hint: 'nous + reflexive = nous' },
+        { type: 'choice', q: 'Which is correct?', options: ['Ils se sont parlé.', 'Ils se sont parlés.'], answer: 'Ils se sont parlé.', hint: 'parler à → no agreement (indirect object)' },
+        { type: 'fill', q: 'Tu ___ appelles comment?', options: ["t'", 'te', 'se', 'me'], answer: "t'", hint: 'tu + reflexive before vowel = t\'' }
       ]
     },
 
@@ -1156,6 +1344,18 @@ const GRAMMAR = {
           ],
           tip: 'If both subjects are the SAME person, use the infinitive instead: "Je veux partir" (I want to leave), NOT "Je veux que je parte." The subjunctive requires TWO DIFFERENT subjects: "Je veux que TU partes."'
         }
+      ],
+      exercises: [
+        { type: 'fill', q: 'Il faut que tu ___ là.', options: ['sois', 'es', 'seras', 'étais'], answer: 'sois', hint: 'il faut que + subjunctive' },
+        { type: 'fill', q: 'Je veux que vous ___ heureux.', options: ['soyez', 'êtes', 'serez', 'étiez'], answer: 'soyez', hint: 'vouloir que + subjunctive' },
+        { type: 'choice', q: 'Which triggers the subjunctive?', options: ['Il faut que...', 'Je sais que...', 'Il dit que...'], answer: 'Il faut que...', hint: 'Necessity/obligation triggers subjunctive' },
+        { type: 'fill', q: "Bien qu'il ___ fatigué, il travaille.", options: ['soit', 'est', 'sera', 'était'], answer: 'soit', hint: 'bien que + subjunctive' },
+        { type: 'error', q: "Je doute qu'il est là.", correction: "Je doute qu'il soit là.", errorWord: 'est', fixWord: 'soit', hint: 'douter que + subjunctive' },
+        { type: 'fill', q: 'Je suis content que tu ___ venu.', options: ['sois', 'es', 'as', 'aies'], answer: 'sois', hint: 'Emotion + que → subjunctive' },
+        { type: 'choice', q: '"Je pense qu\'il vient" — subjunctive needed?', options: ['No — penser (affirmative) uses indicative', 'Yes — always subjunctive after que'], answer: 'No — penser (affirmative) uses indicative', hint: 'Affirmative belief = indicative' },
+        { type: 'fill', q: 'Il est possible que nous ___ en retard.', options: ['soyons', 'sommes', 'serons', 'étions'], answer: 'soyons', hint: 'il est possible que + subjunctive' },
+        { type: 'fill', q: 'Pour que tu ___ comprendre.', options: ['puisses', 'peux', 'pourras', 'pouvais'], answer: 'puisses', hint: 'pour que + subjunctive' },
+        { type: 'transform', instruction: 'Use subjunctive', q: 'Il faut que je ___ (faire) mes devoirs.', answer: 'Il faut que je fasse mes devoirs.', hint: 'faire subjunctive: je fasse' }
       ]
     },
 
@@ -1191,6 +1391,16 @@ const GRAMMAR = {
           ],
           tip: 'Think of the plus-que-parfait as "one step further back in time." If the passé composé is the past, the plus-que-parfait is the past-of-the-past. "J\'ai mangé" = I ate. "J\'avais mangé" = I had (already) eaten.'
         }
+      ],
+      exercises: [
+        { type: 'fill', q: "J'___ déjà mangé quand il est arrivé.", options: ['avais', 'ai', 'avait', 'aurais'], answer: 'avais', hint: 'Plus-que-parfait: imparfait of avoir + participle' },
+        { type: 'fill', q: 'Elle ___ partie avant nous.', options: ['était', 'est', 'avait', 'a'], answer: 'était', hint: 'partir uses être → imparfait of être' },
+        { type: 'transform', instruction: 'Change from passé composé to plus-que-parfait', q: "J'ai fini mon travail.", answer: "J'avais fini mon travail.", hint: 'ai → avais' },
+        { type: 'choice', q: 'When do you use the plus-que-parfait?', options: ['For an action before another past action', 'For habitual past actions', 'For future plans'], answer: 'For an action before another past action', hint: 'The "past of the past"' },
+        { type: 'fill', q: 'Nous ___ arrivés quand le film a commencé.', options: ['étions', 'sommes', 'avions', 'avons'], answer: 'étions', hint: 'arriver uses être → étions arrivés' },
+        { type: 'error', q: "Il a déjà parti quand j'ai appelé.", correction: "Il était déjà parti quand j'ai appelé.", errorWord: 'a', fixWord: 'était', hint: 'Action before another past → plus-que-parfait' },
+        { type: 'transform', instruction: 'Put in plus-que-parfait', q: 'Ils sont venus.', answer: 'Ils étaient venus.', hint: 'sont → étaient' },
+        { type: 'fill', q: 'Tu ___ déjà vu ce film?', options: ['avais', 'as', 'avait', 'aurais'], answer: 'avais', hint: 'Plus-que-parfait of voir: avais vu' }
       ]
     },
 
@@ -1246,6 +1456,16 @@ const GRAMMAR = {
           ],
           tip: '"On" is the secret weapon for avoiding passives. "On m\'a dit" (I was told), "On m\'a volé mon sac" (My bag was stolen), "On parle anglais ici" (English is spoken here). It sounds much more natural than the passive in everyday French.'
         }
+      ],
+      exercises: [
+        { type: 'transform', instruction: 'Change to passive voice', q: 'Le chat mange la souris.', answer: 'La souris est mangée par le chat.', hint: 'Object becomes subject + être + past participle + par' },
+        { type: 'fill', q: 'La maison ___ construite en 1900.', options: ['a été', 'est', 'a', 'était'], answer: 'a été', hint: 'Passive past: a été + past participle' },
+        { type: 'choice', q: 'Which is passive?', options: ['Le livre est lu par les étudiants.', 'Les étudiants lisent le livre.'], answer: 'Le livre est lu par les étudiants.', hint: 'Subject receives the action in passive' },
+        { type: 'transform', instruction: 'Change to active voice', q: 'Le gâteau est mangé par les enfants.', answer: 'Les enfants mangent le gâteau.', hint: 'Agent (par...) becomes the subject' },
+        { type: 'fill', q: 'Cette chanson ___ chantée par tout le monde.', options: ['est', 'a', 'fait', 'va'], answer: 'est', hint: 'être + past participle = passive present' },
+        { type: 'error', q: 'Le lettre a été écrit par Marie.', correction: 'La lettre a été écrite par Marie.', errorWord: 'Le lettre a été écrit', fixWord: 'La lettre a été écrite', hint: 'lettre is feminine → la lettre, écrite' },
+        { type: 'fill', q: 'Les résultats ___ annoncés demain.', options: ['seront', 'sont', 'ont été', 'étaient'], answer: 'seront', hint: 'Future passive: seront + past participle' },
+        { type: 'transform', instruction: 'Change to passive voice', q: 'On parle français ici.', answer: 'Le français est parlé ici.', hint: 'on = passive construction' }
       ]
     },
 
@@ -1304,6 +1524,18 @@ const GRAMMAR = {
           ],
           tip: '"Et si on..." + imparfait is a wonderfully casual way to make suggestions in French. "Et si on prenait un café ?" (What if we grabbed a coffee?) — it sounds natural and friendly.'
         }
+      ],
+      exercises: [
+        { type: 'fill', q: "Si j'___ le temps, je lirais.", options: ['avais', 'aurais', 'ai', 'aurai'], answer: 'avais', hint: 'Si + imparfait (type 2 conditional)' },
+        { type: 'fill', q: "S'il pleut, je ___ mon parapluie.", options: ['prendrai', 'prendrais', 'prends', 'prenais'], answer: 'prendrai', hint: 'Si + present → future (type 1)' },
+        { type: 'error', q: 'Si je serais riche, je voyagerais.', correction: "Si j'étais riche, je voyagerais.", errorWord: 'serais', fixWord: 'étais', hint: 'Never conditional after si!' },
+        { type: 'choice', q: 'Si + present → ?', options: ['Future or present in result clause', 'Conditional in result clause', 'Subjunctive in result clause'], answer: 'Future or present in result clause', hint: 'Type 1: si + present → future/present' },
+        { type: 'fill', q: "Si j'avais su, je ne ___ pas venu.", options: ['serais', 'suis', 'serai', 'étais'], answer: 'serais', hint: 'Si + plus-que-parfait → conditionnel passé' },
+        { type: 'transform', instruction: 'Complete the sentence', q: "Si tu étudies, tu ___ (réussir).", answer: 'Si tu étudies, tu réussiras.', hint: 'Si + present → future' },
+        { type: 'error', q: 'Si je suis riche, je voyagerais.', correction: 'Si je suis riche, je voyagerai.', errorWord: 'voyagerais', fixWord: 'voyagerai', hint: 'Si + present → future, not conditional' },
+        { type: 'fill', q: "Si nous ___ plus tôt, nous aurions eu des places.", options: ['étions arrivés', 'arrivions', 'sommes arrivés', 'arriverions'], answer: 'étions arrivés', hint: 'Type 3: si + plus-que-parfait' },
+        { type: 'order', words: ['avais', 'Si', 'le', 'temps', 'je', "j'", 'irais'], answer: "Si j' avais le temps je irais", hint: 'Si + imparfait, conditional' },
+        { type: 'choice', q: 'Which si-clause type is hypothetical (unlikely)?', options: ['Si + imparfait → conditional', 'Si + present → future', 'Si + PQP → cond. passé'], answer: 'Si + imparfait → conditional', hint: 'Type 2 = unlikely/hypothetical' }
       ]
     },
 
@@ -1366,6 +1598,16 @@ const GRAMMAR = {
           ],
           tip: 'Commands in reported speech become "dire de + infinitive." "Mange !" (Eat!) → "Il m\'a dit de manger" (He told me to eat). For negative commands: "Ne mange pas !" → "Il m\'a dit de ne pas manger."'
         }
+      ],
+      exercises: [
+        { type: 'transform', instruction: 'Change to reported speech', q: 'Il dit: "Je suis fatigué."', answer: 'Il dit qu\'il est fatigué.', hint: 'Present → present (verb of speech in present)' },
+        { type: 'transform', instruction: 'Change to reported speech', q: 'Elle a dit: "Je viendrai demain."', answer: 'Elle a dit qu\'elle viendrait le lendemain.', hint: 'Future → conditional, demain → le lendemain' },
+        { type: 'fill', q: 'Il a dit qu\'il ___ fatigué.', options: ['était', 'est', 'sera', 'soit'], answer: 'était', hint: 'Past reporting verb: present → imparfait' },
+        { type: 'choice', q: '"demain" in reported speech becomes...', options: ['le lendemain', 'hier', 'aujourd\'hui', 'demain'], answer: 'le lendemain', hint: 'Time reference shifts back' },
+        { type: 'fill', q: 'Elle m\'a demandé ___ j\'allais.', options: ['où', 'que', 'si', 'qui'], answer: 'où', hint: 'Question word stays: "Où vas-tu?" → où j\'allais' },
+        { type: 'fill', q: "Il m'a demandé ___ j'étais content.", options: ['si', 'que', 'ce que', 'où'], answer: 'si', hint: 'Yes/no question → si' },
+        { type: 'transform', instruction: 'Change to reported speech', q: 'Elle dit: "J\'ai fini."', answer: 'Elle dit qu\'elle a fini.', hint: 'dit (present) → no tense shift needed' },
+        { type: 'choice', q: '"hier" in reported speech becomes...', options: ['la veille', 'le lendemain', 'ce jour-là', 'hier'], answer: 'la veille', hint: 'Yesterday → the day before' }
       ]
     },
 
@@ -1422,6 +1664,16 @@ const GRAMMAR = {
           ],
           tip: 'Use "dont" whenever possible — it is simpler. But for compound prepositions ending in "de" (à côté de, près de, au sujet de, loin de, à cause de), you MUST use "duquel/de laquelle": "La maison à côté de laquelle il y a un parc."'
         }
+      ],
+      exercises: [
+        { type: 'fill', q: "La personne à ___ j'ai parlé.", options: ['laquelle', 'qui', 'que', 'dont'], answer: 'laquelle', hint: 'à + feminine → à laquelle (or à qui for people)' },
+        { type: 'fill', q: "Le stylo avec ___ j'écris.", options: ['lequel', 'qui', 'que', 'dont'], answer: 'lequel', hint: 'Preposition + thing → lequel' },
+        { type: 'choice', q: '"Le film auquel je pense" — auquel is...', options: ['à + lequel (contracted)', 'au + lequel', 'à + quel'], answer: 'à + lequel (contracted)', hint: 'à + lequel = auquel' },
+        { type: 'fill', q: "Les raisons pour ___ il est parti.", options: ['lesquelles', 'laquelle', 'lequel', 'dont'], answer: 'lesquelles', hint: 'pour + feminine plural → lesquelles' },
+        { type: 'fill', q: "Ce ___ je pense est important.", options: ['à quoi', 'dont', 'que', 'qui'], answer: 'à quoi', hint: 'penser à + indefinite → ce à quoi' },
+        { type: 'choice', q: 'duquel is the contraction of...', options: ['de + lequel', 'du + lequel', 'de + quel'], answer: 'de + lequel', hint: 'de + lequel = duquel' },
+        { type: 'fill', q: 'La table sur ___ est le livre.', options: ['laquelle', 'lequel', 'que', 'qui'], answer: 'laquelle', hint: 'sur + feminine → sur laquelle' },
+        { type: 'fill', q: "Ce ___ j'ai besoin, c'est du repos.", options: ['dont', 'que', 'qui', 'à quoi'], answer: 'dont', hint: 'avoir besoin DE → ce dont' }
       ]
     }
   ]
