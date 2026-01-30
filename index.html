@@ -1056,6 +1056,21 @@ else if(latest.type==='quiz'||latest.type==='flashcard'||latest.type==='conjugat
 const match=latest.desc.match(/(\d+)\/(\d+)/);if(match&&parseInt(match[1])>=dc.challenge.goal){dc.completed=true;save();toast('Daily Challenge complete!');checkAchievements();}}}
 
 // ── SMART REVIEW ──
+function resolveKey(key,all){
+const m=all.find(x=>x.key===key);if(m)return m;
+const p=key.split('_');
+if(p[0]==='vocab'){const fr=p.slice(2).join(' ').replace(/_/g,' ');const f=all.find(x=>x.type==='vocab'&&x.fr.toLowerCase()===fr.toLowerCase());if(f)return f;}
+if(p[0]==='verb'){const fr=p.slice(1).join(' ').replace(/_/g,' ');const f=all.find(x=>x.type==='verb'&&x.fr.toLowerCase()===fr.toLowerCase());if(f)return f;}
+if(p[0]==='phrase'){const fr=p.slice(2).join(' ').replace(/_/g,' ');const f=all.find(x=>x.type==='phrase'&&x.fr.toLowerCase()===fr.toLowerCase());if(f)return f;}
+if(p[0]==='conn'){const fr=p.slice(2).join(' ').replace(/_/g,' ');const f=all.find(x=>x.type==='conn'&&x.fr.toLowerCase()===fr.toLowerCase());if(f)return f;}
+return null;}
+
+function getReviewItems(type){const now=Date.now();
+let entries;if(type==='due')entries=Object.entries(srs.items).filter(([k,v])=>v.next&&v.next<=now).sort((a,b)=>a[1].next-b[1].next).slice(0,20);
+else entries=Object.entries(srs.items).filter(([k,v])=>v.next&&v.next>now&&v.next<=now+86400000).slice(0,20);
+const all=getAllItems(['vocab','verbs','phrases','connectives']);
+return entries.map(([k])=>resolveKey(k,all)).filter(Boolean);}
+
 function renderSmartReview(){const sec=document.getElementById('smart-review-section');
 const now=Date.now();const due=Object.entries(srs.items).filter(([k,v])=>v.next&&v.next<=now);
 const soon=Object.entries(srs.items).filter(([k,v])=>v.next&&v.next>now&&v.next<=now+86400000);
@@ -1065,13 +1080,40 @@ if(due.length>0)h+='<div style="display:flex;align-items:center;gap:8px;margin-b
 if(soon.length>0)h+='<div style="display:flex;align-items:center;gap:8px"><span class="review-badge review-soon">'+soon.length+' due today</span></div>';
 h+='</div>';sec.innerHTML=h;}
 
-function startSmartReview(type){const now=Date.now();
-let items;if(type==='due')items=Object.entries(srs.items).filter(([k,v])=>v.next&&v.next<=now).sort((a,b)=>a[1].next-b[1].next).slice(0,20);
-else items=Object.entries(srs.items).filter(([k,v])=>v.next&&v.next>now&&v.next<=now+86400000).slice(0,20);
+function startSmartReview(type){
+const items=getReviewItems(type);
 if(!items.length){toast('No items to review');return;}
-nav('practice');setTimeout(()=>{document.getElementById('practice-hub').classList.add('hidden');
-const fcItems=items.map(([k])=>{const p=k.split('_');const label=p.slice(1).join(' ');return{fr:label,en:label,type:p[0],key:k};});
-PS={mode:'fc',items:shuffle(fcItems),i:0,known:0};startTimer();document.getElementById('practice-config').classList.add('hidden');rFC();},50);}
+nav('practice');setTimeout(()=>{
+document.getElementById('practice-hub').classList.add('hidden');
+document.getElementById('practice-config').classList.remove('hidden');
+document.getElementById('practice-config').innerHTML=
+'<h2 class="mb-12">Smart Review</h2>'+
+'<p class="subtitle mb-12" style="color:var(--text2)">'+items.length+' items to review</p>'+
+'<h3 class="mb-8">Choose Mode</h3>'+
+'<div style="display:flex;flex-direction:column;gap:10px" class="mb-16">'+
+'<button class="btn btn-primary btn-full" onclick="goSmartReview(\'mcq\')">Multiple Choice Quiz</button>'+
+'<button class="btn btn-primary btn-full" onclick="goSmartReview(\'fc\')">Flashcards</button>'+
+'<button class="btn btn-primary btn-full" onclick="goSmartReview(\'type\')">Type the Answer</button>'+
+'<button class="btn btn-primary btn-full" onclick="goSmartReview(\'match\')">Matching</button>'+
+'<button class="btn btn-primary btn-full" onclick="goSmartReview(\'listen\')">Listening</button>'+
+'</div>'+
+'<button class="btn btn-ghost btn-full" onclick="resetPractice()">Cancel</button>';
+window._smartReviewItems=items;window._smartReviewType=type;
+},50);}
+
+function goSmartReview(mode){
+const items=shuffle(window._smartReviewItems||[]);if(!items.length){toast('No items');return;}
+document.getElementById('practice-config').classList.add('hidden');
+const all=getAllItems(['vocab','verbs','phrases','connectives']);
+if(mode==='fc'){PS={mode:'fc',items,i:0,known:0};startTimer();rFC();}
+else if(mode==='mcq'){PS={mode:'mcq',items,all,i:0,sc:0,dir:'f2e',ans:[]};startTimer();rMCQ();}
+else if(mode==='type'){PS={mode:'type',items,i:0,sc:0,ans:[]};startTimer();rType();}
+else if(mode==='match'){const mItems=items.slice(0,Math.min(items.length,8));
+const left=shuffle(mItems.map((it,i)=>({id:i,text:it.fr,side:'fr'})));
+const right=shuffle(mItems.map((it,i)=>({id:i,text:it.en,side:'en'})));
+PS={mode:'match',items:mItems,left,right,matched:[],sel:null,attempts:0,startTime:Date.now()};startTimer();rMatch();}
+else if(mode==='listen'){PS={mode:'listen',items,all,i:0,sc:0};startTimer();rListen();}
+}
 
 // ── ENHANCED HOME ──
 const _origRenderHome=renderHome;
