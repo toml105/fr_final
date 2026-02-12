@@ -1,155 +1,1516 @@
-const DB={
-// ESSENTIAL
-être:{m:"to be",g:"irregular",c:"essential",t:{présent:{je:"suis",tu:"es",il:"est",nous:"sommes",vous:"êtes",ils:"sont"},passéComposé:{je:"ai été",tu:"as été",il:"a été",nous:"avons été",vous:"avez été",ils:"ont été"},imparfait:{je:"étais",tu:"étais",il:"était",nous:"étions",vous:"étiez",ils:"étaient"},futurSimple:{je:"serai",tu:"seras",il:"sera",nous:"serons",vous:"serez",ils:"seront"}}},
-avoir:{m:"to have",g:"irregular",c:"essential",t:{présent:{je:"ai",tu:"as",il:"a",nous:"avons",vous:"avez",ils:"ont"},passéComposé:{je:"ai eu",tu:"as eu",il:"a eu",nous:"avons eu",vous:"avez eu",ils:"ont eu"},imparfait:{je:"avais",tu:"avais",il:"avait",nous:"avions",vous:"aviez",ils:"avaient"},futurSimple:{je:"aurai",tu:"auras",il:"aura",nous:"aurons",vous:"aurez",ils:"auront"}}},
+// ============================================================
+// French Verb Database with Conjugation Engine
+// 150+ verbs, 12 tenses, full irregular support
+// ============================================================
 
-// MODAL VERBS
-faire:{m:"to do/make",g:"irregular",c:"modal",t:{présent:{je:"fais",tu:"fais",il:"fait",nous:"faisons",vous:"faites",ils:"font"},passéComposé:{je:"ai fait",tu:"as fait",il:"a fait",nous:"avons fait",vous:"avez fait",ils:"ont fait"},imparfait:{je:"faisais",tu:"faisais",il:"faisait",nous:"faisions",vous:"faisiez",ils:"faisaient"},futurSimple:{je:"ferai",tu:"feras",il:"fera",nous:"ferons",vous:"ferez",ils:"feront"}}},
-pouvoir:{m:"can/to be able",g:"irregular",c:"modal",t:{présent:{je:"peux",tu:"peux",il:"peut",nous:"pouvons",vous:"pouvez",ils:"peuvent"},passéComposé:{je:"ai pu",tu:"as pu",il:"a pu",nous:"avons pu",vous:"avez pu",ils:"ont pu"},imparfait:{je:"pouvais",tu:"pouvais",il:"pouvait",nous:"pouvions",vous:"pouviez",ils:"pouvaient"},futurSimple:{je:"pourrai",tu:"pourras",il:"pourra",nous:"pourrons",vous:"pourrez",ils:"pourront"}}},
-vouloir:{m:"to want",g:"irregular",c:"modal",t:{présent:{je:"veux",tu:"veux",il:"veut",nous:"voulons",vous:"voulez",ils:"veulent"},passéComposé:{je:"ai voulu",tu:"as voulu",il:"a voulu",nous:"avons voulu",vous:"avez voulu",ils:"ont voulu"},imparfait:{je:"voulais",tu:"voulais",il:"voulait",nous:"voulions",vous:"vouliez",ils:"voulaient"},futurSimple:{je:"voudrai",tu:"voudras",il:"voudra",nous:"voudrons",vous:"voudrez",ils:"voudront"}}},
-devoir:{m:"must/to have to",g:"irregular",c:"modal",t:{présent:{je:"dois",tu:"dois",il:"doit",nous:"devons",vous:"devez",ils:"doivent"},passéComposé:{je:"ai dû",tu:"as dû",il:"a dû",nous:"avons dû",vous:"avez dû",ils:"ont dû"},imparfait:{je:"devais",tu:"devais",il:"devait",nous:"devions",vous:"deviez",ils:"devaient"},futurSimple:{je:"devrai",tu:"devras",il:"devra",nous:"devrons",vous:"devrez",ils:"devront"}}},
-savoir:{m:"to know (facts)",g:"irregular",c:"modal",t:{présent:{je:"sais",tu:"sais",il:"sait",nous:"savons",vous:"savez",ils:"savent"},passéComposé:{je:"ai su",tu:"as su",il:"a su",nous:"avons su",vous:"avez su",ils:"ont su"},imparfait:{je:"savais",tu:"savais",il:"savait",nous:"savions",vous:"saviez",ils:"savaient"},futurSimple:{je:"saurai",tu:"sauras",il:"saura",nous:"saurons",vous:"saurez",ils:"sauront"}}},
-connaître:{m:"to know (people/places)",g:"irregular",c:"modal",t:{présent:{je:"connais",tu:"connais",il:"connaît",nous:"connaissons",vous:"connaissez",ils:"connaissent"},passéComposé:{je:"ai connu",tu:"as connu",il:"a connu",nous:"avons connu",vous:"avez connu",ils:"ont connu"},imparfait:{je:"connaissais",tu:"connaissais",il:"connaissait",nous:"connaissions",vous:"connaissiez",ils:"connaissaient"},futurSimple:{je:"connaîtrai",tu:"connaîtras",il:"connaîtra",nous:"connaîtrons",vous:"connaîtrez",ils:"connaîtront"}}},
-falloir:{m:"to be necessary",g:"irregular",c:"modal",t:{présent:{il:"faut"},passéComposé:{il:"a fallu"},imparfait:{il:"fallait"},futurSimple:{il:"faudra"}}},
+const VERB_DATA = (() => {
+  "use strict";
 
-// MOVEMENT / DR MRS VANDERTRAMP
-aller:{m:"to go",g:"irregular",c:"movement",aux:"être",t:{présent:{je:"vais",tu:"vas",il:"va",nous:"allons",vous:"allez",ils:"vont"},passéComposé:{je:"suis allé(e)",tu:"es allé(e)",il:"est allé",nous:"sommes allés",vous:"êtes allés",ils:"sont allés"},imparfait:{je:"allais",tu:"allais",il:"allait",nous:"allions",vous:"alliez",ils:"allaient"},futurSimple:{je:"irai",tu:"iras",il:"ira",nous:"irons",vous:"irez",ils:"iront"}}},
-venir:{m:"to come",g:"irregular",c:"movement",aux:"être",t:{présent:{je:"viens",tu:"viens",il:"vient",nous:"venons",vous:"venez",ils:"viennent"},passéComposé:{je:"suis venu(e)",tu:"es venu(e)",il:"est venu",nous:"sommes venus",vous:"êtes venus",ils:"sont venus"},imparfait:{je:"venais",tu:"venais",il:"venait",nous:"venions",vous:"veniez",ils:"venaient"},futurSimple:{je:"viendrai",tu:"viendras",il:"viendra",nous:"viendrons",vous:"viendrez",ils:"viendront"}}},
-partir:{m:"to leave",g:"irregular",c:"movement",aux:"être",t:{présent:{je:"pars",tu:"pars",il:"part",nous:"partons",vous:"partez",ils:"partent"},passéComposé:{je:"suis parti(e)",tu:"es parti(e)",il:"est parti",nous:"sommes partis",vous:"êtes partis",ils:"sont partis"},imparfait:{je:"partais",tu:"partais",il:"partait",nous:"partions",vous:"partiez",ils:"partaient"},futurSimple:{je:"partirai",tu:"partiras",il:"partira",nous:"partirons",vous:"partirez",ils:"partiront"}}},
-sortir:{m:"to go out",g:"irregular",c:"movement",aux:"être",t:{présent:{je:"sors",tu:"sors",il:"sort",nous:"sortons",vous:"sortez",ils:"sortent"},passéComposé:{je:"suis sorti(e)",tu:"es sorti(e)",il:"est sorti",nous:"sommes sortis",vous:"êtes sortis",ils:"sont sortis"},imparfait:{je:"sortais",tu:"sortais",il:"sortait",nous:"sortions",vous:"sortiez",ils:"sortaient"},futurSimple:{je:"sortirai",tu:"sortiras",il:"sortira",nous:"sortirons",vous:"sortirez",ils:"sortiront"}}},
-arriver:{m:"to arrive",g:"-er",c:"movement",aux:"être",t:{présent:{je:"arrive",tu:"arrives",il:"arrive",nous:"arrivons",vous:"arrivez",ils:"arrivent"},passéComposé:{je:"suis arrivé(e)",tu:"es arrivé(e)",il:"est arrivé",nous:"sommes arrivés",vous:"êtes arrivés",ils:"sont arrivés"},imparfait:{je:"arrivais",tu:"arrivais",il:"arrivait",nous:"arrivions",vous:"arriviez",ils:"arrivaient"},futurSimple:{je:"arriverai",tu:"arriveras",il:"arrivera",nous:"arriverons",vous:"arriverez",ils:"arriveront"}}},
-entrer:{m:"to enter",g:"-er",c:"movement",aux:"être",t:{présent:{je:"entre",tu:"entres",il:"entre",nous:"entrons",vous:"entrez",ils:"entrent"},passéComposé:{je:"suis entré(e)",tu:"es entré(e)",il:"est entré",nous:"sommes entrés",vous:"êtes entrés",ils:"sont entrés"},imparfait:{je:"entrais",tu:"entrais",il:"entrait",nous:"entrions",vous:"entriez",ils:"entraient"},futurSimple:{je:"entrerai",tu:"entreras",il:"entrera",nous:"entrerons",vous:"entrerez",ils:"entreront"}}},
-rester:{m:"to stay",g:"-er",c:"movement",aux:"être",t:{présent:{je:"reste",tu:"restes",il:"reste",nous:"restons",vous:"restez",ils:"restent"},passéComposé:{je:"suis resté(e)",tu:"es resté(e)",il:"est resté",nous:"sommes restés",vous:"êtes restés",ils:"sont restés"},imparfait:{je:"restais",tu:"restais",il:"restait",nous:"restions",vous:"restiez",ils:"restaient"},futurSimple:{je:"resterai",tu:"resteras",il:"restera",nous:"resterons",vous:"resterez",ils:"resteront"}}},
-tomber:{m:"to fall",g:"-er",c:"movement",aux:"être",t:{présent:{je:"tombe",tu:"tombes",il:"tombe",nous:"tombons",vous:"tombez",ils:"tombent"},passéComposé:{je:"suis tombé(e)",tu:"es tombé(e)",il:"est tombé",nous:"sommes tombés",vous:"êtes tombés",ils:"sont tombés"},imparfait:{je:"tombais",tu:"tombais",il:"tombait",nous:"tombions",vous:"tombiez",ils:"tombaient"},futurSimple:{je:"tomberai",tu:"tomberas",il:"tombera",nous:"tomberons",vous:"tomberez",ils:"tomberont"}}},
-monter:{m:"to go up/climb",g:"-er",c:"movement",aux:"être",t:{présent:{je:"monte",tu:"montes",il:"monte",nous:"montons",vous:"montez",ils:"montent"},passéComposé:{je:"suis monté(e)",tu:"es monté(e)",il:"est monté",nous:"sommes montés",vous:"êtes montés",ils:"sont montés"},imparfait:{je:"montais",tu:"montais",il:"montait",nous:"montions",vous:"montiez",ils:"montaient"},futurSimple:{je:"monterai",tu:"monteras",il:"montera",nous:"monterons",vous:"monterez",ils:"monteront"}}},
-descendre:{m:"to go down",g:"-re",c:"movement",aux:"être",t:{présent:{je:"descends",tu:"descends",il:"descend",nous:"descendons",vous:"descendez",ils:"descendent"},passéComposé:{je:"suis descendu(e)",tu:"es descendu(e)",il:"est descendu",nous:"sommes descendus",vous:"êtes descendus",ils:"sont descendus"},imparfait:{je:"descendais",tu:"descendais",il:"descendait",nous:"descendions",vous:"descendiez",ils:"descendaient"},futurSimple:{je:"descendrai",tu:"descendras",il:"descendra",nous:"descendrons",vous:"descendrez",ils:"descendront"}}},
-rentrer:{m:"to return home",g:"-er",c:"movement",aux:"être",t:{présent:{je:"rentre",tu:"rentres",il:"rentre",nous:"rentrons",vous:"rentrez",ils:"rentrent"},passéComposé:{je:"suis rentré(e)",tu:"es rentré(e)",il:"est rentré",nous:"sommes rentrés",vous:"êtes rentrés",ils:"sont rentrés"},imparfait:{je:"rentrais",tu:"rentrais",il:"rentrait",nous:"rentrions",vous:"rentriez",ils:"rentraient"},futurSimple:{je:"rentrerai",tu:"rentreras",il:"rentrera",nous:"rentrerons",vous:"rentrerez",ils:"rentreront"}}},
-retourner:{m:"to return",g:"-er",c:"movement",aux:"être",t:{présent:{je:"retourne",tu:"retournes",il:"retourne",nous:"retournons",vous:"retournez",ils:"retournent"},passéComposé:{je:"suis retourné(e)",tu:"es retourné(e)",il:"est retourné",nous:"sommes retournés",vous:"êtes retournés",ils:"sont retournés"},imparfait:{je:"retournais",tu:"retournais",il:"retournait",nous:"retournions",vous:"retourniez",ils:"retournaient"},futurSimple:{je:"retournerai",tu:"retourneras",il:"retournera",nous:"retournerons",vous:"retournerez",ils:"retourneront"}}},
-naître:{m:"to be born",g:"irregular",c:"movement",aux:"être",t:{présent:{je:"nais",tu:"nais",il:"naît",nous:"naissons",vous:"naissez",ils:"naissent"},passéComposé:{je:"suis né(e)",tu:"es né(e)",il:"est né",nous:"sommes nés",vous:"êtes nés",ils:"sont nés"},imparfait:{je:"naissais",tu:"naissais",il:"naissait",nous:"naissions",vous:"naissiez",ils:"naissaient"},futurSimple:{je:"naîtrai",tu:"naîtras",il:"naîtra",nous:"naîtrons",vous:"naîtrez",ils:"naîtront"}}},
-mourir:{m:"to die",g:"irregular",c:"movement",aux:"être",t:{présent:{je:"meurs",tu:"meurs",il:"meurt",nous:"mourons",vous:"mourez",ils:"meurent"},passéComposé:{je:"suis mort(e)",tu:"es mort(e)",il:"est mort",nous:"sommes morts",vous:"êtes morts",ils:"sont morts"},imparfait:{je:"mourais",tu:"mourais",il:"mourait",nous:"mourions",vous:"mouriez",ils:"mouraient"},futurSimple:{je:"mourrai",tu:"mourras",il:"mourra",nous:"mourrons",vous:"mourrez",ils:"mourront"}}},
-devenir:{m:"to become",g:"irregular",c:"movement",aux:"être",t:{présent:{je:"deviens",tu:"deviens",il:"devient",nous:"devenons",vous:"devenez",ils:"deviennent"},passéComposé:{je:"suis devenu(e)",tu:"es devenu(e)",il:"est devenu",nous:"sommes devenus",vous:"êtes devenus",ils:"sont devenus"},imparfait:{je:"devenais",tu:"devenais",il:"devenait",nous:"devenions",vous:"deveniez",ils:"devenaient"},futurSimple:{je:"deviendrai",tu:"deviendras",il:"deviendra",nous:"deviendrons",vous:"deviendrez",ils:"deviendront"}}},
-revenir:{m:"to come back",g:"irregular",c:"movement",aux:"être",t:{présent:{je:"reviens",tu:"reviens",il:"revient",nous:"revenons",vous:"revenez",ils:"reviennent"},passéComposé:{je:"suis revenu(e)",tu:"es revenu(e)",il:"est revenu",nous:"sommes revenus",vous:"êtes revenus",ils:"sont revenus"},imparfait:{je:"revenais",tu:"revenais",il:"revenait",nous:"revenions",vous:"reveniez",ils:"revenaient"},futurSimple:{je:"reviendrai",tu:"reviendras",il:"reviendra",nous:"reviendrons",vous:"reviendrez",ils:"reviendront"}}},
-passer:{m:"to pass/spend time",g:"-er",c:"movement",aux:"être",t:{présent:{je:"passe",tu:"passes",il:"passe",nous:"passons",vous:"passez",ils:"passent"},passéComposé:{je:"suis passé(e)",tu:"es passé(e)",il:"est passé",nous:"sommes passés",vous:"êtes passés",ils:"sont passés"},imparfait:{je:"passais",tu:"passais",il:"passait",nous:"passions",vous:"passiez",ils:"passaient"},futurSimple:{je:"passerai",tu:"passeras",il:"passera",nous:"passerons",vous:"passerez",ils:"passeront"}}},
+  // ──────────────────────────────────────────────
+  // PERSON LABELS
+  // ──────────────────────────────────────────────
+  const PERSONS = ["je", "tu", "il/elle", "nous", "vous", "ils/elles"];
 
-// REFLEXIVE VERBS
-"se lever":{m:"to get up",g:"reflexive",c:"reflexive",aux:"être",refl:true,t:{présent:{je:"me lève",tu:"te lèves",il:"se lève",nous:"nous levons",vous:"vous levez",ils:"se lèvent"},passéComposé:{je:"me suis levé(e)",tu:"t'es levé(e)",il:"s'est levé",nous:"nous sommes levés",vous:"vous êtes levés",ils:"se sont levés"},imparfait:{je:"me levais",tu:"te levais",il:"se levait",nous:"nous levions",vous:"vous leviez",ils:"se levaient"},futurSimple:{je:"me lèverai",tu:"te lèveras",il:"se lèvera",nous:"nous lèverons",vous:"vous lèverez",ils:"se lèveront"}}},
-"se coucher":{m:"to go to bed",g:"reflexive",c:"reflexive",aux:"être",refl:true,t:{présent:{je:"me couche",tu:"te couches",il:"se couche",nous:"nous couchons",vous:"vous couchez",ils:"se couchent"},passéComposé:{je:"me suis couché(e)",tu:"t'es couché(e)",il:"s'est couché",nous:"nous sommes couchés",vous:"vous êtes couchés",ils:"se sont couchés"},imparfait:{je:"me couchais",tu:"te couchais",il:"se couchait",nous:"nous couchions",vous:"vous couchiez",ils:"se couchaient"},futurSimple:{je:"me coucherai",tu:"te coucheras",il:"se couchera",nous:"nous coucherons",vous:"vous coucherez",ils:"se coucheront"}}},
-"se réveiller":{m:"to wake up",g:"reflexive",c:"reflexive",aux:"être",refl:true,t:{présent:{je:"me réveille",tu:"te réveilles",il:"se réveille",nous:"nous réveillons",vous:"vous réveillez",ils:"se réveillent"},passéComposé:{je:"me suis réveillé(e)",tu:"t'es réveillé(e)",il:"s'est réveillé",nous:"nous sommes réveillés",vous:"vous êtes réveillés",ils:"se sont réveillés"},imparfait:{je:"me réveillais",tu:"te réveillais",il:"se réveillait",nous:"nous réveillions",vous:"vous réveilliez",ils:"se réveillaient"},futurSimple:{je:"me réveillerai",tu:"te réveilleras",il:"se réveillera",nous:"nous réveillerons",vous:"vous réveillerez",ils:"se réveilleront"}}},
-"se laver":{m:"to wash oneself",g:"reflexive",c:"reflexive",aux:"être",refl:true,t:{présent:{je:"me lave",tu:"te laves",il:"se lave",nous:"nous lavons",vous:"vous lavez",ils:"se lavent"},passéComposé:{je:"me suis lavé(e)",tu:"t'es lavé(e)",il:"s'est lavé",nous:"nous sommes lavés",vous:"vous êtes lavés",ils:"se sont lavés"},imparfait:{je:"me lavais",tu:"te lavais",il:"se lavait",nous:"nous lavions",vous:"vous laviez",ils:"se lavaient"},futurSimple:{je:"me laverai",tu:"te laveras",il:"se lavera",nous:"nous laverons",vous:"vous laverez",ils:"se laveront"}}},
-"s'habiller":{m:"to get dressed",g:"reflexive",c:"reflexive",aux:"être",refl:true,t:{présent:{je:"m'habille",tu:"t'habilles",il:"s'habille",nous:"nous habillons",vous:"vous habillez",ils:"s'habillent"},passéComposé:{je:"me suis habillé(e)",tu:"t'es habillé(e)",il:"s'est habillé",nous:"nous sommes habillés",vous:"vous êtes habillés",ils:"se sont habillés"},imparfait:{je:"m'habillais",tu:"t'habillais",il:"s'habillait",nous:"nous habillions",vous:"vous habilliez",ils:"s'habillaient"},futurSimple:{je:"m'habillerai",tu:"t'habilleras",il:"s'habillera",nous:"nous habillerons",vous:"vous habillerez",ils:"s'habilleront"}}},
-"s'appeler":{m:"to be called",g:"reflexive",c:"reflexive",aux:"être",refl:true,t:{présent:{je:"m'appelle",tu:"t'appelles",il:"s'appelle",nous:"nous appelons",vous:"vous appelez",ils:"s'appellent"},passéComposé:{je:"me suis appelé(e)",tu:"t'es appelé(e)",il:"s'est appelé",nous:"nous sommes appelés",vous:"vous êtes appelés",ils:"se sont appelés"},imparfait:{je:"m'appelais",tu:"t'appelais",il:"s'appelait",nous:"nous appelions",vous:"vous appeliez",ils:"s'appelaient"},futurSimple:{je:"m'appellerai",tu:"t'appelleras",il:"s'appellera",nous:"nous appellerons",vous:"vous appellerez",ils:"s'appelleront"}}},
-"se promener":{m:"to walk/stroll",g:"reflexive",c:"reflexive",aux:"être",refl:true,t:{présent:{je:"me promène",tu:"te promènes",il:"se promène",nous:"nous promenons",vous:"vous promenez",ils:"se promènent"},passéComposé:{je:"me suis promené(e)",tu:"t'es promené(e)",il:"s'est promené",nous:"nous sommes promenés",vous:"vous êtes promenés",ils:"se sont promenés"},imparfait:{je:"me promenais",tu:"te promenais",il:"se promenait",nous:"nous promenions",vous:"vous promeniez",ils:"se promenaient"},futurSimple:{je:"me promènerai",tu:"te promèneras",il:"se promènera",nous:"nous promènerons",vous:"vous promènerez",ils:"se promèneront"}}},
-"se sentir":{m:"to feel",g:"reflexive",c:"reflexive",aux:"être",refl:true,t:{présent:{je:"me sens",tu:"te sens",il:"se sent",nous:"nous sentons",vous:"vous sentez",ils:"se sentent"},passéComposé:{je:"me suis senti(e)",tu:"t'es senti(e)",il:"s'est senti",nous:"nous sommes sentis",vous:"vous êtes sentis",ils:"se sont sentis"},imparfait:{je:"me sentais",tu:"te sentais",il:"se sentait",nous:"nous sentions",vous:"vous sentiez",ils:"se sentaient"},futurSimple:{je:"me sentirai",tu:"te sentiras",il:"se sentira",nous:"nous sentirons",vous:"vous sentirez",ils:"se sentiront"}}},
-"se dépêcher":{m:"to hurry",g:"reflexive",c:"reflexive",aux:"être",refl:true,t:{présent:{je:"me dépêche",tu:"te dépêches",il:"se dépêche",nous:"nous dépêchons",vous:"vous dépêchez",ils:"se dépêchent"},passéComposé:{je:"me suis dépêché(e)",tu:"t'es dépêché(e)",il:"s'est dépêché",nous:"nous sommes dépêchés",vous:"vous êtes dépêchés",ils:"se sont dépêchés"},imparfait:{je:"me dépêchais",tu:"te dépêchais",il:"se dépêchait",nous:"nous dépêchions",vous:"vous dépêchiez",ils:"se dépêchaient"},futurSimple:{je:"me dépêcherai",tu:"te dépêcheras",il:"se dépêchera",nous:"nous dépêcherons",vous:"vous dépêcherez",ils:"se dépêcheront"}}},
-"se reposer":{m:"to rest",g:"reflexive",c:"reflexive",aux:"être",refl:true,t:{présent:{je:"me repose",tu:"te reposes",il:"se repose",nous:"nous reposons",vous:"vous reposez",ils:"se reposent"},passéComposé:{je:"me suis reposé(e)",tu:"t'es reposé(e)",il:"s'est reposé",nous:"nous sommes reposés",vous:"vous êtes reposés",ils:"se sont reposés"},imparfait:{je:"me reposais",tu:"te reposais",il:"se reposait",nous:"nous reposions",vous:"vous reposiez",ils:"se reposaient"},futurSimple:{je:"me reposerai",tu:"te reposeras",il:"se reposera",nous:"nous reposerons",vous:"vous reposerez",ils:"se reposeront"}}},
-"se souvenir":{m:"to remember",g:"reflexive",c:"reflexive",aux:"être",refl:true,t:{présent:{je:"me souviens",tu:"te souviens",il:"se souvient",nous:"nous souvenons",vous:"vous souvenez",ils:"se souviennent"},passéComposé:{je:"me suis souvenu(e)",tu:"t'es souvenu(e)",il:"s'est souvenu",nous:"nous sommes souvenus",vous:"vous êtes souvenus",ils:"se sont souvenus"},imparfait:{je:"me souvenais",tu:"te souvenais",il:"se souvenait",nous:"nous souvenions",vous:"vous souveniez",ils:"se souvenaient"},futurSimple:{je:"me souviendrai",tu:"te souviendras",il:"se souviendra",nous:"nous souviendrons",vous:"vous souviendrez",ils:"se souviendront"}}},
-"se tromper":{m:"to be wrong/make mistake",g:"reflexive",c:"reflexive",aux:"être",refl:true,t:{présent:{je:"me trompe",tu:"te trompes",il:"se trompe",nous:"nous trompons",vous:"vous trompez",ils:"se trompent"},passéComposé:{je:"me suis trompé(e)",tu:"t'es trompé(e)",il:"s'est trompé",nous:"nous sommes trompés",vous:"vous êtes trompés",ils:"se sont trompés"},imparfait:{je:"me trompais",tu:"te trompais",il:"se trompait",nous:"nous trompions",vous:"vous trompiez",ils:"se trompaient"},futurSimple:{je:"me tromperai",tu:"te tromperas",il:"se trompera",nous:"nous tromperons",vous:"vous tromperez",ils:"se tromperont"}}},
-"s'arrêter":{m:"to stop",g:"reflexive",c:"reflexive",aux:"être",refl:true,t:{présent:{je:"m'arrête",tu:"t'arrêtes",il:"s'arrête",nous:"nous arrêtons",vous:"vous arrêtez",ils:"s'arrêtent"},passéComposé:{je:"me suis arrêté(e)",tu:"t'es arrêté(e)",il:"s'est arrêté",nous:"nous sommes arrêtés",vous:"vous êtes arrêtés",ils:"se sont arrêtés"},imparfait:{je:"m'arrêtais",tu:"t'arrêtais",il:"s'arrêtait",nous:"nous arrêtions",vous:"vous arrêtiez",ils:"s'arrêtaient"},futurSimple:{je:"m'arrêterai",tu:"t'arrêteras",il:"s'arrêtera",nous:"nous arrêterons",vous:"vous arrêterez",ils:"s'arrêteront"}}},
-"s'asseoir":{m:"to sit down",g:"reflexive",c:"reflexive",aux:"être",refl:true,t:{présent:{je:"m'assieds",tu:"t'assieds",il:"s'assied",nous:"nous asseyons",vous:"vous asseyez",ils:"s'asseyent"},passéComposé:{je:"me suis assis(e)",tu:"t'es assis(e)",il:"s'est assis",nous:"nous sommes assis",vous:"vous êtes assis",ils:"se sont assis"},imparfait:{je:"m'asseyais",tu:"t'asseyais",il:"s'asseyait",nous:"nous asseyions",vous:"vous asseyiez",ils:"s'asseyaient"},futurSimple:{je:"m'assiérai",tu:"t'assiéras",il:"s'assiéra",nous:"nous assiérons",vous:"vous assiérez",ils:"s'assiéront"}}},
-"se marier":{m:"to get married",g:"reflexive",c:"reflexive",aux:"être",refl:true,t:{présent:{je:"me marie",tu:"te maries",il:"se marie",nous:"nous marions",vous:"vous mariez",ils:"se marient"},passéComposé:{je:"me suis marié(e)",tu:"t'es marié(e)",il:"s'est marié",nous:"nous sommes mariés",vous:"vous êtes mariés",ils:"se sont mariés"},imparfait:{je:"me mariais",tu:"te mariais",il:"se mariait",nous:"nous mariions",vous:"vous mariiez",ils:"se mariaient"},futurSimple:{je:"me marierai",tu:"te marieras",il:"se mariera",nous:"nous marierons",vous:"vous marierez",ils:"se marieront"}}},
-"se brosser":{m:"to brush (hair/teeth)",g:"reflexive",c:"reflexive",aux:"être",refl:true,t:{présent:{je:"me brosse",tu:"te brosses",il:"se brosse",nous:"nous brossons",vous:"vous brossez",ils:"se brossent"},passéComposé:{je:"me suis brossé(e)",tu:"t'es brossé(e)",il:"s'est brossé",nous:"nous sommes brossés",vous:"vous êtes brossés",ils:"se sont brossés"},imparfait:{je:"me brossais",tu:"te brossais",il:"se brossait",nous:"nous brossions",vous:"vous brossiez",ils:"se brossaient"},futurSimple:{je:"me brosserai",tu:"te brosseras",il:"se brossera",nous:"nous brosserons",vous:"vous brosserez",ils:"se brosseront"}}},
-// IRREGULAR VERBS
-prendre:{m:"to take",g:"irregular",c:"irregular",t:{présent:{je:"prends",tu:"prends",il:"prend",nous:"prenons",vous:"prenez",ils:"prennent"},passéComposé:{je:"ai pris",tu:"as pris",il:"a pris",nous:"avons pris",vous:"avez pris",ils:"ont pris"},imparfait:{je:"prenais",tu:"prenais",il:"prenait",nous:"prenions",vous:"preniez",ils:"prenaient"},futurSimple:{je:"prendrai",tu:"prendras",il:"prendra",nous:"prendrons",vous:"prendrez",ils:"prendront"}}},
-comprendre:{m:"to understand",g:"irregular",c:"irregular",t:{présent:{je:"comprends",tu:"comprends",il:"comprend",nous:"comprenons",vous:"comprenez",ils:"comprennent"},passéComposé:{je:"ai compris",tu:"as compris",il:"a compris",nous:"avons compris",vous:"avez compris",ils:"ont compris"},imparfait:{je:"comprenais",tu:"comprenais",il:"comprenait",nous:"comprenions",vous:"compreniez",ils:"comprenaient"},futurSimple:{je:"comprendrai",tu:"comprendras",il:"comprendra",nous:"comprendrons",vous:"comprendrez",ils:"comprendront"}}},
-apprendre:{m:"to learn",g:"irregular",c:"irregular",t:{présent:{je:"apprends",tu:"apprends",il:"apprend",nous:"apprenons",vous:"apprenez",ils:"apprennent"},passéComposé:{je:"ai appris",tu:"as appris",il:"a appris",nous:"avons appris",vous:"avez appris",ils:"ont appris"},imparfait:{je:"apprenais",tu:"apprenais",il:"apprenait",nous:"apprenions",vous:"appreniez",ils:"apprenaient"},futurSimple:{je:"apprendrai",tu:"apprendras",il:"apprendra",nous:"apprendrons",vous:"apprendrez",ils:"apprendront"}}},
-surprendre:{m:"to surprise",g:"irregular",c:"irregular",t:{présent:{je:"surprends",tu:"surprends",il:"surprend",nous:"surprenons",vous:"surprenez",ils:"surprennent"},passéComposé:{je:"ai surpris",tu:"as surpris",il:"a surpris",nous:"avons surpris",vous:"avez surpris",ils:"ont surpris"},imparfait:{je:"surprenais",tu:"surprenais",il:"surprenait",nous:"surprenions",vous:"surpreniez",ils:"surprenaient"},futurSimple:{je:"surprendrai",tu:"surprendras",il:"surprendra",nous:"surprendrons",vous:"surprendrez",ils:"surprendront"}}},
-mettre:{m:"to put/place",g:"irregular",c:"irregular",t:{présent:{je:"mets",tu:"mets",il:"met",nous:"mettons",vous:"mettez",ils:"mettent"},passéComposé:{je:"ai mis",tu:"as mis",il:"a mis",nous:"avons mis",vous:"avez mis",ils:"ont mis"},imparfait:{je:"mettais",tu:"mettais",il:"mettait",nous:"mettions",vous:"mettiez",ils:"mettaient"},futurSimple:{je:"mettrai",tu:"mettras",il:"mettra",nous:"mettrons",vous:"mettrez",ils:"mettront"}}},
-permettre:{m:"to allow/permit",g:"irregular",c:"irregular",t:{présent:{je:"permets",tu:"permets",il:"permet",nous:"permettons",vous:"permettez",ils:"permettent"},passéComposé:{je:"ai permis",tu:"as permis",il:"a permis",nous:"avons permis",vous:"avez permis",ils:"ont permis"},imparfait:{je:"permettais",tu:"permettais",il:"permettait",nous:"permettions",vous:"permettiez",ils:"permettaient"},futurSimple:{je:"permettrai",tu:"permettras",il:"permettra",nous:"permettrons",vous:"permettrez",ils:"permettront"}}},
-promettre:{m:"to promise",g:"irregular",c:"irregular",t:{présent:{je:"promets",tu:"promets",il:"promet",nous:"promettons",vous:"promettez",ils:"promettent"},passéComposé:{je:"ai promis",tu:"as promis",il:"a promis",nous:"avons promis",vous:"avez promis",ils:"ont promis"},imparfait:{je:"promettais",tu:"promettais",il:"promettait",nous:"promettions",vous:"promettiez",ils:"promettaient"},futurSimple:{je:"promettrai",tu:"promettras",il:"promettra",nous:"promettrons",vous:"promettrez",ils:"promettront"}}},
-dire:{m:"to say/tell",g:"irregular",c:"irregular",t:{présent:{je:"dis",tu:"dis",il:"dit",nous:"disons",vous:"dites",ils:"disent"},passéComposé:{je:"ai dit",tu:"as dit",il:"a dit",nous:"avons dit",vous:"avez dit",ils:"ont dit"},imparfait:{je:"disais",tu:"disais",il:"disait",nous:"disions",vous:"disiez",ils:"disaient"},futurSimple:{je:"dirai",tu:"diras",il:"dira",nous:"dirons",vous:"direz",ils:"diront"}}},
-lire:{m:"to read",g:"irregular",c:"irregular",t:{présent:{je:"lis",tu:"lis",il:"lit",nous:"lisons",vous:"lisez",ils:"lisent"},passéComposé:{je:"ai lu",tu:"as lu",il:"a lu",nous:"avons lu",vous:"avez lu",ils:"ont lu"},imparfait:{je:"lisais",tu:"lisais",il:"lisait",nous:"lisions",vous:"lisiez",ils:"lisaient"},futurSimple:{je:"lirai",tu:"liras",il:"lira",nous:"lirons",vous:"lirez",ils:"liront"}}},
-écrire:{m:"to write",g:"irregular",c:"irregular",t:{présent:{je:"écris",tu:"écris",il:"écrit",nous:"écrivons",vous:"écrivez",ils:"écrivent"},passéComposé:{je:"ai écrit",tu:"as écrit",il:"a écrit",nous:"avons écrit",vous:"avez écrit",ils:"ont écrit"},imparfait:{je:"écrivais",tu:"écrivais",il:"écrivait",nous:"écrivions",vous:"écriviez",ils:"écrivaient"},futurSimple:{je:"écrirai",tu:"écriras",il:"écrira",nous:"écrirons",vous:"écrirez",ils:"écriront"}}},
-décrire:{m:"to describe",g:"irregular",c:"irregular",t:{présent:{je:"décris",tu:"décris",il:"décrit",nous:"décrivons",vous:"décrivez",ils:"décrivent"},passéComposé:{je:"ai décrit",tu:"as décrit",il:"a décrit",nous:"avons décrit",vous:"avez décrit",ils:"ont décrit"},imparfait:{je:"décrivais",tu:"décrivais",il:"décrivait",nous:"décrivions",vous:"décriviez",ils:"décrivaient"},futurSimple:{je:"décrirai",tu:"décriras",il:"décrira",nous:"décrirons",vous:"décrirez",ils:"décriront"}}},
-voir:{m:"to see",g:"irregular",c:"irregular",t:{présent:{je:"vois",tu:"vois",il:"voit",nous:"voyons",vous:"voyez",ils:"voient"},passéComposé:{je:"ai vu",tu:"as vu",il:"a vu",nous:"avons vu",vous:"avez vu",ils:"ont vu"},imparfait:{je:"voyais",tu:"voyais",il:"voyait",nous:"voyions",vous:"voyiez",ils:"voyaient"},futurSimple:{je:"verrai",tu:"verras",il:"verra",nous:"verrons",vous:"verrez",ils:"verront"}}},
-croire:{m:"to believe",g:"irregular",c:"irregular",t:{présent:{je:"crois",tu:"crois",il:"croit",nous:"croyons",vous:"croyez",ils:"croient"},passéComposé:{je:"ai cru",tu:"as cru",il:"a cru",nous:"avons cru",vous:"avez cru",ils:"ont cru"},imparfait:{je:"croyais",tu:"croyais",il:"croyait",nous:"croyions",vous:"croyiez",ils:"croyaient"},futurSimple:{je:"croirai",tu:"croiras",il:"croira",nous:"croirons",vous:"croirez",ils:"croiront"}}},
-boire:{m:"to drink",g:"irregular",c:"irregular",t:{présent:{je:"bois",tu:"bois",il:"boit",nous:"buvons",vous:"buvez",ils:"boivent"},passéComposé:{je:"ai bu",tu:"as bu",il:"a bu",nous:"avons bu",vous:"avez bu",ils:"ont bu"},imparfait:{je:"buvais",tu:"buvais",il:"buvait",nous:"buvions",vous:"buviez",ils:"buvaient"},futurSimple:{je:"boirai",tu:"boiras",il:"boira",nous:"boirons",vous:"boirez",ils:"boiront"}}},
-recevoir:{m:"to receive",g:"irregular",c:"irregular",t:{présent:{je:"reçois",tu:"reçois",il:"reçoit",nous:"recevons",vous:"recevez",ils:"reçoivent"},passéComposé:{je:"ai reçu",tu:"as reçu",il:"a reçu",nous:"avons reçu",vous:"avez reçu",ils:"ont reçu"},imparfait:{je:"recevais",tu:"recevais",il:"recevait",nous:"recevions",vous:"receviez",ils:"recevaient"},futurSimple:{je:"recevrai",tu:"recevras",il:"recevra",nous:"recevrons",vous:"recevrez",ils:"recevront"}}},
-apercevoir:{m:"to notice/glimpse",g:"irregular",c:"irregular",t:{présent:{je:"aperçois",tu:"aperçois",il:"aperçoit",nous:"apercevons",vous:"apercevez",ils:"aperçoivent"},passéComposé:{je:"ai aperçu",tu:"as aperçu",il:"a aperçu",nous:"avons aperçu",vous:"avez aperçu",ils:"ont aperçu"},imparfait:{je:"apercevais",tu:"apercevais",il:"apercevait",nous:"apercevions",vous:"aperceviez",ils:"apercevaient"},futurSimple:{je:"apercevrai",tu:"apercevras",il:"apercevra",nous:"apercevrons",vous:"apercevrez",ils:"apercevront"}}},
-dormir:{m:"to sleep",g:"irregular",c:"irregular",t:{présent:{je:"dors",tu:"dors",il:"dort",nous:"dormons",vous:"dormez",ils:"dorment"},passéComposé:{je:"ai dormi",tu:"as dormi",il:"a dormi",nous:"avons dormi",vous:"avez dormi",ils:"ont dormi"},imparfait:{je:"dormais",tu:"dormais",il:"dormait",nous:"dormions",vous:"dormiez",ils:"dormaient"},futurSimple:{je:"dormirai",tu:"dormiras",il:"dormira",nous:"dormirons",vous:"dormirez",ils:"dormiront"}}},
-servir:{m:"to serve",g:"irregular",c:"irregular",t:{présent:{je:"sers",tu:"sers",il:"sert",nous:"servons",vous:"servez",ils:"servent"},passéComposé:{je:"ai servi",tu:"as servi",il:"a servi",nous:"avons servi",vous:"avez servi",ils:"ont servi"},imparfait:{je:"servais",tu:"servais",il:"servait",nous:"servions",vous:"serviez",ils:"servaient"},futurSimple:{je:"servirai",tu:"serviras",il:"servira",nous:"servirons",vous:"servirez",ils:"serviront"}}},
-sentir:{m:"to smell/feel",g:"irregular",c:"irregular",t:{présent:{je:"sens",tu:"sens",il:"sent",nous:"sentons",vous:"sentez",ils:"sentent"},passéComposé:{je:"ai senti",tu:"as senti",il:"a senti",nous:"avons senti",vous:"avez senti",ils:"ont senti"},imparfait:{je:"sentais",tu:"sentais",il:"sentait",nous:"sentions",vous:"sentiez",ils:"sentaient"},futurSimple:{je:"sentirai",tu:"sentiras",il:"sentira",nous:"sentirons",vous:"sentirez",ils:"sentiront"}}},
-ouvrir:{m:"to open",g:"irregular",c:"irregular",t:{présent:{je:"ouvre",tu:"ouvres",il:"ouvre",nous:"ouvrons",vous:"ouvrez",ils:"ouvrent"},passéComposé:{je:"ai ouvert",tu:"as ouvert",il:"a ouvert",nous:"avons ouvert",vous:"avez ouvert",ils:"ont ouvert"},imparfait:{je:"ouvrais",tu:"ouvrais",il:"ouvrait",nous:"ouvrions",vous:"ouvriez",ils:"ouvraient"},futurSimple:{je:"ouvrirai",tu:"ouvriras",il:"ouvrira",nous:"ouvrirons",vous:"ouvrirez",ils:"ouvriront"}}},
-offrir:{m:"to offer/give",g:"irregular",c:"irregular",t:{présent:{je:"offre",tu:"offres",il:"offre",nous:"offrons",vous:"offrez",ils:"offrent"},passéComposé:{je:"ai offert",tu:"as offert",il:"a offert",nous:"avons offert",vous:"avez offert",ils:"ont offert"},imparfait:{je:"offrais",tu:"offrais",il:"offrait",nous:"offrions",vous:"offriez",ils:"offraient"},futurSimple:{je:"offrirai",tu:"offriras",il:"offrira",nous:"offrirons",vous:"offrirez",ils:"offriront"}}},
-souffrir:{m:"to suffer",g:"irregular",c:"irregular",t:{présent:{je:"souffre",tu:"souffres",il:"souffre",nous:"souffrons",vous:"souffrez",ils:"souffrent"},passéComposé:{je:"ai souffert",tu:"as souffert",il:"a souffert",nous:"avons souffert",vous:"avez souffert",ils:"ont souffert"},imparfait:{je:"souffrais",tu:"souffrais",il:"souffrait",nous:"souffrions",vous:"souffriez",ils:"souffraient"},futurSimple:{je:"souffrirai",tu:"souffriras",il:"souffrira",nous:"souffrirons",vous:"souffrirez",ils:"souffriront"}}},
-découvrir:{m:"to discover",g:"irregular",c:"irregular",t:{présent:{je:"découvre",tu:"découvres",il:"découvre",nous:"découvrons",vous:"découvrez",ils:"découvrent"},passéComposé:{je:"ai découvert",tu:"as découvert",il:"a découvert",nous:"avons découvert",vous:"avez découvert",ils:"ont découvert"},imparfait:{je:"découvrais",tu:"découvrais",il:"découvrait",nous:"découvrions",vous:"découvriez",ils:"découvraient"},futurSimple:{je:"découvrirai",tu:"découvriras",il:"découvrira",nous:"découvrirons",vous:"découvrirez",ils:"découvriront"}}},
-courir:{m:"to run",g:"irregular",c:"irregular",t:{présent:{je:"cours",tu:"cours",il:"court",nous:"courons",vous:"courez",ils:"courent"},passéComposé:{je:"ai couru",tu:"as couru",il:"a couru",nous:"avons couru",vous:"avez couru",ils:"ont couru"},imparfait:{je:"courais",tu:"courais",il:"courait",nous:"courions",vous:"couriez",ils:"couraient"},futurSimple:{je:"courrai",tu:"courras",il:"courra",nous:"courrons",vous:"courrez",ils:"courront"}}},
-tenir:{m:"to hold/keep",g:"irregular",c:"irregular",t:{présent:{je:"tiens",tu:"tiens",il:"tient",nous:"tenons",vous:"tenez",ils:"tiennent"},passéComposé:{je:"ai tenu",tu:"as tenu",il:"a tenu",nous:"avons tenu",vous:"avez tenu",ils:"ont tenu"},imparfait:{je:"tenais",tu:"tenais",il:"tenait",nous:"tenions",vous:"teniez",ils:"tenaient"},futurSimple:{je:"tiendrai",tu:"tiendras",il:"tiendra",nous:"tiendrons",vous:"tiendrez",ils:"tiendront"}}},
-obtenir:{m:"to obtain/get",g:"irregular",c:"irregular",t:{présent:{je:"obtiens",tu:"obtiens",il:"obtient",nous:"obtenons",vous:"obtenez",ils:"obtiennent"},passéComposé:{je:"ai obtenu",tu:"as obtenu",il:"a obtenu",nous:"avons obtenu",vous:"avez obtenu",ils:"ont obtenu"},imparfait:{je:"obtenais",tu:"obtenais",il:"obtenait",nous:"obtenions",vous:"obteniez",ils:"obtenaient"},futurSimple:{je:"obtiendrai",tu:"obtiendras",il:"obtiendra",nous:"obtiendrons",vous:"obtiendrez",ils:"obtiendront"}}},
-appartenir:{m:"to belong",g:"irregular",c:"irregular",t:{présent:{je:"appartiens",tu:"appartiens",il:"appartient",nous:"appartenons",vous:"appartenez",ils:"appartiennent"},passéComposé:{je:"ai appartenu",tu:"as appartenu",il:"a appartenu",nous:"avons appartenu",vous:"avez appartenu",ils:"ont appartenu"},imparfait:{je:"appartenais",tu:"appartenais",il:"appartenait",nous:"appartenions",vous:"apparteniez",ils:"appartenaient"},futurSimple:{je:"appartiendrai",tu:"appartiendras",il:"appartiendra",nous:"appartiendrons",vous:"appartiendrez",ils:"appartiendront"}}},
-vivre:{m:"to live",g:"irregular",c:"irregular",t:{présent:{je:"vis",tu:"vis",il:"vit",nous:"vivons",vous:"vivez",ils:"vivent"},passéComposé:{je:"ai vécu",tu:"as vécu",il:"a vécu",nous:"avons vécu",vous:"avez vécu",ils:"ont vécu"},imparfait:{je:"vivais",tu:"vivais",il:"vivait",nous:"vivions",vous:"viviez",ils:"vivaient"},futurSimple:{je:"vivrai",tu:"vivras",il:"vivra",nous:"vivrons",vous:"vivrez",ils:"vivront"}}},
-suivre:{m:"to follow",g:"irregular",c:"irregular",t:{présent:{je:"suis",tu:"suis",il:"suit",nous:"suivons",vous:"suivez",ils:"suivent"},passéComposé:{je:"ai suivi",tu:"as suivi",il:"a suivi",nous:"avons suivi",vous:"avez suivi",ils:"ont suivi"},imparfait:{je:"suivais",tu:"suivais",il:"suivait",nous:"suivions",vous:"suiviez",ils:"suivaient"},futurSimple:{je:"suivrai",tu:"suivras",il:"suivra",nous:"suivrons",vous:"suivrez",ils:"suivront"}}},
-poursuivre:{m:"to pursue/continue",g:"irregular",c:"irregular",t:{présent:{je:"poursuis",tu:"poursuis",il:"poursuit",nous:"poursuivons",vous:"poursuivez",ils:"poursuivent"},passéComposé:{je:"ai poursuivi",tu:"as poursuivi",il:"a poursuivi",nous:"avons poursuivi",vous:"avez poursuivi",ils:"ont poursuivi"},imparfait:{je:"poursuivais",tu:"poursuivais",il:"poursuivait",nous:"poursuivions",vous:"poursuiviez",ils:"poursuivaient"},futurSimple:{je:"poursuivrai",tu:"poursuivras",il:"poursuivra",nous:"poursuivrons",vous:"poursuivrez",ils:"poursuivront"}}},
-conduire:{m:"to drive",g:"irregular",c:"irregular",t:{présent:{je:"conduis",tu:"conduis",il:"conduit",nous:"conduisons",vous:"conduisez",ils:"conduisent"},passéComposé:{je:"ai conduit",tu:"as conduit",il:"a conduit",nous:"avons conduit",vous:"avez conduit",ils:"ont conduit"},imparfait:{je:"conduisais",tu:"conduisais",il:"conduisait",nous:"conduisions",vous:"conduisiez",ils:"conduisaient"},futurSimple:{je:"conduirai",tu:"conduiras",il:"conduira",nous:"conduirons",vous:"conduirez",ils:"conduiront"}}},
-produire:{m:"to produce",g:"irregular",c:"irregular",t:{présent:{je:"produis",tu:"produis",il:"produit",nous:"produisons",vous:"produisez",ils:"produisent"},passéComposé:{je:"ai produit",tu:"as produit",il:"a produit",nous:"avons produit",vous:"avez produit",ils:"ont produit"},imparfait:{je:"produisais",tu:"produisais",il:"produisait",nous:"produisions",vous:"produisiez",ils:"produisaient"},futurSimple:{je:"produirai",tu:"produiras",il:"produira",nous:"produirons",vous:"produirez",ils:"produiront"}}},
-traduire:{m:"to translate",g:"irregular",c:"irregular",t:{présent:{je:"traduis",tu:"traduis",il:"traduit",nous:"traduisons",vous:"traduisez",ils:"traduisent"},passéComposé:{je:"ai traduit",tu:"as traduit",il:"a traduit",nous:"avons traduit",vous:"avez traduit",ils:"ont traduit"},imparfait:{je:"traduisais",tu:"traduisais",il:"traduisait",nous:"traduisions",vous:"traduisiez",ils:"traduisaient"},futurSimple:{je:"traduirai",tu:"traduiras",il:"traduira",nous:"traduirons",vous:"traduirez",ils:"traduiront"}}},
-construire:{m:"to build",g:"irregular",c:"irregular",t:{présent:{je:"construis",tu:"construis",il:"construit",nous:"construisons",vous:"construisez",ils:"construisent"},passéComposé:{je:"ai construit",tu:"as construit",il:"a construit",nous:"avons construit",vous:"avez construit",ils:"ont construit"},imparfait:{je:"construisais",tu:"construisais",il:"construisait",nous:"construisions",vous:"construisiez",ils:"construisaient"},futurSimple:{je:"construirai",tu:"construiras",il:"construira",nous:"construirons",vous:"construirez",ils:"construiront"}}},
-détruire:{m:"to destroy",g:"irregular",c:"irregular",t:{présent:{je:"détruis",tu:"détruis",il:"détruit",nous:"détruisons",vous:"détruisez",ils:"détruisent"},passéComposé:{je:"ai détruit",tu:"as détruit",il:"a détruit",nous:"avons détruit",vous:"avez détruit",ils:"ont détruit"},imparfait:{je:"détruisais",tu:"détruisais",il:"détruisait",nous:"détruisions",vous:"détruisiez",ils:"détruisaient"},futurSimple:{je:"détruirai",tu:"détruiras",il:"détruira",nous:"détruirons",vous:"détruirez",ils:"détruiront"}}},
-rire:{m:"to laugh",g:"irregular",c:"irregular",t:{présent:{je:"ris",tu:"ris",il:"rit",nous:"rions",vous:"riez",ils:"rient"},passéComposé:{je:"ai ri",tu:"as ri",il:"a ri",nous:"avons ri",vous:"avez ri",ils:"ont ri"},imparfait:{je:"riais",tu:"riais",il:"riait",nous:"riions",vous:"riiez",ils:"riaient"},futurSimple:{je:"rirai",tu:"riras",il:"rira",nous:"rirons",vous:"rirez",ils:"riront"}}},
-sourire:{m:"to smile",g:"irregular",c:"irregular",t:{présent:{je:"souris",tu:"souris",il:"sourit",nous:"sourions",vous:"souriez",ils:"sourient"},passéComposé:{je:"ai souri",tu:"as souri",il:"a souri",nous:"avons souri",vous:"avez souri",ils:"ont souri"},imparfait:{je:"souriais",tu:"souriais",il:"souriait",nous:"souriions",vous:"souriiez",ils:"souriaient"},futurSimple:{je:"sourirai",tu:"souriras",il:"sourira",nous:"sourirons",vous:"sourirez",ils:"souriront"}}},
-plaire:{m:"to please",g:"irregular",c:"irregular",t:{présent:{je:"plais",tu:"plais",il:"plaît",nous:"plaisons",vous:"plaisez",ils:"plaisent"},passéComposé:{je:"ai plu",tu:"as plu",il:"a plu",nous:"avons plu",vous:"avez plu",ils:"ont plu"},imparfait:{je:"plaisais",tu:"plaisais",il:"plaisait",nous:"plaisions",vous:"plaisiez",ils:"plaisaient"},futurSimple:{je:"plairai",tu:"plairas",il:"plaira",nous:"plairons",vous:"plairez",ils:"plairont"}}},
-battre:{m:"to beat/hit",g:"irregular",c:"irregular",t:{présent:{je:"bats",tu:"bats",il:"bat",nous:"battons",vous:"battez",ils:"battent"},passéComposé:{je:"ai battu",tu:"as battu",il:"a battu",nous:"avons battu",vous:"avez battu",ils:"ont battu"},imparfait:{je:"battais",tu:"battais",il:"battait",nous:"battions",vous:"battiez",ils:"battaient"},futurSimple:{je:"battrai",tu:"battras",il:"battra",nous:"battrons",vous:"battrez",ils:"battront"}}},
-craindre:{m:"to fear",g:"irregular",c:"irregular",t:{présent:{je:"crains",tu:"crains",il:"craint",nous:"craignons",vous:"craignez",ils:"craignent"},passéComposé:{je:"ai craint",tu:"as craint",il:"a craint",nous:"avons craint",vous:"avez craint",ils:"ont craint"},imparfait:{je:"craignais",tu:"craignais",il:"craignait",nous:"craignions",vous:"craigniez",ils:"craignaient"},futurSimple:{je:"craindrai",tu:"craindras",il:"craindra",nous:"craindrons",vous:"craindrez",ils:"craindront"}}},
-peindre:{m:"to paint",g:"irregular",c:"irregular",t:{présent:{je:"peins",tu:"peins",il:"peint",nous:"peignons",vous:"peignez",ils:"peignent"},passéComposé:{je:"ai peint",tu:"as peint",il:"a peint",nous:"avons peint",vous:"avez peint",ils:"ont peint"},imparfait:{je:"peignais",tu:"peignais",il:"peignait",nous:"peignions",vous:"peigniez",ils:"peignaient"},futurSimple:{je:"peindrai",tu:"peindras",il:"peindra",nous:"peindrons",vous:"peindrez",ils:"peindront"}}},
-joindre:{m:"to join/contact",g:"irregular",c:"irregular",t:{présent:{je:"joins",tu:"joins",il:"joint",nous:"joignons",vous:"joignez",ils:"joignent"},passéComposé:{je:"ai joint",tu:"as joint",il:"a joint",nous:"avons joint",vous:"avez joint",ils:"ont joint"},imparfait:{je:"joignais",tu:"joignais",il:"joignait",nous:"joignions",vous:"joigniez",ils:"joignaient"},futurSimple:{je:"joindrai",tu:"joindras",il:"joindra",nous:"joindrons",vous:"joindrez",ils:"joindront"}}},
-continuer:{m:"to continue",g:"-er",c:"regular-er",t:{présent:{je:"continue",tu:"continues",il:"continue",nous:"continuons",vous:"continuez",ils:"continuent"},passéComposé:{je:"ai continué",tu:"as continué",il:"a continué",nous:"avons continué",vous:"avez continué",ils:"ont continué"},imparfait:{je:"continuais",tu:"continuais",il:"continuait",nous:"continuions",vous:"continuiez",ils:"continuaient"},futurSimple:{je:"continuerai",tu:"continueras",il:"continuera",nous:"continuerons",vous:"continuerez",ils:"continueront"}}},
-arrêter:{m:"to stop",g:"-er",c:"regular-er",t:{présent:{je:"arrête",tu:"arrêtes",il:"arrête",nous:"arrêtons",vous:"arrêtez",ils:"arrêtent"},passéComposé:{je:"ai arrêté",tu:"as arrêté",il:"a arrêté",nous:"avons arrêté",vous:"avez arrêté",ils:"ont arrêté"},imparfait:{je:"arrêtais",tu:"arrêtais",il:"arrêtait",nous:"arrêtions",vous:"arrêtiez",ils:"arrêtaient"},futurSimple:{je:"arrêterai",tu:"arrêteras",il:"arrêtera",nous:"arrêterons",vous:"arrêterez",ils:"arrêteront"}}},
-terminer:{m:"to finish/end",g:"-er",c:"regular-er",t:{présent:{je:"termine",tu:"termines",il:"termine",nous:"terminons",vous:"terminez",ils:"terminent"},passéComposé:{je:"ai terminé",tu:"as terminé",il:"a terminé",nous:"avons terminé",vous:"avez terminé",ils:"ont terminé"},imparfait:{je:"terminais",tu:"terminais",il:"terminait",nous:"terminions",vous:"terminiez",ils:"terminaient"},futurSimple:{je:"terminerai",tu:"termineras",il:"terminera",nous:"terminerons",vous:"terminerez",ils:"termineront"}}},
-gagner:{m:"to win/earn",g:"-er",c:"regular-er",t:{présent:{je:"gagne",tu:"gagnes",il:"gagne",nous:"gagnons",vous:"gagnez",ils:"gagnent"},passéComposé:{je:"ai gagné",tu:"as gagné",il:"a gagné",nous:"avons gagné",vous:"avez gagné",ils:"ont gagné"},imparfait:{je:"gagnais",tu:"gagnais",il:"gagnait",nous:"gagnions",vous:"gagniez",ils:"gagnaient"},futurSimple:{je:"gagnerai",tu:"gagneras",il:"gagnera",nous:"gagnerons",vous:"gagnerez",ils:"gagneront"}}},
-chanter:{m:"to sing",g:"-er",c:"regular-er",t:{présent:{je:"chante",tu:"chantes",il:"chante",nous:"chantons",vous:"chantez",ils:"chantent"},passéComposé:{je:"ai chanté",tu:"as chanté",il:"a chanté",nous:"avons chanté",vous:"avez chanté",ils:"ont chanté"},imparfait:{je:"chantais",tu:"chantais",il:"chantait",nous:"chantions",vous:"chantiez",ils:"chantaient"},futurSimple:{je:"chanterai",tu:"chanteras",il:"chantera",nous:"chanterons",vous:"chanterez",ils:"chanteront"}}},
-danser:{m:"to dance",g:"-er",c:"regular-er",t:{présent:{je:"danse",tu:"danses",il:"danse",nous:"dansons",vous:"dansez",ils:"dansent"},passéComposé:{je:"ai dansé",tu:"as dansé",il:"a dansé",nous:"avons dansé",vous:"avez dansé",ils:"ont dansé"},imparfait:{je:"dansais",tu:"dansais",il:"dansait",nous:"dansions",vous:"dansiez",ils:"dansaient"},futurSimple:{je:"danserai",tu:"danseras",il:"dansera",nous:"danserons",vous:"danserez",ils:"danseront"}}},
-nager:{m:"to swim",g:"-er",c:"regular-er",t:{présent:{je:"nage",tu:"nages",il:"nage",nous:"nageons",vous:"nagez",ils:"nagent"},passéComposé:{je:"ai nagé",tu:"as nagé",il:"a nagé",nous:"avons nagé",vous:"avez nagé",ils:"ont nagé"},imparfait:{je:"nageais",tu:"nageais",il:"nageait",nous:"nagions",vous:"nagiez",ils:"nageaient"},futurSimple:{je:"nagerai",tu:"nageras",il:"nagera",nous:"nagerons",vous:"nagerez",ils:"nageront"}}},
-voyager:{m:"to travel",g:"-er",c:"regular-er",t:{présent:{je:"voyage",tu:"voyages",il:"voyage",nous:"voyageons",vous:"voyagez",ils:"voyagent"},passéComposé:{je:"ai voyagé",tu:"as voyagé",il:"a voyagé",nous:"avons voyagé",vous:"avez voyagé",ils:"ont voyagé"},imparfait:{je:"voyageais",tu:"voyageais",il:"voyageait",nous:"voyagions",vous:"voyagiez",ils:"voyageaient"},futurSimple:{je:"voyagerai",tu:"voyageras",il:"voyagera",nous:"voyagerons",vous:"voyagerez",ils:"voyageront"}}},
-visiter:{m:"to visit (place)",g:"-er",c:"regular-er",t:{présent:{je:"visite",tu:"visites",il:"visite",nous:"visitons",vous:"visitez",ils:"visitent"},passéComposé:{je:"ai visité",tu:"as visité",il:"a visité",nous:"avons visité",vous:"avez visité",ils:"ont visité"},imparfait:{je:"visitais",tu:"visitais",il:"visitait",nous:"visitions",vous:"visitiez",ils:"visitaient"},futurSimple:{je:"visiterai",tu:"visiteras",il:"visitera",nous:"visiterons",vous:"visiterez",ils:"visiteront"}}},
-étudier:{m:"to study",g:"-er",c:"regular-er",t:{présent:{je:"étudie",tu:"étudies",il:"étudie",nous:"étudions",vous:"étudiez",ils:"étudient"},passéComposé:{je:"ai étudié",tu:"as étudié",il:"a étudié",nous:"avons étudié",vous:"avez étudié",ils:"ont étudié"},imparfait:{je:"étudiais",tu:"étudiais",il:"étudiait",nous:"étudiions",vous:"étudiiez",ils:"étudiaient"},futurSimple:{je:"étudierai",tu:"étudieras",il:"étudiera",nous:"étudierons",vous:"étudierez",ils:"étudieront"}}},
-enseigner:{m:"to teach",g:"-er",c:"regular-er",t:{présent:{je:"enseigne",tu:"enseignes",il:"enseigne",nous:"enseignons",vous:"enseignez",ils:"enseignent"},passéComposé:{je:"ai enseigné",tu:"as enseigné",il:"a enseigné",nous:"avons enseigné",vous:"avez enseigné",ils:"ont enseigné"},imparfait:{je:"enseignais",tu:"enseignais",il:"enseignait",nous:"enseignions",vous:"enseigniez",ils:"enseignaient"},futurSimple:{je:"enseignerai",tu:"enseigneras",il:"enseignera",nous:"enseignerons",vous:"enseignerez",ils:"enseigneront"}}},
-espérer:{m:"to hope",g:"-er",c:"regular-er",t:{présent:{je:"espère",tu:"espères",il:"espère",nous:"espérons",vous:"espérez",ils:"espèrent"},passéComposé:{je:"ai espéré",tu:"as espéré",il:"a espéré",nous:"avons espéré",vous:"avez espéré",ils:"ont espéré"},imparfait:{je:"espérais",tu:"espérais",il:"espérait",nous:"espérions",vous:"espériez",ils:"espéraient"},futurSimple:{je:"espérerai",tu:"espéreras",il:"espérera",nous:"espérerons",vous:"espérerez",ils:"espéreront"}}},
-préférer:{m:"to prefer",g:"-er",c:"regular-er",t:{présent:{je:"préfère",tu:"préfères",il:"préfère",nous:"préférons",vous:"préférez",ils:"préfèrent"},passéComposé:{je:"ai préféré",tu:"as préféré",il:"a préféré",nous:"avons préféré",vous:"avez préféré",ils:"ont préféré"},imparfait:{je:"préférais",tu:"préférais",il:"préférait",nous:"préférions",vous:"préfériez",ils:"préféraient"},futurSimple:{je:"préférerai",tu:"préféreras",il:"préférera",nous:"préférerons",vous:"préférerez",ils:"préféreront"}}},
-répéter:{m:"to repeat",g:"-er",c:"regular-er",t:{présent:{je:"répète",tu:"répètes",il:"répète",nous:"répétons",vous:"répétez",ils:"répètent"},passéComposé:{je:"ai répété",tu:"as répété",il:"a répété",nous:"avons répété",vous:"avez répété",ils:"ont répété"},imparfait:{je:"répétais",tu:"répétais",il:"répétait",nous:"répétions",vous:"répétiez",ils:"répétaient"},futurSimple:{je:"répéterai",tu:"répéteras",il:"répétera",nous:"répéterons",vous:"répéterez",ils:"répéteront"}}},
-rappeler:{m:"to call back/remind",g:"-er",c:"regular-er",t:{présent:{je:"rappelle",tu:"rappelles",il:"rappelle",nous:"rappelons",vous:"rappelez",ils:"rappellent"},passéComposé:{je:"ai rappelé",tu:"as rappelé",il:"a rappelé",nous:"avons rappelé",vous:"avez rappelé",ils:"ont rappelé"},imparfait:{je:"rappelais",tu:"rappelais",il:"rappelait",nous:"rappelions",vous:"rappeliez",ils:"rappelaient"},futurSimple:{je:"rappellerai",tu:"rappelleras",il:"rappellera",nous:"rappellerons",vous:"rappellerez",ils:"rappelleront"}}},
-réserver:{m:"to reserve/book",g:"-er",c:"regular-er",t:{présent:{je:"réserve",tu:"réserves",il:"réserve",nous:"réservons",vous:"réservez",ils:"réservent"},passéComposé:{je:"ai réservé",tu:"as réservé",il:"a réservé",nous:"avons réservé",vous:"avez réservé",ils:"ont réservé"},imparfait:{je:"réservais",tu:"réservais",il:"réservait",nous:"réservions",vous:"réserviez",ils:"réservaient"},futurSimple:{je:"réserverai",tu:"réserveras",il:"réservera",nous:"réserverons",vous:"réserverez",ils:"réserveront"}}},
-commander:{m:"to order",g:"-er",c:"regular-er",t:{présent:{je:"commande",tu:"commandes",il:"commande",nous:"commandons",vous:"commandez",ils:"commandent"},passéComposé:{je:"ai commandé",tu:"as commandé",il:"a commandé",nous:"avons commandé",vous:"avez commandé",ils:"ont commandé"},imparfait:{je:"commandais",tu:"commandais",il:"commandait",nous:"commandions",vous:"commandiez",ils:"commandaient"},futurSimple:{je:"commanderai",tu:"commanderas",il:"commandera",nous:"commanderons",vous:"commanderez",ils:"commanderont"}}},
-coûter:{m:"to cost",g:"-er",c:"regular-er",t:{présent:{je:"coûte",tu:"coûtes",il:"coûte",nous:"coûtons",vous:"coûtez",ils:"coûtent"},passéComposé:{je:"ai coûté",tu:"as coûté",il:"a coûté",nous:"avons coûté",vous:"avez coûté",ils:"ont coûté"},imparfait:{je:"coûtais",tu:"coûtais",il:"coûtait",nous:"coûtions",vous:"coûtiez",ils:"coûtaient"},futurSimple:{je:"coûterai",tu:"coûteras",il:"coûtera",nous:"coûterons",vous:"coûterez",ils:"coûteront"}}},
-détester:{m:"to hate",g:"-er",c:"regular-er",t:{présent:{je:"déteste",tu:"détestes",il:"déteste",nous:"détestons",vous:"détestez",ils:"détestent"},passéComposé:{je:"ai détesté",tu:"as détesté",il:"a détesté",nous:"avons détesté",vous:"avez détesté",ils:"ont détesté"},imparfait:{je:"détestais",tu:"détestais",il:"détestait",nous:"détestions",vous:"détestiez",ils:"détestaient"},futurSimple:{je:"détesterai",tu:"détesteras",il:"détestera",nous:"détesterons",vous:"détesterez",ils:"détesteront"}}},
-adorer:{m:"to adore/love",g:"-er",c:"regular-er",t:{présent:{je:"adore",tu:"adores",il:"adore",nous:"adorons",vous:"adorez",ils:"adorent"},passéComposé:{je:"ai adoré",tu:"as adoré",il:"a adoré",nous:"avons adoré",vous:"avez adoré",ils:"ont adoré"},imparfait:{je:"adorais",tu:"adorais",il:"adorait",nous:"adorions",vous:"adoriez",ils:"adoraient"},futurSimple:{je:"adorerai",tu:"adoreras",il:"adorera",nous:"adorerons",vous:"adorerez",ils:"adoreront"}}},
-inviter:{m:"to invite",g:"-er",c:"regular-er",t:{présent:{je:"invite",tu:"invites",il:"invite",nous:"invitons",vous:"invitez",ils:"invitent"},passéComposé:{je:"ai invité",tu:"as invité",il:"a invité",nous:"avons invité",vous:"avez invité",ils:"ont invité"},imparfait:{je:"invitais",tu:"invitais",il:"invitait",nous:"invitions",vous:"invitiez",ils:"invitaient"},futurSimple:{je:"inviterai",tu:"inviteras",il:"invitera",nous:"inviterons",vous:"inviterez",ils:"inviteront"}}},
-fumer:{m:"to smoke",g:"-er",c:"regular-er",t:{présent:{je:"fume",tu:"fumes",il:"fume",nous:"fumons",vous:"fumez",ils:"fument"},passéComposé:{je:"ai fumé",tu:"as fumé",il:"a fumé",nous:"avons fumé",vous:"avez fumé",ils:"ont fumé"},imparfait:{je:"fumais",tu:"fumais",il:"fumait",nous:"fumions",vous:"fumiez",ils:"fumaient"},futurSimple:{je:"fumerai",tu:"fumeras",il:"fumera",nous:"fumerons",vous:"fumerez",ils:"fumeront"}}},
-exister:{m:"to exist",g:"-er",c:"regular-er",t:{présent:{je:"existe",tu:"existes",il:"existe",nous:"existons",vous:"existez",ils:"existent"},passéComposé:{je:"ai existé",tu:"as existé",il:"a existé",nous:"avons existé",vous:"avez existé",ils:"ont existé"},imparfait:{je:"existais",tu:"existais",il:"existait",nous:"existions",vous:"existiez",ils:"existaient"},futurSimple:{je:"existerai",tu:"existeras",il:"existera",nous:"existerons",vous:"existerez",ils:"existeront"}}},
-sembler:{m:"to seem",g:"-er",c:"regular-er",t:{présent:{je:"semble",tu:"sembles",il:"semble",nous:"semblons",vous:"semblez",ils:"semblent"},passéComposé:{je:"ai semblé",tu:"as semblé",il:"a semblé",nous:"avons semblé",vous:"avez semblé",ils:"ont semblé"},imparfait:{je:"semblais",tu:"semblais",il:"semblait",nous:"semblions",vous:"sembliez",ils:"semblaient"},futurSimple:{je:"semblerai",tu:"sembleras",il:"semblera",nous:"semblerons",vous:"semblerez",ils:"sembleront"}}},
-// REGULAR -IR VERBS
-finir:{m:"to finish",g:"-ir",c:"regular-ir",t:{présent:{je:"finis",tu:"finis",il:"finit",nous:"finissons",vous:"finissez",ils:"finissent"},passéComposé:{je:"ai fini",tu:"as fini",il:"a fini",nous:"avons fini",vous:"avez fini",ils:"ont fini"},imparfait:{je:"finissais",tu:"finissais",il:"finissait",nous:"finissions",vous:"finissiez",ils:"finissaient"},futurSimple:{je:"finirai",tu:"finiras",il:"finira",nous:"finirons",vous:"finirez",ils:"finiront"}}},
-choisir:{m:"to choose",g:"-ir",c:"regular-ir",t:{présent:{je:"choisis",tu:"choisis",il:"choisit",nous:"choisissons",vous:"choisissez",ils:"choisissent"},passéComposé:{je:"ai choisi",tu:"as choisi",il:"a choisi",nous:"avons choisi",vous:"avez choisi",ils:"ont choisi"},imparfait:{je:"choisissais",tu:"choisissais",il:"choisissait",nous:"choisissions",vous:"choisissiez",ils:"choisissaient"},futurSimple:{je:"choisirai",tu:"choisiras",il:"choisira",nous:"choisirons",vous:"choisirez",ils:"choisiront"}}},
-réussir:{m:"to succeed",g:"-ir",c:"regular-ir",t:{présent:{je:"réussis",tu:"réussis",il:"réussit",nous:"réussissons",vous:"réussissez",ils:"réussissent"},passéComposé:{je:"ai réussi",tu:"as réussi",il:"a réussi",nous:"avons réussi",vous:"avez réussi",ils:"ont réussi"},imparfait:{je:"réussissais",tu:"réussissais",il:"réussissait",nous:"réussissions",vous:"réussissiez",ils:"réussissaient"},futurSimple:{je:"réussirai",tu:"réussiras",il:"réussira",nous:"réussirons",vous:"réussirez",ils:"réussiront"}}},
-grandir:{m:"to grow up",g:"-ir",c:"regular-ir",t:{présent:{je:"grandis",tu:"grandis",il:"grandit",nous:"grandissons",vous:"grandissez",ils:"grandissent"},passéComposé:{je:"ai grandi",tu:"as grandi",il:"a grandi",nous:"avons grandi",vous:"avez grandi",ils:"ont grandi"},imparfait:{je:"grandissais",tu:"grandissais",il:"grandissait",nous:"grandissions",vous:"grandissiez",ils:"grandissaient"},futurSimple:{je:"grandirai",tu:"grandiras",il:"grandira",nous:"grandirons",vous:"grandirez",ils:"grandiront"}}},
-remplir:{m:"to fill",g:"-ir",c:"regular-ir",t:{présent:{je:"remplis",tu:"remplis",il:"remplit",nous:"remplissons",vous:"remplissez",ils:"remplissent"},passéComposé:{je:"ai rempli",tu:"as rempli",il:"a rempli",nous:"avons rempli",vous:"avez rempli",ils:"ont rempli"},imparfait:{je:"remplissais",tu:"remplissais",il:"remplissait",nous:"remplissions",vous:"remplissiez",ils:"remplissaient"},futurSimple:{je:"remplirai",tu:"rempliras",il:"remplira",nous:"remplirons",vous:"remplirez",ils:"rempliront"}}},
-réfléchir:{m:"to think/reflect",g:"-ir",c:"regular-ir",t:{présent:{je:"réfléchis",tu:"réfléchis",il:"réfléchit",nous:"réfléchissons",vous:"réfléchissez",ils:"réfléchissent"},passéComposé:{je:"ai réfléchi",tu:"as réfléchi",il:"a réfléchi",nous:"avons réfléchi",vous:"avez réfléchi",ils:"ont réfléchi"},imparfait:{je:"réfléchissais",tu:"réfléchissais",il:"réfléchissait",nous:"réfléchissions",vous:"réfléchissiez",ils:"réfléchissaient"},futurSimple:{je:"réfléchirai",tu:"réfléchiras",il:"réfléchira",nous:"réfléchirons",vous:"réfléchirez",ils:"réfléchiront"}}},
-obéir:{m:"to obey",g:"-ir",c:"regular-ir",t:{présent:{je:"obéis",tu:"obéis",il:"obéit",nous:"obéissons",vous:"obéissez",ils:"obéissent"},passéComposé:{je:"ai obéi",tu:"as obéi",il:"a obéi",nous:"avons obéi",vous:"avez obéi",ils:"ont obéi"},imparfait:{je:"obéissais",tu:"obéissais",il:"obéissait",nous:"obéissions",vous:"obéissiez",ils:"obéissaient"},futurSimple:{je:"obéirai",tu:"obéiras",il:"obéira",nous:"obéirons",vous:"obéirez",ils:"obéiront"}}},
-punir:{m:"to punish",g:"-ir",c:"regular-ir",t:{présent:{je:"punis",tu:"punis",il:"punit",nous:"punissons",vous:"punissez",ils:"punissent"},passéComposé:{je:"ai puni",tu:"as puni",il:"a puni",nous:"avons puni",vous:"avez puni",ils:"ont puni"},imparfait:{je:"punissais",tu:"punissais",il:"punissait",nous:"punissions",vous:"punissiez",ils:"punissaient"},futurSimple:{je:"punirai",tu:"puniras",il:"punira",nous:"punirons",vous:"punirez",ils:"puniront"}}},
-guérir:{m:"to heal/cure",g:"-ir",c:"regular-ir",t:{présent:{je:"guéris",tu:"guéris",il:"guérit",nous:"guérissons",vous:"guérissez",ils:"guérissent"},passéComposé:{je:"ai guéri",tu:"as guéri",il:"a guéri",nous:"avons guéri",vous:"avez guéri",ils:"ont guéri"},imparfait:{je:"guérissais",tu:"guérissais",il:"guérissait",nous:"guérissions",vous:"guérissiez",ils:"guérissaient"},futurSimple:{je:"guérirai",tu:"guériras",il:"guérira",nous:"guérirons",vous:"guérirez",ils:"guériront"}}},
-bâtir:{m:"to build",g:"-ir",c:"regular-ir",t:{présent:{je:"bâtis",tu:"bâtis",il:"bâtit",nous:"bâtissons",vous:"bâtissez",ils:"bâtissent"},passéComposé:{je:"ai bâti",tu:"as bâti",il:"a bâti",nous:"avons bâti",vous:"avez bâti",ils:"ont bâti"},imparfait:{je:"bâtissais",tu:"bâtissais",il:"bâtissait",nous:"bâtissions",vous:"bâtissiez",ils:"bâtissaient"},futurSimple:{je:"bâtirai",tu:"bâtiras",il:"bâtira",nous:"bâtirons",vous:"bâtirez",ils:"bâtiront"}}},
-ralentir:{m:"to slow down",g:"-ir",c:"regular-ir",t:{présent:{je:"ralentis",tu:"ralentis",il:"ralentit",nous:"ralentissons",vous:"ralentissez",ils:"ralentissent"},passéComposé:{je:"ai ralenti",tu:"as ralenti",il:"a ralenti",nous:"avons ralenti",vous:"avez ralenti",ils:"ont ralenti"},imparfait:{je:"ralentissais",tu:"ralentissais",il:"ralentissait",nous:"ralentissions",vous:"ralentissiez",ils:"ralentissaient"},futurSimple:{je:"ralentirai",tu:"ralentiras",il:"ralentira",nous:"ralentirons",vous:"ralentirez",ils:"ralentiront"}}},
-applaudir:{m:"to applaud",g:"-ir",c:"regular-ir",t:{présent:{je:"applaudis",tu:"applaudis",il:"applaudit",nous:"applaudissons",vous:"applaudissez",ils:"applaudissent"},passéComposé:{je:"ai applaudi",tu:"as applaudi",il:"a applaudi",nous:"avons applaudi",vous:"avez applaudi",ils:"ont applaudi"},imparfait:{je:"applaudissais",tu:"applaudissais",il:"applaudissait",nous:"applaudissions",vous:"applaudissiez",ils:"applaudissaient"},futurSimple:{je:"applaudirai",tu:"applaudiras",il:"applaudira",nous:"applaudirons",vous:"applaudirez",ils:"applaudiront"}}},
-grossir:{m:"to gain weight",g:"-ir",c:"regular-ir",t:{présent:{je:"grossis",tu:"grossis",il:"grossit",nous:"grossissons",vous:"grossissez",ils:"grossissent"},passéComposé:{je:"ai grossi",tu:"as grossi",il:"a grossi",nous:"avons grossi",vous:"avez grossi",ils:"ont grossi"},imparfait:{je:"grossissais",tu:"grossissais",il:"grossissait",nous:"grossissions",vous:"grossissiez",ils:"grossissaient"},futurSimple:{je:"grossirai",tu:"grossiras",il:"grossira",nous:"grossirons",vous:"grossirez",ils:"grossiront"}}},
-maigrir:{m:"to lose weight",g:"-ir",c:"regular-ir",t:{présent:{je:"maigris",tu:"maigris",il:"maigrit",nous:"maigrissons",vous:"maigrissez",ils:"maigrissent"},passéComposé:{je:"ai maigri",tu:"as maigri",il:"a maigri",nous:"avons maigri",vous:"avez maigri",ils:"ont maigri"},imparfait:{je:"maigrissais",tu:"maigrissais",il:"maigrissait",nous:"maigrissions",vous:"maigrissiez",ils:"maigrissaient"},futurSimple:{je:"maigrirai",tu:"maigriras",il:"maigrira",nous:"maigrirons",vous:"maigrirez",ils:"maigriront"}}},
-vieillir:{m:"to age/grow old",g:"-ir",c:"regular-ir",t:{présent:{je:"vieillis",tu:"vieillis",il:"vieillit",nous:"vieillissons",vous:"vieillissez",ils:"vieillissent"},passéComposé:{je:"ai vieilli",tu:"as vieilli",il:"a vieilli",nous:"avons vieilli",vous:"avez vieilli",ils:"ont vieilli"},imparfait:{je:"vieillissais",tu:"vieillissais",il:"vieillissait",nous:"vieillissions",vous:"vieillissiez",ils:"vieillissaient"},futurSimple:{je:"vieillirai",tu:"vieilliras",il:"vieillira",nous:"vieillirons",vous:"vieillirez",ils:"vieilliront"}}},
-rougir:{m:"to blush/turn red",g:"-ir",c:"regular-ir",t:{présent:{je:"rougis",tu:"rougis",il:"rougit",nous:"rougissons",vous:"rougissez",ils:"rougissent"},passéComposé:{je:"ai rougi",tu:"as rougi",il:"a rougi",nous:"avons rougi",vous:"avez rougi",ils:"ont rougi"},imparfait:{je:"rougissais",tu:"rougissais",il:"rougissait",nous:"rougissions",vous:"rougissiez",ils:"rougissaient"},futurSimple:{je:"rougirai",tu:"rougiras",il:"rougira",nous:"rougirons",vous:"rougirez",ils:"rougiront"}}},
-pâlir:{m:"to turn pale",g:"-ir",c:"regular-ir",t:{présent:{je:"pâlis",tu:"pâlis",il:"pâlit",nous:"pâlissons",vous:"pâlissez",ils:"pâlissent"},passéComposé:{je:"ai pâli",tu:"as pâli",il:"a pâli",nous:"avons pâli",vous:"avez pâli",ils:"ont pâli"},imparfait:{je:"pâlissais",tu:"pâlissais",il:"pâlissait",nous:"pâlissions",vous:"pâlissiez",ils:"pâlissaient"},futurSimple:{je:"pâlirai",tu:"pâliras",il:"pâlira",nous:"pâlirons",vous:"pâlirez",ils:"pâliront"}}},
-réagir:{m:"to react",g:"-ir",c:"regular-ir",t:{présent:{je:"réagis",tu:"réagis",il:"réagit",nous:"réagissons",vous:"réagissez",ils:"réagissent"},passéComposé:{je:"ai réagi",tu:"as réagi",il:"a réagi",nous:"avons réagi",vous:"avez réagi",ils:"ont réagi"},imparfait:{je:"réagissais",tu:"réagissais",il:"réagissait",nous:"réagissions",vous:"réagissiez",ils:"réagissaient"},futurSimple:{je:"réagirai",tu:"réagiras",il:"réagira",nous:"réagirons",vous:"réagirez",ils:"réagiront"}}},
-agir:{m:"to act",g:"-ir",c:"regular-ir",t:{présent:{je:"agis",tu:"agis",il:"agit",nous:"agissons",vous:"agissez",ils:"agissent"},passéComposé:{je:"ai agi",tu:"as agi",il:"a agi",nous:"avons agi",vous:"avez agi",ils:"ont agi"},imparfait:{je:"agissais",tu:"agissais",il:"agissait",nous:"agissions",vous:"agissiez",ils:"agissaient"},futurSimple:{je:"agirai",tu:"agiras",il:"agira",nous:"agirons",vous:"agirez",ils:"agiront"}}},
-avertir:{m:"to warn",g:"-ir",c:"regular-ir",t:{présent:{je:"avertis",tu:"avertis",il:"avertit",nous:"avertissons",vous:"avertissez",ils:"avertissent"},passéComposé:{je:"ai averti",tu:"as averti",il:"a averti",nous:"avons averti",vous:"avez averti",ils:"ont averti"},imparfait:{je:"avertissais",tu:"avertissais",il:"avertissait",nous:"avertissions",vous:"avertissiez",ils:"avertissaient"},futurSimple:{je:"avertirai",tu:"avertiras",il:"avertira",nous:"avertirons",vous:"avertirez",ils:"avertiront"}}},
-nourrir:{m:"to feed/nourish",g:"-ir",c:"regular-ir",t:{présent:{je:"nourris",tu:"nourris",il:"nourrit",nous:"nourrissons",vous:"nourrissez",ils:"nourrissent"},passéComposé:{je:"ai nourri",tu:"as nourri",il:"a nourri",nous:"avons nourri",vous:"avez nourri",ils:"ont nourri"},imparfait:{je:"nourrissais",tu:"nourrissais",il:"nourrissait",nous:"nourrissions",vous:"nourrissiez",ils:"nourrissaient"},futurSimple:{je:"nourrirai",tu:"nourriras",il:"nourrira",nous:"nourrirons",vous:"nourrirez",ils:"nourriront"}}},
+  // ──────────────────────────────────────────────
+  // TENSE METADATA
+  // ──────────────────────────────────────────────
+  const tenseInfo = {
+    présent: {
+      name: "Présent",
+      englishName: "Present",
+      description: "Actions happening now or habitually",
+      compound: false,
+      mood: "indicatif"
+    },
+    passéComposé: {
+      name: "Passé composé",
+      englishName: "Present perfect / Simple past",
+      description: "Completed past actions",
+      compound: true,
+      auxiliary: true,
+      mood: "indicatif"
+    },
+    imparfait: {
+      name: "Imparfait",
+      englishName: "Imperfect",
+      description: "Ongoing or habitual past actions, descriptions",
+      compound: false,
+      mood: "indicatif"
+    },
+    plusQueParfait: {
+      name: "Plus-que-parfait",
+      englishName: "Pluperfect",
+      description: "Actions completed before another past action",
+      compound: true,
+      auxiliary: true,
+      mood: "indicatif"
+    },
+    futurSimple: {
+      name: "Futur simple",
+      englishName: "Simple future",
+      description: "Actions that will happen",
+      compound: false,
+      mood: "indicatif"
+    },
+    futurAntérieur: {
+      name: "Futur antérieur",
+      englishName: "Future perfect",
+      description: "Actions that will have been completed",
+      compound: true,
+      auxiliary: true,
+      mood: "indicatif"
+    },
+    conditionnelPrésent: {
+      name: "Conditionnel présent",
+      englishName: "Present conditional",
+      description: "Hypothetical actions, polite requests",
+      compound: false,
+      mood: "conditionnel"
+    },
+    conditionnelPassé: {
+      name: "Conditionnel passé",
+      englishName: "Past conditional",
+      description: "Actions that would have happened",
+      compound: true,
+      auxiliary: true,
+      mood: "conditionnel"
+    },
+    subjonctifPrésent: {
+      name: "Subjonctif présent",
+      englishName: "Present subjunctive",
+      description: "Doubt, emotion, necessity, desire",
+      compound: false,
+      mood: "subjonctif"
+    },
+    subjonctifPassé: {
+      name: "Subjonctif passé",
+      englishName: "Past subjunctive",
+      description: "Past actions with doubt, emotion, necessity",
+      compound: true,
+      auxiliary: true,
+      mood: "subjonctif"
+    },
+    passéSimple: {
+      name: "Passé simple",
+      englishName: "Simple past (literary)",
+      description: "Completed past actions in literary/formal writing",
+      compound: false,
+      mood: "indicatif"
+    },
+    impératif: {
+      name: "Impératif",
+      englishName: "Imperative",
+      description: "Commands and requests (tu, nous, vous only)",
+      compound: false,
+      mood: "impératif",
+      persons: ["tu", "nous", "vous"]
+    }
+  };
 
-// REGULAR -RE VERBS
-vendre:{m:"to sell",g:"-re",c:"regular-re",t:{présent:{je:"vends",tu:"vends",il:"vend",nous:"vendons",vous:"vendez",ils:"vendent"},passéComposé:{je:"ai vendu",tu:"as vendu",il:"a vendu",nous:"avons vendu",vous:"avez vendu",ils:"ont vendu"},imparfait:{je:"vendais",tu:"vendais",il:"vendait",nous:"vendions",vous:"vendiez",ils:"vendaient"},futurSimple:{je:"vendrai",tu:"vendras",il:"vendra",nous:"vendrons",vous:"vendrez",ils:"vendront"}}},
-attendre:{m:"to wait",g:"-re",c:"regular-re",t:{présent:{je:"attends",tu:"attends",il:"attend",nous:"attendons",vous:"attendez",ils:"attendent"},passéComposé:{je:"ai attendu",tu:"as attendu",il:"a attendu",nous:"avons attendu",vous:"avez attendu",ils:"ont attendu"},imparfait:{je:"attendais",tu:"attendais",il:"attendait",nous:"attendions",vous:"attendiez",ils:"attendaient"},futurSimple:{je:"attendrai",tu:"attendras",il:"attendra",nous:"attendrons",vous:"attendrez",ils:"attendront"}}},
-entendre:{m:"to hear",g:"-re",c:"regular-re",t:{présent:{je:"entends",tu:"entends",il:"entend",nous:"entendons",vous:"entendez",ils:"entendent"},passéComposé:{je:"ai entendu",tu:"as entendu",il:"a entendu",nous:"avons entendu",vous:"avez entendu",ils:"ont entendu"},imparfait:{je:"entendais",tu:"entendais",il:"entendait",nous:"entendions",vous:"entendiez",ils:"entendaient"},futurSimple:{je:"entendrai",tu:"entendras",il:"entendra",nous:"entendrons",vous:"entendrez",ils:"entendront"}}},
-répondre:{m:"to answer",g:"-re",c:"regular-re",t:{présent:{je:"réponds",tu:"réponds",il:"répond",nous:"répondons",vous:"répondez",ils:"répondent"},passéComposé:{je:"ai répondu",tu:"as répondu",il:"a répondu",nous:"avons répondu",vous:"avez répondu",ils:"ont répondu"},imparfait:{je:"répondais",tu:"répondais",il:"répondait",nous:"répondions",vous:"répondiez",ils:"répondaient"},futurSimple:{je:"répondrai",tu:"répondras",il:"répondra",nous:"répondrons",vous:"répondrez",ils:"répondront"}}},
-perdre:{m:"to lose",g:"-re",c:"regular-re",t:{présent:{je:"perds",tu:"perds",il:"perd",nous:"perdons",vous:"perdez",ils:"perdent"},passéComposé:{je:"ai perdu",tu:"as perdu",il:"a perdu",nous:"avons perdu",vous:"avez perdu",ils:"ont perdu"},imparfait:{je:"perdais",tu:"perdais",il:"perdait",nous:"perdions",vous:"perdiez",ils:"perdaient"},futurSimple:{je:"perdrai",tu:"perdras",il:"perdra",nous:"perdrons",vous:"perdrez",ils:"perdront"}}},
-rendre:{m:"to give back/return",g:"-re",c:"regular-re",t:{présent:{je:"rends",tu:"rends",il:"rend",nous:"rendons",vous:"rendez",ils:"rendent"},passéComposé:{je:"ai rendu",tu:"as rendu",il:"a rendu",nous:"avons rendu",vous:"avez rendu",ils:"ont rendu"},imparfait:{je:"rendais",tu:"rendais",il:"rendait",nous:"rendions",vous:"rendiez",ils:"rendaient"},futurSimple:{je:"rendrai",tu:"rendras",il:"rendra",nous:"rendrons",vous:"rendrez",ils:"rendront"}}},
-défendre:{m:"to defend/forbid",g:"-re",c:"regular-re",t:{présent:{je:"défends",tu:"défends",il:"défend",nous:"défendons",vous:"défendez",ils:"défendent"},passéComposé:{je:"ai défendu",tu:"as défendu",il:"a défendu",nous:"avons défendu",vous:"avez défendu",ils:"ont défendu"},imparfait:{je:"défendais",tu:"défendais",il:"défendait",nous:"défendions",vous:"défendiez",ils:"défendaient"},futurSimple:{je:"défendrai",tu:"défendras",il:"défendra",nous:"défendrons",vous:"défendrez",ils:"défendront"}}},
-mordre:{m:"to bite",g:"-re",c:"regular-re",t:{présent:{je:"mords",tu:"mords",il:"mord",nous:"mordons",vous:"mordez",ils:"mordent"},passéComposé:{je:"ai mordu",tu:"as mordu",il:"a mordu",nous:"avons mordu",vous:"avez mordu",ils:"ont mordu"},imparfait:{je:"mordais",tu:"mordais",il:"mordait",nous:"mordions",vous:"mordiez",ils:"mordaient"},futurSimple:{je:"mordrai",tu:"mordras",il:"mordra",nous:"mordrons",vous:"mordrez",ils:"mordront"}}},
-fondre:{m:"to melt",g:"-re",c:"regular-re",t:{présent:{je:"fonds",tu:"fonds",il:"fond",nous:"fondons",vous:"fondez",ils:"fondent"},passéComposé:{je:"ai fondu",tu:"as fondu",il:"a fondu",nous:"avons fondu",vous:"avez fondu",ils:"ont fondu"},imparfait:{je:"fondais",tu:"fondais",il:"fondait",nous:"fondions",vous:"fondiez",ils:"fondaient"},futurSimple:{je:"fondrai",tu:"fondras",il:"fondra",nous:"fondrons",vous:"fondrez",ils:"fondront"}}},
-confondre:{m:"to confuse",g:"-re",c:"regular-re",t:{présent:{je:"confonds",tu:"confonds",il:"confond",nous:"confondons",vous:"confondez",ils:"confondent"},passéComposé:{je:"ai confondu",tu:"as confondu",il:"a confondu",nous:"avons confondu",vous:"avez confondu",ils:"ont confondu"},imparfait:{je:"confondais",tu:"confondais",il:"confondait",nous:"confondions",vous:"confondiez",ils:"confondaient"},futurSimple:{je:"confondrai",tu:"confondras",il:"confondra",nous:"confondrons",vous:"confondrez",ils:"confondront"}}},
-répandre:{m:"to spread/spill",g:"-re",c:"regular-re",t:{présent:{je:"répands",tu:"répands",il:"répand",nous:"répandons",vous:"répandez",ils:"répandent"},passéComposé:{je:"ai répandu",tu:"as répandu",il:"a répandu",nous:"avons répandu",vous:"avez répandu",ils:"ont répandu"},imparfait:{je:"répandais",tu:"répandais",il:"répandait",nous:"répandions",vous:"répandiez",ils:"répandaient"},futurSimple:{je:"répandrai",tu:"répandras",il:"répandra",nous:"répandrons",vous:"répandrez",ils:"répandront"}}},
-interrompre:{m:"to interrupt",g:"-re",c:"regular-re",t:{présent:{je:"interromps",tu:"interromps",il:"interrompt",nous:"interrompons",vous:"interrompez",ils:"interrompent"},passéComposé:{je:"ai interrompu",tu:"as interrompu",il:"a interrompu",nous:"avons interrompu",vous:"avez interrompu",ils:"ont interrompu"},imparfait:{je:"interrompais",tu:"interrompais",il:"interrompait",nous:"interrompions",vous:"interrompiez",ils:"interrompaient"},futurSimple:{je:"interromprai",tu:"interrompras",il:"interrompra",nous:"interromprons",vous:"interromprez",ils:"interrompront"}}},
-rompre:{m:"to break",g:"-re",c:"regular-re",t:{présent:{je:"romps",tu:"romps",il:"rompt",nous:"rompons",vous:"rompez",ils:"rompent"},passéComposé:{je:"ai rompu",tu:"as rompu",il:"a rompu",nous:"avons rompu",vous:"avez rompu",ils:"ont rompu"},imparfait:{je:"rompais",tu:"rompais",il:"rompait",nous:"rompions",vous:"rompiez",ils:"rompaient"},futurSimple:{je:"romprai",tu:"rompras",il:"rompra",nous:"romprons",vous:"romprez",ils:"rompront"}}}
-};
+  // ──────────────────────────────────────────────
+  // CONJUGATION ENGINE
+  // ──────────────────────────────────────────────
+  const engine = {
+    // Regular -ER endings
+    er: {
+      présent:              ["e", "es", "e", "ons", "ez", "ent"],
+      imparfait:            ["ais", "ais", "ait", "ions", "iez", "aient"],
+      futurSimple:          ["erai", "eras", "era", "erons", "erez", "eront"],
+      conditionnelPrésent:  ["erais", "erais", "erait", "erions", "eriez", "eraient"],
+      subjonctifPrésent:    ["e", "es", "e", "ions", "iez", "ent"],
+      passéSimple:          ["ai", "as", "a", "âmes", "âtes", "èrent"],
+      impératif:            ["e", "ons", "ez"]
+    },
+    // Regular -IR (2nd group, -issant) endings
+    ir: {
+      présent:              ["is", "is", "it", "issons", "issez", "issent"],
+      imparfait:            ["issais", "issais", "issait", "issions", "issiez", "issaient"],
+      futurSimple:          ["irai", "iras", "ira", "irons", "irez", "iront"],
+      conditionnelPrésent:  ["irais", "irais", "irait", "irions", "iriez", "iraient"],
+      subjonctifPrésent:    ["isse", "isses", "isse", "issions", "issiez", "issent"],
+      passéSimple:          ["is", "is", "it", "îmes", "îtes", "irent"],
+      impératif:            ["is", "issons", "issez"]
+    },
+    // Regular -RE endings
+    re: {
+      présent:              ["s", "s", "", "ons", "ez", "ent"],
+      imparfait:            ["ais", "ais", "ait", "ions", "iez", "aient"],
+      futurSimple:          ["rai", "ras", "ra", "rons", "rez", "ront"],
+      conditionnelPrésent:  ["rais", "rais", "rait", "rions", "riez", "raient"],
+      subjonctifPrésent:    ["e", "es", "e", "ions", "iez", "ent"],
+      passéSimple:          ["is", "is", "it", "îmes", "îtes", "irent"],
+      impératif:            ["s", "ons", "ez"]
+    },
+
+    // Avoir conjugations (for compound tenses)
+    avoirPrésent:             ["ai", "as", "a", "avons", "avez", "ont"],
+    avoirImparfait:           ["avais", "avais", "avait", "avions", "aviez", "avaient"],
+    avoirFuturSimple:         ["aurai", "auras", "aura", "aurons", "aurez", "auront"],
+    avoirConditionnelPrésent: ["aurais", "aurais", "aurait", "aurions", "auriez", "auraient"],
+    avoirSubjonctifPrésent:   ["aie", "aies", "ait", "ayons", "ayez", "aient"],
+
+    // Être conjugations (for compound tenses)
+    êtrePrésent:              ["suis", "es", "est", "sommes", "êtes", "sont"],
+    êtreImparfait:            ["étais", "étais", "était", "étions", "étiez", "étaient"],
+    êtreFuturSimple:          ["serai", "seras", "sera", "serons", "serez", "seront"],
+    êtreConditionnelPrésent:  ["serais", "serais", "serait", "serions", "seriez", "seraient"],
+    êtreSubjonctifPrésent:    ["sois", "sois", "soit", "soyons", "soyez", "soient"],
+
+    /**
+     * Get the stem of a regular verb by removing the infinitive ending.
+     */
+    getStem(infinitive, group) {
+      if (group === "er") return infinitive.slice(0, -2);
+      if (group === "ir") return infinitive.slice(0, -2);
+      if (group === "re") return infinitive.slice(0, -2);
+      return infinitive;
+    },
+
+    /**
+     * Apply stem changes for stem-changing verbs.
+     * stemChanges is an object like:
+     *   { present: { je: "stem", tu: "stem", ... }, futur: "stem", ... }
+     * or with pattern shortcuts:
+     *   { present1236: "stem" }  (persons 1,2,3,6 = je,tu,il,ils)
+     */
+    applyStemChange(baseStem, stemChanges, tense, personIndex) {
+      if (!stemChanges) return baseStem;
+      const tenseMap = {
+        présent: "present",
+        imparfait: "imparfait",
+        futurSimple: "futur",
+        conditionnelPrésent: "conditionnel",
+        subjonctifPrésent: "subjonctif",
+        passéSimple: "passéSimple"
+      };
+      const key = tenseMap[tense];
+      if (!key) return baseStem;
+
+      // Check for boot pattern shortcut (persons 0,1,2,5 = je,tu,il/elle,ils/elles)
+      const bootKey = key + "Boot";
+      if (stemChanges[bootKey] && [0, 1, 2, 5].includes(personIndex)) {
+        return stemChanges[bootKey];
+      }
+
+      // Check for full tense override
+      if (typeof stemChanges[key] === "string") {
+        return stemChanges[key];
+      }
+
+      // Check for per-person stems
+      if (stemChanges[key] && typeof stemChanges[key] === "object") {
+        const personKeys = ["je", "tu", "il", "nous", "vous", "ils"];
+        return stemChanges[key][personKeys[personIndex]] || baseStem;
+      }
+
+      return baseStem;
+    },
+
+    /**
+     * Conjugate a simple (non-compound) tense for a regular verb.
+     * Returns an array of 6 forms (or 3 for impératif).
+     */
+    conjugateSimple(verb, tense) {
+      // If verb has explicit irregular forms for this tense, use them
+      if (verb.irregular && verb.irregular[tense]) {
+        return verb.irregular[tense];
+      }
+
+      const group = verb.group;
+      if (group === "irregular") {
+        // Irregular verbs MUST have their forms spelled out
+        return null;
+      }
+
+      const endings = this[group][tense];
+      if (!endings) return null;
+
+      const baseStem = this.getStem(verb.infinitive, group);
+      const isImperatif = tense === "impératif";
+      const count = isImperatif ? 3 : 6;
+      const personIndices = isImperatif ? [1, 3, 4] : [0, 1, 2, 3, 4, 5];
+
+      const forms = [];
+      for (let i = 0; i < count; i++) {
+        const pi = personIndices[i];
+        let stem = this.applyStemChange(baseStem, verb.stemChanges, tense, pi);
+
+        // Handle -ger verbs: add 'e' before 'a' or 'o' endings
+        if (verb.infinitive.endsWith("ger")) {
+          const ending = endings[i];
+          if (ending.startsWith("a") || ending.startsWith("o") || ending.startsWith("â")) {
+            stem = stem + "e";
+          }
+        }
+
+        // Handle -cer verbs: change 'c' to 'ç' before 'a' or 'o' endings
+        if (verb.infinitive.endsWith("cer") && stem.endsWith("c")) {
+          const ending = endings[i];
+          if (ending.startsWith("a") || ending.startsWith("o") || ending.startsWith("â")) {
+            stem = stem.slice(0, -1) + "ç";
+          }
+        }
+
+        // For futur/conditionnel of -er verbs, the ending includes the full suffix
+        // (stem + ending), but we already have the right stem
+        if ((tense === "futurSimple" || tense === "conditionnelPrésent") && group === "er") {
+          // For -er verbs, futur/conditionnel stem = infinitive (not the stem)
+          let futurStem = verb.infinitive;
+          if (verb.stemChanges && verb.stemChanges.futur) {
+            futurStem = verb.stemChanges.futur;
+          }
+          // The endings already include the full future suffix
+          // e.g., "erai" for -er; but we stored them as full endings from stem
+          // Actually for -er, futur = infinitive_without_e + ai etc
+          // parler -> parlerai; so stem "parl" + "erai"
+          // That is already handled: stem="parl", ending="erai" -> "parlerai"
+          forms.push(stem + endings[i]);
+        } else if ((tense === "futurSimple" || tense === "conditionnelPrésent") && group === "ir") {
+          let futurStem = verb.infinitive;
+          if (verb.stemChanges && verb.stemChanges.futur) {
+            futurStem = verb.stemChanges.futur;
+          } else {
+            futurStem = verb.infinitive;
+          }
+          // finir -> finirai: stem="fin" + "irai"
+          forms.push(stem + endings[i]);
+        } else if ((tense === "futurSimple" || tense === "conditionnelPrésent") && group === "re") {
+          // vendre -> vendrai: stem="vend" + "rai"
+          forms.push(stem + endings[i]);
+        } else {
+          forms.push(stem + endings[i]);
+        }
+      }
+      return forms;
+    },
+
+    /**
+     * Get auxiliary conjugation for a compound tense.
+     */
+    getAuxiliary(aux, compoundTense) {
+      const auxTenseMap = {
+        passéComposé: "Présent",
+        plusQueParfait: "Imparfait",
+        futurAntérieur: "FuturSimple",
+        conditionnelPassé: "ConditionnelPrésent",
+        subjonctifPassé: "SubjonctifPrésent"
+      };
+      const suffix = auxTenseMap[compoundTense];
+      if (!suffix) return null;
+      const key = aux + suffix;
+      return this[key] || null;
+    },
+
+    /**
+     * Conjugate a compound tense. Returns array of 6 strings.
+     */
+    conjugateCompound(verb, tense) {
+      const aux = verb.auxiliary || "avoir";
+      const auxForms = this.getAuxiliary(aux, tense);
+      if (!auxForms) return null;
+      const pp = verb.pastParticiple;
+      const usesEtre = aux === "être";
+
+      return auxForms.map((auxForm, i) => {
+        let participle = pp;
+        if (usesEtre) {
+          // Agreement: feminine and plural forms
+          // For basic display, show masculine forms with (e)(s) hint
+          // persons: je, tu, il/elle, nous, vous, ils/elles
+          if (i === 5) {
+            // ils/elles -> add s (or es if already has e)
+            participle = pp.endsWith("e") ? pp + "s" : pp + "s";
+          }
+          // We show base form; apps can handle agreement
+        }
+        // Add elision for je + vowel-starting auxiliary
+        let person = PERSONS[i];
+        if (i === 0 && /^[aeéèêiîoôuûhh]/.test(auxForm)) {
+          person = "j'";
+        }
+        return auxForm + " " + participle;
+      });
+    },
+
+    /**
+     * Main entry: conjugate a verb in any tense.
+     * Returns { forms: [...], persons: [...] }
+     */
+    conjugate(verb, tense) {
+      const info = tenseInfo[tense];
+      if (!info) return null;
+
+      if (info.compound) {
+        const forms = this.conjugateCompound(verb, tense);
+        return forms ? { forms, persons: PERSONS } : null;
+      }
+
+      if (tense === "impératif") {
+        const forms = this.conjugateSimple(verb, tense);
+        return forms ? { forms, persons: ["tu", "nous", "vous"] } : null;
+      }
+
+      const forms = this.conjugateSimple(verb, tense);
+      return forms ? { forms, persons: PERSONS } : null;
+    },
+
+    /**
+     * Get a display-ready conjugation table for a verb and tense.
+     */
+    getConjugationTable(verb, tense) {
+      const result = this.conjugate(verb, tense);
+      if (!result) return null;
+      const info = tenseInfo[tense];
+      return {
+        tense: info.name,
+        tenseKey: tense,
+        englishName: info.englishName,
+        compound: info.compound,
+        rows: result.persons.map((p, i) => {
+          const form = result.forms[i];
+          // Handle elision
+          let display;
+          if (info.compound) {
+            let pronoun = p;
+            if (p === "je" && /^[aeéèêiîoôuûh]/.test(form)) {
+              pronoun = "j'";
+            }
+            display = pronoun + (pronoun.endsWith("'") ? "" : " ") + form;
+          } else {
+            let pronoun = p;
+            if (p === "je" && /^[aeéèêiîoôuûh]/.test(form)) {
+              pronoun = "j'";
+            }
+            display = pronoun + (pronoun.endsWith("'") ? "" : " ") + form;
+          }
+          return { person: p, form, display };
+        })
+      };
+    }
+  };
+
+  // ──────────────────────────────────────────────
+  // CATEGORIES
+  // ──────────────────────────────────────────────
+  const categories = {
+    essential:       { name: "Essential", description: "Most common and fundamental verbs", icon: "⭐" },
+    modal:           { name: "Modal", description: "Verbs expressing ability, obligation, desire", icon: "🔑" },
+    movement:        { name: "Movement (Dr Mrs Vandertramp)", description: "Verbs of motion conjugated with être", icon: "🚶" },
+    reflexive:       { name: "Reflexive", description: "Pronominal/reflexive verbs (se + verb)", icon: "🪞" },
+    communication:   { name: "Communication", description: "Speaking, writing, expressing", icon: "💬" },
+    thinking:        { name: "Thinking / Cognition", description: "Mental processes, knowledge, belief", icon: "🧠" },
+    dailyLife:       { name: "Daily Life", description: "Everyday activities and routines", icon: "🏠" },
+    emotions:        { name: "Emotions", description: "Feelings and emotional states", icon: "❤️" },
+    perception:      { name: "Perception", description: "Senses and observation", icon: "👁️" },
+    actions:         { name: "Actions / Physical", description: "Physical actions and activities", icon: "💪" },
+    social:          { name: "Social", description: "Interpersonal and social interactions", icon: "🤝" },
+    work:            { name: "Work / Professional", description: "Professional and work-related verbs", icon: "💼" },
+    state:           { name: "State / Existence", description: "Being, existing, seeming", icon: "🌀" }
+  };
+
+  // ──────────────────────────────────────────────
+  // VERB DEFINITIONS
+  // ──────────────────────────────────────────────
+  // Helper: shorthand for regular verb definition
+  function reg(infinitive, english, group, category, opts) {
+    const base = {
+      infinitive,
+      english,
+      group,
+      category: Array.isArray(category) ? category : [category],
+      auxiliary: "avoir",
+      pastParticiple: null,       // computed below
+      presentParticiple: null,    // computed below
+    };
+    if (group === "er") {
+      const stem = infinitive.slice(0, -2);
+      base.pastParticiple = stem + "é";
+      base.presentParticiple = stem + "ant";
+    } else if (group === "ir") {
+      const stem = infinitive.slice(0, -2);
+      base.pastParticiple = stem + "i";
+      base.presentParticiple = stem + "issant";
+    } else if (group === "re") {
+      const stem = infinitive.slice(0, -2);
+      base.pastParticiple = stem + "u";
+      base.presentParticiple = stem + "ant";
+    }
+    return Object.assign(base, opts || {});
+  }
+
+  // Helper: irregular verb definition
+  function irreg(infinitive, english, category, aux, pp, prp, irregular, opts) {
+    const base = {
+      infinitive,
+      english,
+      group: "irregular",
+      category: Array.isArray(category) ? category : [category],
+      auxiliary: aux,
+      pastParticiple: pp,
+      presentParticiple: prp,
+      irregular
+    };
+    return Object.assign(base, opts || {});
+  }
+
+  // ──────────────────────────────────────────────
+  // IRREGULAR VERBS
+  // ──────────────────────────────────────────────
+
+  const irregularVerbs = [
+    // ── ÊTRE ──
+    irreg("être", "to be", ["essential", "state"], "avoir", "été", "étant", {
+      présent: ["suis", "es", "est", "sommes", "êtes", "sont"],
+      imparfait: ["étais", "étais", "était", "étions", "étiez", "étaient"],
+      futurSimple: ["serai", "seras", "sera", "serons", "serez", "seront"],
+      conditionnelPrésent: ["serais", "serais", "serait", "serions", "seriez", "seraient"],
+      subjonctifPrésent: ["sois", "sois", "soit", "soyons", "soyez", "soient"],
+      passéSimple: ["fus", "fus", "fut", "fûmes", "fûtes", "furent"],
+      impératif: ["sois", "soyons", "soyez"]
+    }),
+
+    // ── AVOIR ──
+    irreg("avoir", "to have", ["essential", "state"], "avoir", "eu", "ayant", {
+      présent: ["ai", "as", "a", "avons", "avez", "ont"],
+      imparfait: ["avais", "avais", "avait", "avions", "aviez", "avaient"],
+      futurSimple: ["aurai", "auras", "aura", "aurons", "aurez", "auront"],
+      conditionnelPrésent: ["aurais", "aurais", "aurait", "aurions", "auriez", "auraient"],
+      subjonctifPrésent: ["aie", "aies", "ait", "ayons", "ayez", "aient"],
+      passéSimple: ["eus", "eus", "eut", "eûmes", "eûtes", "eurent"],
+      impératif: ["aie", "ayons", "ayez"]
+    }),
+
+    // ── FAIRE ──
+    irreg("faire", "to do, to make", ["essential", "actions"], "avoir", "fait", "faisant", {
+      présent: ["fais", "fais", "fait", "faisons", "faites", "font"],
+      imparfait: ["faisais", "faisais", "faisait", "faisions", "faisiez", "faisaient"],
+      futurSimple: ["ferai", "feras", "fera", "ferons", "ferez", "feront"],
+      conditionnelPrésent: ["ferais", "ferais", "ferait", "ferions", "feriez", "feraient"],
+      subjonctifPrésent: ["fasse", "fasses", "fasse", "fassions", "fassiez", "fassent"],
+      passéSimple: ["fis", "fis", "fit", "fîmes", "fîtes", "firent"],
+      impératif: ["fais", "faisons", "faites"]
+    }),
+
+    // ── ALLER ──
+    irreg("aller", "to go", ["essential", "movement"], "être", "allé", "allant", {
+      présent: ["vais", "vas", "va", "allons", "allez", "vont"],
+      imparfait: ["allais", "allais", "allait", "allions", "alliez", "allaient"],
+      futurSimple: ["irai", "iras", "ira", "irons", "irez", "iront"],
+      conditionnelPrésent: ["irais", "irais", "irait", "irions", "iriez", "iraient"],
+      subjonctifPrésent: ["aille", "ailles", "aille", "allions", "alliez", "aillent"],
+      passéSimple: ["allai", "allas", "alla", "allâmes", "allâtes", "allèrent"],
+      impératif: ["va", "allons", "allez"]
+    }),
+
+    // ── DIRE ──
+    irreg("dire", "to say, to tell", ["essential", "communication"], "avoir", "dit", "disant", {
+      présent: ["dis", "dis", "dit", "disons", "dites", "disent"],
+      imparfait: ["disais", "disais", "disait", "disions", "disiez", "disaient"],
+      futurSimple: ["dirai", "diras", "dira", "dirons", "direz", "diront"],
+      conditionnelPrésent: ["dirais", "dirais", "dirait", "dirions", "diriez", "diraient"],
+      subjonctifPrésent: ["dise", "dises", "dise", "disions", "disiez", "disent"],
+      passéSimple: ["dis", "dis", "dit", "dîmes", "dîtes", "dirent"],
+      impératif: ["dis", "disons", "dites"]
+    }),
+
+    // ── POUVOIR ──
+    irreg("pouvoir", "to be able to, can", ["essential", "modal"], "avoir", "pu", "pouvant", {
+      présent: ["peux", "peux", "peut", "pouvons", "pouvez", "peuvent"],
+      imparfait: ["pouvais", "pouvais", "pouvait", "pouvions", "pouviez", "pouvaient"],
+      futurSimple: ["pourrai", "pourras", "pourra", "pourrons", "pourrez", "pourront"],
+      conditionnelPrésent: ["pourrais", "pourrais", "pourrait", "pourrions", "pourriez", "pourraient"],
+      subjonctifPrésent: ["puisse", "puisses", "puisse", "puissions", "puissiez", "puissent"],
+      passéSimple: ["pus", "pus", "put", "pûmes", "pûtes", "purent"],
+      impératif: null
+    }),
+
+    // ── VOULOIR ──
+    irreg("vouloir", "to want", ["essential", "modal"], "avoir", "voulu", "voulant", {
+      présent: ["veux", "veux", "veut", "voulons", "voulez", "veulent"],
+      imparfait: ["voulais", "voulais", "voulait", "voulions", "vouliez", "voulaient"],
+      futurSimple: ["voudrai", "voudras", "voudra", "voudrons", "voudrez", "voudront"],
+      conditionnelPrésent: ["voudrais", "voudrais", "voudrait", "voudrions", "voudriez", "voudraient"],
+      subjonctifPrésent: ["veuille", "veuilles", "veuille", "voulions", "vouliez", "veuillent"],
+      passéSimple: ["voulus", "voulus", "voulut", "voulûmes", "voulûtes", "voulurent"],
+      impératif: ["veuille", "voulons", "veuillez"]
+    }),
+
+    // ── DEVOIR ──
+    irreg("devoir", "to have to, must, to owe", ["essential", "modal"], "avoir", "dû", "devant", {
+      présent: ["dois", "dois", "doit", "devons", "devez", "doivent"],
+      imparfait: ["devais", "devais", "devait", "devions", "deviez", "devaient"],
+      futurSimple: ["devrai", "devras", "devra", "devrons", "devrez", "devront"],
+      conditionnelPrésent: ["devrais", "devrais", "devrait", "devrions", "devriez", "devraient"],
+      subjonctifPrésent: ["doive", "doives", "doive", "devions", "deviez", "doivent"],
+      passéSimple: ["dus", "dus", "dut", "dûmes", "dûtes", "durent"],
+      impératif: ["dois", "devons", "devez"]
+    }),
+
+    // ── SAVOIR ──
+    irreg("savoir", "to know (facts)", ["essential", "thinking"], "avoir", "su", "sachant", {
+      présent: ["sais", "sais", "sait", "savons", "savez", "savent"],
+      imparfait: ["savais", "savais", "savait", "savions", "saviez", "savaient"],
+      futurSimple: ["saurai", "sauras", "saura", "saurons", "saurez", "sauront"],
+      conditionnelPrésent: ["saurais", "saurais", "saurait", "saurions", "sauriez", "sauraient"],
+      subjonctifPrésent: ["sache", "saches", "sache", "sachions", "sachiez", "sachent"],
+      passéSimple: ["sus", "sus", "sut", "sûmes", "sûtes", "surent"],
+      impératif: ["sache", "sachons", "sachez"]
+    }),
+
+    // ── FALLOIR (impersonal) ──
+    irreg("falloir", "to be necessary (il faut)", ["essential", "modal"], "avoir", "fallu", null, {
+      présent: [null, null, "faut", null, null, null],
+      imparfait: [null, null, "fallait", null, null, null],
+      futurSimple: [null, null, "faudra", null, null, null],
+      conditionnelPrésent: [null, null, "faudrait", null, null, null],
+      subjonctifPrésent: [null, null, "faille", null, null, null],
+      passéSimple: [null, null, "fallut", null, null, null],
+      impératif: null
+    }, { impersonal: true }),
+
+    // ── VENIR ──
+    irreg("venir", "to come", ["essential", "movement"], "être", "venu", "venant", {
+      présent: ["viens", "viens", "vient", "venons", "venez", "viennent"],
+      imparfait: ["venais", "venais", "venait", "venions", "veniez", "venaient"],
+      futurSimple: ["viendrai", "viendras", "viendra", "viendrons", "viendrez", "viendront"],
+      conditionnelPrésent: ["viendrais", "viendrais", "viendrait", "viendrions", "viendriez", "viendraient"],
+      subjonctifPrésent: ["vienne", "viennes", "vienne", "venions", "veniez", "viennent"],
+      passéSimple: ["vins", "vins", "vint", "vînmes", "vîntes", "vinrent"],
+      impératif: ["viens", "venons", "venez"]
+    }),
+
+    // ── PARTIR ──
+    irreg("partir", "to leave, to depart", ["essential", "movement"], "être", "parti", "partant", {
+      présent: ["pars", "pars", "part", "partons", "partez", "partent"],
+      imparfait: ["partais", "partais", "partait", "partions", "partiez", "partaient"],
+      futurSimple: ["partirai", "partiras", "partira", "partirons", "partirez", "partiront"],
+      conditionnelPrésent: ["partirais", "partirais", "partirait", "partirions", "partiriez", "partiraient"],
+      subjonctifPrésent: ["parte", "partes", "parte", "partions", "partiez", "partent"],
+      passéSimple: ["partis", "partis", "partit", "partîmes", "partîtes", "partirent"],
+      impératif: ["pars", "partons", "partez"]
+    }),
+
+    // ── SORTIR ──
+    irreg("sortir", "to go out, to exit", ["essential", "movement"], "être", "sorti", "sortant", {
+      présent: ["sors", "sors", "sort", "sortons", "sortez", "sortent"],
+      imparfait: ["sortais", "sortais", "sortait", "sortions", "sortiez", "sortaient"],
+      futurSimple: ["sortirai", "sortiras", "sortira", "sortirons", "sortirez", "sortiront"],
+      conditionnelPrésent: ["sortirais", "sortirais", "sortirait", "sortirions", "sortiriez", "sortiraient"],
+      subjonctifPrésent: ["sorte", "sortes", "sorte", "sortions", "sortiez", "sortent"],
+      passéSimple: ["sortis", "sortis", "sortit", "sortîmes", "sortîtes", "sortirent"],
+      impératif: ["sors", "sortons", "sortez"]
+    }),
+
+    // ── NAÎTRE ──
+    irreg("naître", "to be born", ["state", "movement"], "être", "né", "naissant", {
+      présent: ["nais", "nais", "naît", "naissons", "naissez", "naissent"],
+      imparfait: ["naissais", "naissais", "naissait", "naissions", "naissiez", "naissaient"],
+      futurSimple: ["naîtrai", "naîtras", "naîtra", "naîtrons", "naîtrez", "naîtront"],
+      conditionnelPrésent: ["naîtrais", "naîtrais", "naîtrait", "naîtrions", "naîtriez", "naîtraient"],
+      subjonctifPrésent: ["naisse", "naisses", "naisse", "naissions", "naissiez", "naissent"],
+      passéSimple: ["naquis", "naquis", "naquit", "naquîmes", "naquîtes", "naquirent"],
+      impératif: ["nais", "naissons", "naissez"]
+    }),
+
+    // ── MOURIR ──
+    irreg("mourir", "to die", ["state", "movement"], "être", "mort", "mourant", {
+      présent: ["meurs", "meurs", "meurt", "mourons", "mourez", "meurent"],
+      imparfait: ["mourais", "mourais", "mourait", "mourions", "mouriez", "mouraient"],
+      futurSimple: ["mourrai", "mourras", "mourra", "mourrons", "mourrez", "mourront"],
+      conditionnelPrésent: ["mourrais", "mourrais", "mourrait", "mourrions", "mourriez", "mourraient"],
+      subjonctifPrésent: ["meure", "meures", "meure", "mourions", "mouriez", "meurent"],
+      passéSimple: ["mourus", "mourus", "mourut", "mourûmes", "mourûtes", "moururent"],
+      impératif: ["meurs", "mourons", "mourez"]
+    }),
+
+    // ── DEVENIR ──
+    irreg("devenir", "to become", ["state", "movement"], "être", "devenu", "devenant", {
+      présent: ["deviens", "deviens", "devient", "devenons", "devenez", "deviennent"],
+      imparfait: ["devenais", "devenais", "devenait", "devenions", "deveniez", "devenaient"],
+      futurSimple: ["deviendrai", "deviendras", "deviendra", "deviendrons", "deviendrez", "deviendront"],
+      conditionnelPrésent: ["deviendrais", "deviendrais", "deviendrait", "deviendrions", "deviendriez", "deviendraient"],
+      subjonctifPrésent: ["devienne", "deviennes", "devienne", "devenions", "deveniez", "deviennent"],
+      passéSimple: ["devins", "devins", "devint", "devînmes", "devîntes", "devinrent"],
+      impératif: ["deviens", "devenons", "devenez"]
+    }),
+
+    // ── REVENIR ──
+    irreg("revenir", "to come back", ["movement"], "être", "revenu", "revenant", {
+      présent: ["reviens", "reviens", "revient", "revenons", "revenez", "reviennent"],
+      imparfait: ["revenais", "revenais", "revenait", "revenions", "reveniez", "revenaient"],
+      futurSimple: ["reviendrai", "reviendras", "reviendra", "reviendrons", "reviendrez", "reviendront"],
+      conditionnelPrésent: ["reviendrais", "reviendrais", "reviendrait", "reviendrions", "reviendriez", "reviendraient"],
+      subjonctifPrésent: ["revienne", "reviennes", "revienne", "revenions", "reveniez", "reviennent"],
+      passéSimple: ["revins", "revins", "revint", "revînmes", "revîntes", "revinrent"],
+      impératif: ["reviens", "revenons", "revenez"]
+    }),
+
+    // ── PRENDRE ──
+    irreg("prendre", "to take", ["essential", "actions"], "avoir", "pris", "prenant", {
+      présent: ["prends", "prends", "prend", "prenons", "prenez", "prennent"],
+      imparfait: ["prenais", "prenais", "prenait", "prenions", "preniez", "prenaient"],
+      futurSimple: ["prendrai", "prendras", "prendra", "prendrons", "prendrez", "prendront"],
+      conditionnelPrésent: ["prendrais", "prendrais", "prendrait", "prendrions", "prendriez", "prendraient"],
+      subjonctifPrésent: ["prenne", "prennes", "prenne", "prenions", "preniez", "prennent"],
+      passéSimple: ["pris", "pris", "prit", "prîmes", "prîtes", "prirent"],
+      impératif: ["prends", "prenons", "prenez"]
+    }),
+
+    // ── COMPRENDRE ──
+    irreg("comprendre", "to understand", ["essential", "thinking"], "avoir", "compris", "comprenant", {
+      présent: ["comprends", "comprends", "comprend", "comprenons", "comprenez", "comprennent"],
+      imparfait: ["comprenais", "comprenais", "comprenait", "comprenions", "compreniez", "comprenaient"],
+      futurSimple: ["comprendrai", "comprendras", "comprendra", "comprendrons", "comprendrez", "comprendront"],
+      conditionnelPrésent: ["comprendrais", "comprendrais", "comprendrait", "comprendrions", "comprendriez", "comprendraient"],
+      subjonctifPrésent: ["comprenne", "comprennes", "comprenne", "comprenions", "compreniez", "comprennent"],
+      passéSimple: ["compris", "compris", "comprit", "comprîmes", "comprîtes", "comprirent"],
+      impératif: ["comprends", "comprenons", "comprenez"]
+    }),
+
+    // ── APPRENDRE ──
+    irreg("apprendre", "to learn", ["essential", "thinking"], "avoir", "appris", "apprenant", {
+      présent: ["apprends", "apprends", "apprend", "apprenons", "apprenez", "apprennent"],
+      imparfait: ["apprenais", "apprenais", "apprenait", "apprenions", "appreniez", "apprenaient"],
+      futurSimple: ["apprendrai", "apprendras", "apprendra", "apprendrons", "apprendrez", "apprendront"],
+      conditionnelPrésent: ["apprendrais", "apprendrais", "apprendrait", "apprendrions", "apprendriez", "apprendraient"],
+      subjonctifPrésent: ["apprenne", "apprennes", "apprenne", "apprenions", "appreniez", "apprennent"],
+      passéSimple: ["appris", "appris", "apprit", "apprîmes", "apprîtes", "apprirent"],
+      impératif: ["apprends", "apprenons", "apprenez"]
+    }),
+
+    // ── METTRE ──
+    irreg("mettre", "to put, to place", ["essential", "actions"], "avoir", "mis", "mettant", {
+      présent: ["mets", "mets", "met", "mettons", "mettez", "mettent"],
+      imparfait: ["mettais", "mettais", "mettait", "mettions", "mettiez", "mettaient"],
+      futurSimple: ["mettrai", "mettras", "mettra", "mettrons", "mettrez", "mettront"],
+      conditionnelPrésent: ["mettrais", "mettrais", "mettrait", "mettrions", "mettriez", "mettraient"],
+      subjonctifPrésent: ["mette", "mettes", "mette", "mettions", "mettiez", "mettent"],
+      passéSimple: ["mis", "mis", "mit", "mîmes", "mîtes", "mirent"],
+      impératif: ["mets", "mettons", "mettez"]
+    }),
+
+    // ── PERMETTRE ──
+    irreg("permettre", "to allow, to permit", ["social", "actions"], "avoir", "permis", "permettant", {
+      présent: ["permets", "permets", "permet", "permettons", "permettez", "permettent"],
+      imparfait: ["permettais", "permettais", "permettait", "permettions", "permettiez", "permettaient"],
+      futurSimple: ["permettrai", "permettras", "permettra", "permettrons", "permettrez", "permettront"],
+      conditionnelPrésent: ["permettrais", "permettrais", "permettrait", "permettrions", "permettriez", "permettraient"],
+      subjonctifPrésent: ["permette", "permettes", "permette", "permettions", "permettiez", "permettent"],
+      passéSimple: ["permis", "permis", "permit", "permîmes", "permîtes", "permirent"],
+      impératif: ["permets", "permettons", "permettez"]
+    }),
+
+    // ── PROMETTRE ──
+    irreg("promettre", "to promise", ["communication", "social"], "avoir", "promis", "promettant", {
+      présent: ["promets", "promets", "promet", "promettons", "promettez", "promettent"],
+      imparfait: ["promettais", "promettais", "promettait", "promettions", "promettiez", "promettaient"],
+      futurSimple: ["promettrai", "promettras", "promettra", "promettrons", "promettrez", "promettront"],
+      conditionnelPrésent: ["promettrais", "promettrais", "promettrait", "promettrions", "promettriez", "promettraient"],
+      subjonctifPrésent: ["promette", "promettes", "promette", "promettions", "promettiez", "promettent"],
+      passéSimple: ["promis", "promis", "promit", "promîmes", "promîtes", "promirent"],
+      impératif: ["promets", "promettons", "promettez"]
+    }),
+
+    // ── BOIRE ──
+    irreg("boire", "to drink", ["dailyLife", "actions"], "avoir", "bu", "buvant", {
+      présent: ["bois", "bois", "boit", "buvons", "buvez", "boivent"],
+      imparfait: ["buvais", "buvais", "buvait", "buvions", "buviez", "buvaient"],
+      futurSimple: ["boirai", "boiras", "boira", "boirons", "boirez", "boiront"],
+      conditionnelPrésent: ["boirais", "boirais", "boirait", "boirions", "boiriez", "boiraient"],
+      subjonctifPrésent: ["boive", "boives", "boive", "buvions", "buviez", "boivent"],
+      passéSimple: ["bus", "bus", "but", "bûmes", "bûtes", "burent"],
+      impératif: ["bois", "buvons", "buvez"]
+    }),
+
+    // ── CONDUIRE ──
+    irreg("conduire", "to drive, to lead", ["actions", "dailyLife"], "avoir", "conduit", "conduisant", {
+      présent: ["conduis", "conduis", "conduit", "conduisons", "conduisez", "conduisent"],
+      imparfait: ["conduisais", "conduisais", "conduisait", "conduisions", "conduisiez", "conduisaient"],
+      futurSimple: ["conduirai", "conduiras", "conduira", "conduirons", "conduirez", "conduiront"],
+      conditionnelPrésent: ["conduirais", "conduirais", "conduirait", "conduirions", "conduiriez", "conduiraient"],
+      subjonctifPrésent: ["conduise", "conduises", "conduise", "conduisions", "conduisiez", "conduisent"],
+      passéSimple: ["conduisis", "conduisis", "conduisit", "conduisîmes", "conduisîtes", "conduisirent"],
+      impératif: ["conduis", "conduisons", "conduisez"]
+    }),
+
+    // ── CONSTRUIRE ──
+    irreg("construire", "to build, to construct", ["actions", "work"], "avoir", "construit", "construisant", {
+      présent: ["construis", "construis", "construit", "construisons", "construisez", "construisent"],
+      imparfait: ["construisais", "construisais", "construisait", "construisions", "construisiez", "construisaient"],
+      futurSimple: ["construirai", "construiras", "construira", "construirons", "construirez", "construiront"],
+      conditionnelPrésent: ["construirais", "construirais", "construirait", "construirions", "construiriez", "construiraient"],
+      subjonctifPrésent: ["construise", "construises", "construise", "construisions", "construisiez", "construisent"],
+      passéSimple: ["construisis", "construisis", "construisit", "construisîmes", "construisîtes", "construisirent"],
+      impératif: ["construis", "construisons", "construisez"]
+    }),
+
+    // ── DÉTRUIRE ──
+    irreg("détruire", "to destroy", ["actions"], "avoir", "détruit", "détruisant", {
+      présent: ["détruis", "détruis", "détruit", "détruisons", "détruisez", "détruisent"],
+      imparfait: ["détruisais", "détruisais", "détruisait", "détruisions", "détruisiez", "détruisaient"],
+      futurSimple: ["détruirai", "détruiras", "détruira", "détruirons", "détruirez", "détruiront"],
+      conditionnelPrésent: ["détruirais", "détruirais", "détruirait", "détruirions", "détruiriez", "détruiraient"],
+      subjonctifPrésent: ["détruise", "détruises", "détruise", "détruisions", "détruisiez", "détruisent"],
+      passéSimple: ["détruisis", "détruisis", "détruisit", "détruisîmes", "détruisîtes", "détruisirent"],
+      impératif: ["détruis", "détruisons", "détruisez"]
+    }),
+
+    // ── PRODUIRE ──
+    irreg("produire", "to produce", ["work", "actions"], "avoir", "produit", "produisant", {
+      présent: ["produis", "produis", "produit", "produisons", "produisez", "produisent"],
+      imparfait: ["produisais", "produisais", "produisait", "produisions", "produisiez", "produisaient"],
+      futurSimple: ["produirai", "produiras", "produira", "produirons", "produirez", "produiront"],
+      conditionnelPrésent: ["produirais", "produirais", "produirait", "produirions", "produiriez", "produiraient"],
+      subjonctifPrésent: ["produise", "produises", "produise", "produisions", "produisiez", "produisent"],
+      passéSimple: ["produisis", "produisis", "produisit", "produisîmes", "produisîtes", "produisirent"],
+      impératif: ["produis", "produisons", "produisez"]
+    }),
+
+    // ── TRADUIRE ──
+    irreg("traduire", "to translate", ["communication", "work"], "avoir", "traduit", "traduisant", {
+      présent: ["traduis", "traduis", "traduit", "traduisons", "traduisez", "traduisent"],
+      imparfait: ["traduisais", "traduisais", "traduisait", "traduisions", "traduisiez", "traduisaient"],
+      futurSimple: ["traduirai", "traduiras", "traduira", "traduirons", "traduirez", "traduiront"],
+      conditionnelPrésent: ["traduirais", "traduirais", "traduirait", "traduirions", "traduiriez", "traduiraient"],
+      subjonctifPrésent: ["traduise", "traduises", "traduise", "traduisions", "traduisiez", "traduisent"],
+      passéSimple: ["traduisis", "traduisis", "traduisit", "traduisîmes", "traduisîtes", "traduisirent"],
+      impératif: ["traduis", "traduisons", "traduisez"]
+    }),
+
+    // ── ÉCRIRE ──
+    irreg("écrire", "to write", ["essential", "communication"], "avoir", "écrit", "écrivant", {
+      présent: ["écris", "écris", "écrit", "écrivons", "écrivez", "écrivent"],
+      imparfait: ["écrivais", "écrivais", "écrivait", "écrivions", "écriviez", "écrivaient"],
+      futurSimple: ["écrirai", "écriras", "écrira", "écrirons", "écrirez", "écriront"],
+      conditionnelPrésent: ["écrirais", "écrirais", "écrirait", "écririons", "écririez", "écriraient"],
+      subjonctifPrésent: ["écrive", "écrives", "écrive", "écrivions", "écriviez", "écrivent"],
+      passéSimple: ["écrivis", "écrivis", "écrivit", "écrivîmes", "écrivîtes", "écrivirent"],
+      impératif: ["écris", "écrivons", "écrivez"]
+    }),
+
+    // ── LIRE ──
+    irreg("lire", "to read", ["essential", "communication"], "avoir", "lu", "lisant", {
+      présent: ["lis", "lis", "lit", "lisons", "lisez", "lisent"],
+      imparfait: ["lisais", "lisais", "lisait", "lisions", "lisiez", "lisaient"],
+      futurSimple: ["lirai", "liras", "lira", "lirons", "lirez", "liront"],
+      conditionnelPrésent: ["lirais", "lirais", "lirait", "lirions", "liriez", "liraient"],
+      subjonctifPrésent: ["lise", "lises", "lise", "lisions", "lisiez", "lisent"],
+      passéSimple: ["lus", "lus", "lut", "lûmes", "lûtes", "lurent"],
+      impératif: ["lis", "lisons", "lisez"]
+    }),
+
+    // ── CROIRE ──
+    irreg("croire", "to believe", ["thinking"], "avoir", "cru", "croyant", {
+      présent: ["crois", "crois", "croit", "croyons", "croyez", "croient"],
+      imparfait: ["croyais", "croyais", "croyait", "croyions", "croyiez", "croyaient"],
+      futurSimple: ["croirai", "croiras", "croira", "croirons", "croirez", "croiront"],
+      conditionnelPrésent: ["croirais", "croirais", "croirait", "croirions", "croiriez", "croiraient"],
+      subjonctifPrésent: ["croie", "croies", "croie", "croyions", "croyiez", "croient"],
+      passéSimple: ["crus", "crus", "crut", "crûmes", "crûtes", "crurent"],
+      impératif: ["crois", "croyons", "croyez"]
+    }),
+
+    // ── VOIR ──
+    irreg("voir", "to see", ["essential", "perception"], "avoir", "vu", "voyant", {
+      présent: ["vois", "vois", "voit", "voyons", "voyez", "voient"],
+      imparfait: ["voyais", "voyais", "voyait", "voyions", "voyiez", "voyaient"],
+      futurSimple: ["verrai", "verras", "verra", "verrons", "verrez", "verront"],
+      conditionnelPrésent: ["verrais", "verrais", "verrait", "verrions", "verriez", "verraient"],
+      subjonctifPrésent: ["voie", "voies", "voie", "voyions", "voyiez", "voient"],
+      passéSimple: ["vis", "vis", "vit", "vîmes", "vîtes", "virent"],
+      impératif: ["vois", "voyons", "voyez"]
+    }),
+
+    // ── RECEVOIR ──
+    irreg("recevoir", "to receive", ["actions", "social"], "avoir", "reçu", "recevant", {
+      présent: ["reçois", "reçois", "reçoit", "recevons", "recevez", "reçoivent"],
+      imparfait: ["recevais", "recevais", "recevait", "recevions", "receviez", "recevaient"],
+      futurSimple: ["recevrai", "recevras", "recevra", "recevrons", "recevrez", "recevront"],
+      conditionnelPrésent: ["recevrais", "recevrais", "recevrait", "recevrions", "recevriez", "recevraient"],
+      subjonctifPrésent: ["reçoive", "reçoives", "reçoive", "recevions", "receviez", "reçoivent"],
+      passéSimple: ["reçus", "reçus", "reçut", "reçûmes", "reçûtes", "reçurent"],
+      impératif: ["reçois", "recevons", "recevez"]
+    }),
+
+    // ── TENIR ──
+    irreg("tenir", "to hold, to keep", ["actions"], "avoir", "tenu", "tenant", {
+      présent: ["tiens", "tiens", "tient", "tenons", "tenez", "tiennent"],
+      imparfait: ["tenais", "tenais", "tenait", "tenions", "teniez", "tenaient"],
+      futurSimple: ["tiendrai", "tiendras", "tiendra", "tiendrons", "tiendrez", "tiendront"],
+      conditionnelPrésent: ["tiendrais", "tiendrais", "tiendrait", "tiendrions", "tiendriez", "tiendraient"],
+      subjonctifPrésent: ["tienne", "tiennes", "tienne", "tenions", "teniez", "tiennent"],
+      passéSimple: ["tins", "tins", "tint", "tînmes", "tîntes", "tinrent"],
+      impératif: ["tiens", "tenons", "tenez"]
+    }),
+
+    // ── OBTENIR ──
+    irreg("obtenir", "to obtain, to get", ["actions", "work"], "avoir", "obtenu", "obtenant", {
+      présent: ["obtiens", "obtiens", "obtient", "obtenons", "obtenez", "obtiennent"],
+      imparfait: ["obtenais", "obtenais", "obtenait", "obtenions", "obteniez", "obtenaient"],
+      futurSimple: ["obtiendrai", "obtiendras", "obtiendra", "obtiendrons", "obtiendrez", "obtiendront"],
+      conditionnelPrésent: ["obtiendrais", "obtiendrais", "obtiendrait", "obtiendrions", "obtiendriez", "obtiendraient"],
+      subjonctifPrésent: ["obtienne", "obtiennes", "obtienne", "obtenions", "obteniez", "obtiennent"],
+      passéSimple: ["obtins", "obtins", "obtint", "obtînmes", "obtîntes", "obtinrent"],
+      impératif: ["obtiens", "obtenons", "obtenez"]
+    }),
+
+    // ── SOUTENIR ──
+    irreg("soutenir", "to support, to sustain", ["social", "actions"], "avoir", "soutenu", "soutenant", {
+      présent: ["soutiens", "soutiens", "soutient", "soutenons", "soutenez", "soutiennent"],
+      imparfait: ["soutenais", "soutenais", "soutenait", "soutenions", "souteniez", "soutenaient"],
+      futurSimple: ["soutiendrai", "soutiendras", "soutiendra", "soutiendrons", "soutiendrez", "soutiendront"],
+      conditionnelPrésent: ["soutiendrais", "soutiendrais", "soutiendrait", "soutiendrions", "soutiendriez", "soutiendraient"],
+      subjonctifPrésent: ["soutienne", "soutiennes", "soutienne", "soutenions", "souteniez", "soutiennent"],
+      passéSimple: ["soutins", "soutins", "soutint", "soutînmes", "soutîntes", "soutinrent"],
+      impératif: ["soutiens", "soutenons", "soutenez"]
+    }),
+
+    // ── COURIR ──
+    irreg("courir", "to run", ["actions", "movement"], "avoir", "couru", "courant", {
+      présent: ["cours", "cours", "court", "courons", "courez", "courent"],
+      imparfait: ["courais", "courais", "courait", "courions", "couriez", "couraient"],
+      futurSimple: ["courrai", "courras", "courra", "courrons", "courrez", "courront"],
+      conditionnelPrésent: ["courrais", "courrais", "courrait", "courrions", "courriez", "courraient"],
+      subjonctifPrésent: ["coure", "coures", "coure", "courions", "couriez", "courent"],
+      passéSimple: ["courus", "courus", "courut", "courûmes", "courûtes", "coururent"],
+      impératif: ["cours", "courons", "courez"]
+    }),
+
+    // ── OUVRIR ──
+    irreg("ouvrir", "to open", ["actions", "dailyLife"], "avoir", "ouvert", "ouvrant", {
+      présent: ["ouvre", "ouvres", "ouvre", "ouvrons", "ouvrez", "ouvrent"],
+      imparfait: ["ouvrais", "ouvrais", "ouvrait", "ouvrions", "ouvriez", "ouvraient"],
+      futurSimple: ["ouvrirai", "ouvriras", "ouvrira", "ouvrirons", "ouvrirez", "ouvriront"],
+      conditionnelPrésent: ["ouvrirais", "ouvrirais", "ouvrirait", "ouvririons", "ouvririez", "ouvriraient"],
+      subjonctifPrésent: ["ouvre", "ouvres", "ouvre", "ouvrions", "ouvriez", "ouvrent"],
+      passéSimple: ["ouvris", "ouvris", "ouvrit", "ouvrîmes", "ouvrîtes", "ouvrirent"],
+      impératif: ["ouvre", "ouvrons", "ouvrez"]
+    }),
+
+    // ── OFFRIR ──
+    irreg("offrir", "to offer, to give (gift)", ["social", "actions"], "avoir", "offert", "offrant", {
+      présent: ["offre", "offres", "offre", "offrons", "offrez", "offrent"],
+      imparfait: ["offrais", "offrais", "offrait", "offrions", "offriez", "offraient"],
+      futurSimple: ["offrirai", "offriras", "offrira", "offrirons", "offrirez", "offriront"],
+      conditionnelPrésent: ["offrirais", "offrirais", "offrirait", "offririons", "offririez", "offriraient"],
+      subjonctifPrésent: ["offre", "offres", "offre", "offrions", "offriez", "offrent"],
+      passéSimple: ["offris", "offris", "offrit", "offrîmes", "offrîtes", "offrirent"],
+      impératif: ["offre", "offrons", "offrez"]
+    }),
+
+    // ── COUVRIR ──
+    irreg("couvrir", "to cover", ["actions"], "avoir", "couvert", "couvrant", {
+      présent: ["couvre", "couvres", "couvre", "couvrons", "couvrez", "couvrent"],
+      imparfait: ["couvrais", "couvrais", "couvrait", "couvrions", "couvriez", "couvraient"],
+      futurSimple: ["couvrirai", "couvriras", "couvrira", "couvrirons", "couvrirez", "couvriront"],
+      conditionnelPrésent: ["couvrirais", "couvrirais", "couvrirait", "couvririons", "couvririez", "couvriraient"],
+      subjonctifPrésent: ["couvre", "couvres", "couvre", "couvrions", "couvriez", "couvrent"],
+      passéSimple: ["couvris", "couvris", "couvrit", "couvrîmes", "couvrîtes", "couvrirent"],
+      impératif: ["couvre", "couvrons", "couvrez"]
+    }),
+
+    // ── DÉCOUVRIR ──
+    irreg("découvrir", "to discover", ["thinking", "actions"], "avoir", "découvert", "découvrant", {
+      présent: ["découvre", "découvres", "découvre", "découvrons", "découvrez", "découvrent"],
+      imparfait: ["découvrais", "découvrais", "découvrait", "découvrions", "découvriez", "découvraient"],
+      futurSimple: ["découvrirai", "découvriras", "découvrira", "découvrirons", "découvrirez", "découvriront"],
+      conditionnelPrésent: ["découvrirais", "découvrirais", "découvrirait", "découvririons", "découvririez", "découvriraient"],
+      subjonctifPrésent: ["découvre", "découvres", "découvre", "découvrions", "découvriez", "découvrent"],
+      passéSimple: ["découvris", "découvris", "découvrit", "découvrîmes", "découvrîtes", "découvrirent"],
+      impératif: ["découvre", "découvrons", "découvrez"]
+    }),
+
+    // ── CRAINDRE ──
+    irreg("craindre", "to fear", ["emotions"], "avoir", "craint", "craignant", {
+      présent: ["crains", "crains", "craint", "craignons", "craignez", "craignent"],
+      imparfait: ["craignais", "craignais", "craignait", "craignions", "craigniez", "craignaient"],
+      futurSimple: ["craindrai", "craindras", "craindra", "craindrons", "craindrez", "craindront"],
+      conditionnelPrésent: ["craindrais", "craindrais", "craindrait", "craindrions", "craindriez", "craindraient"],
+      subjonctifPrésent: ["craigne", "craignes", "craigne", "craignions", "craigniez", "craignent"],
+      passéSimple: ["craignis", "craignis", "craignit", "craignîmes", "craignîtes", "craignirent"],
+      impératif: ["crains", "craignons", "craignez"]
+    }),
+
+    // ── PEINDRE ──
+    irreg("peindre", "to paint", ["actions"], "avoir", "peint", "peignant", {
+      présent: ["peins", "peins", "peint", "peignons", "peignez", "peignent"],
+      imparfait: ["peignais", "peignais", "peignait", "peignions", "peigniez", "peignaient"],
+      futurSimple: ["peindrai", "peindras", "peindra", "peindrons", "peindrez", "peindront"],
+      conditionnelPrésent: ["peindrais", "peindrais", "peindrait", "peindrions", "peindriez", "peindraient"],
+      subjonctifPrésent: ["peigne", "peignes", "peigne", "peignions", "peigniez", "peignent"],
+      passéSimple: ["peignis", "peignis", "peignit", "peignîmes", "peignîtes", "peignirent"],
+      impératif: ["peins", "peignons", "peignez"]
+    }),
+
+    // ── ATTEINDRE ──
+    irreg("atteindre", "to reach, to attain", ["actions"], "avoir", "atteint", "atteignant", {
+      présent: ["atteins", "atteins", "atteint", "atteignons", "atteignez", "atteignent"],
+      imparfait: ["atteignais", "atteignais", "atteignait", "atteignions", "atteigniez", "atteignaient"],
+      futurSimple: ["atteindrai", "atteindras", "atteindra", "atteindrons", "atteindrez", "atteindront"],
+      conditionnelPrésent: ["atteindrais", "atteindrais", "atteindrait", "atteindrions", "atteindriez", "atteindraient"],
+      subjonctifPrésent: ["atteigne", "atteignes", "atteigne", "atteignions", "atteigniez", "atteignent"],
+      passéSimple: ["atteignis", "atteignis", "atteignit", "atteignîmes", "atteignîtes", "atteignirent"],
+      impératif: ["atteins", "atteignons", "atteignez"]
+    }),
+
+    // ── REJOINDRE ──
+    irreg("rejoindre", "to join, to meet up with", ["social", "movement"], "avoir", "rejoint", "rejoignant", {
+      présent: ["rejoins", "rejoins", "rejoint", "rejoignons", "rejoignez", "rejoignent"],
+      imparfait: ["rejoignais", "rejoignais", "rejoignait", "rejoignions", "rejoigniez", "rejoignaient"],
+      futurSimple: ["rejoindrai", "rejoindras", "rejoindra", "rejoindrons", "rejoindrez", "rejoindront"],
+      conditionnelPrésent: ["rejoindrais", "rejoindrais", "rejoindrait", "rejoindrions", "rejoindriez", "rejoindraient"],
+      subjonctifPrésent: ["rejoigne", "rejoignes", "rejoigne", "rejoignions", "rejoigniez", "rejoignent"],
+      passéSimple: ["rejoignis", "rejoignis", "rejoignit", "rejoignîmes", "rejoignîtes", "rejoignirent"],
+      impératif: ["rejoins", "rejoignons", "rejoignez"]
+    }),
+
+    // ── RÉSOUDRE ──
+    irreg("résoudre", "to resolve, to solve", ["thinking", "work"], "avoir", "résolu", "résolvant", {
+      présent: ["résous", "résous", "résout", "résolvons", "résolvez", "résolvent"],
+      imparfait: ["résolvais", "résolvais", "résolvait", "résolvions", "résolviez", "résolvaient"],
+      futurSimple: ["résoudrai", "résoudras", "résoudra", "résoudrons", "résoudrez", "résoudront"],
+      conditionnelPrésent: ["résoudrais", "résoudrais", "résoudrait", "résoudrions", "résoudriez", "résoudraient"],
+      subjonctifPrésent: ["résolve", "résolves", "résolve", "résolvions", "résolviez", "résolvent"],
+      passéSimple: ["résolus", "résolus", "résolut", "résolûmes", "résolûtes", "résolurent"],
+      impératif: ["résous", "résolvons", "résolvez"]
+    }),
+
+    // ── CONCLURE ──
+    irreg("conclure", "to conclude", ["thinking", "communication"], "avoir", "conclu", "concluant", {
+      présent: ["conclus", "conclus", "conclut", "concluons", "concluez", "concluent"],
+      imparfait: ["concluais", "concluais", "concluait", "concluions", "concluiez", "concluaient"],
+      futurSimple: ["conclurai", "concluras", "conclura", "conclurons", "conclurez", "concluront"],
+      conditionnelPrésent: ["conclurais", "conclurais", "conclurait", "conclurions", "concluriez", "concluraient"],
+      subjonctifPrésent: ["conclue", "conclues", "conclue", "concluions", "concluiez", "concluent"],
+      passéSimple: ["conclus", "conclus", "conclut", "conclûmes", "conclûtes", "conclurent"],
+      impératif: ["conclus", "concluons", "concluez"]
+    }),
+
+    // ── SUIVRE ──
+    irreg("suivre", "to follow", ["actions", "movement"], "avoir", "suivi", "suivant", {
+      présent: ["suis", "suis", "suit", "suivons", "suivez", "suivent"],
+      imparfait: ["suivais", "suivais", "suivait", "suivions", "suiviez", "suivaient"],
+      futurSimple: ["suivrai", "suivras", "suivra", "suivrons", "suivrez", "suivront"],
+      conditionnelPrésent: ["suivrais", "suivrais", "suivrait", "suivrions", "suivriez", "suivraient"],
+      subjonctifPrésent: ["suive", "suives", "suive", "suivions", "suiviez", "suivent"],
+      passéSimple: ["suivis", "suivis", "suivit", "suivîmes", "suivîtes", "suivirent"],
+      impératif: ["suis", "suivons", "suivez"]
+    }),
+
+    // ── VIVRE ──
+    irreg("vivre", "to live", ["state", "essential"], "avoir", "vécu", "vivant", {
+      présent: ["vis", "vis", "vit", "vivons", "vivez", "vivent"],
+      imparfait: ["vivais", "vivais", "vivait", "vivions", "viviez", "vivaient"],
+      futurSimple: ["vivrai", "vivras", "vivra", "vivrons", "vivrez", "vivront"],
+      conditionnelPrésent: ["vivrais", "vivrais", "vivrait", "vivrions", "vivriez", "vivraient"],
+      subjonctifPrésent: ["vive", "vives", "vive", "vivions", "viviez", "vivent"],
+      passéSimple: ["vécus", "vécus", "vécut", "vécûmes", "vécûtes", "vécurent"],
+      impératif: ["vis", "vivons", "vivez"]
+    }),
+
+    // ── PARAÎTRE ──
+    irreg("paraître", "to seem, to appear", ["state", "perception"], "avoir", "paru", "paraissant", {
+      présent: ["parais", "parais", "paraît", "paraissons", "paraissez", "paraissent"],
+      imparfait: ["paraissais", "paraissais", "paraissait", "paraissions", "paraissiez", "paraissaient"],
+      futurSimple: ["paraîtrai", "paraîtras", "paraîtra", "paraîtrons", "paraîtrez", "paraîtront"],
+      conditionnelPrésent: ["paraîtrais", "paraîtrais", "paraîtrait", "paraîtrions", "paraîtriez", "paraîtraient"],
+      subjonctifPrésent: ["paraisse", "paraisses", "paraisse", "paraissions", "paraissiez", "paraissent"],
+      passéSimple: ["parus", "parus", "parut", "parûmes", "parûtes", "parurent"],
+      impératif: ["parais", "paraissons", "paraissez"]
+    }),
+
+    // ── CONNAÎTRE ──
+    irreg("connaître", "to know (person/place)", ["essential", "thinking"], "avoir", "connu", "connaissant", {
+      présent: ["connais", "connais", "connaît", "connaissons", "connaissez", "connaissent"],
+      imparfait: ["connaissais", "connaissais", "connaissait", "connaissions", "connaissiez", "connaissaient"],
+      futurSimple: ["connaîtrai", "connaîtras", "connaîtra", "connaîtrons", "connaîtrez", "connaîtront"],
+      conditionnelPrésent: ["connaîtrais", "connaîtrais", "connaîtrait", "connaîtrions", "connaîtriez", "connaîtraient"],
+      subjonctifPrésent: ["connaisse", "connaisses", "connaisse", "connaissions", "connaissiez", "connaissent"],
+      passéSimple: ["connus", "connus", "connut", "connûmes", "connûtes", "connurent"],
+      impératif: ["connais", "connaissons", "connaissez"]
+    }),
+
+    // ── RECONNAÎTRE ──
+    irreg("reconnaître", "to recognize", ["thinking", "perception"], "avoir", "reconnu", "reconnaissant", {
+      présent: ["reconnais", "reconnais", "reconnaît", "reconnaissons", "reconnaissez", "reconnaissent"],
+      imparfait: ["reconnaissais", "reconnaissais", "reconnaissait", "reconnaissions", "reconnaissiez", "reconnaissaient"],
+      futurSimple: ["reconnaîtrai", "reconnaîtras", "reconnaîtra", "reconnaîtrons", "reconnaîtrez", "reconnaîtront"],
+      conditionnelPrésent: ["reconnaîtrais", "reconnaîtrais", "reconnaîtrait", "reconnaîtrions", "reconnaîtriez", "reconnaîtraient"],
+      subjonctifPrésent: ["reconnaisse", "reconnaisses", "reconnaisse", "reconnaissions", "reconnaissiez", "reconnaissent"],
+      passéSimple: ["reconnus", "reconnus", "reconnut", "reconnûmes", "reconnûtes", "reconnurent"],
+      impératif: ["reconnais", "reconnaissons", "reconnaissez"]
+    }),
+
+    // ── PLAIRE ──
+    irreg("plaire", "to please", ["emotions", "social"], "avoir", "plu", "plaisant", {
+      présent: ["plais", "plais", "plaît", "plaisons", "plaisez", "plaisent"],
+      imparfait: ["plaisais", "plaisais", "plaisait", "plaisions", "plaisiez", "plaisaient"],
+      futurSimple: ["plairai", "plairas", "plaira", "plairons", "plairez", "plairont"],
+      conditionnelPrésent: ["plairais", "plairais", "plairait", "plairions", "plairiez", "plairaient"],
+      subjonctifPrésent: ["plaise", "plaises", "plaise", "plaisions", "plaisiez", "plaisent"],
+      passéSimple: ["plus", "plus", "plut", "plûmes", "plûtes", "plurent"],
+      impératif: ["plais", "plaisons", "plaisez"]
+    }),
+
+    // ── RIRE ──
+    irreg("rire", "to laugh", ["emotions", "social"], "avoir", "ri", "riant", {
+      présent: ["ris", "ris", "rit", "rions", "riez", "rient"],
+      imparfait: ["riais", "riais", "riait", "riions", "riiez", "riaient"],
+      futurSimple: ["rirai", "riras", "rira", "rirons", "rirez", "riront"],
+      conditionnelPrésent: ["rirais", "rirais", "rirait", "ririons", "ririez", "riraient"],
+      subjonctifPrésent: ["rie", "ries", "rie", "riions", "riiez", "rient"],
+      passéSimple: ["ris", "ris", "rit", "rîmes", "rîtes", "rirent"],
+      impératif: ["ris", "rions", "riez"]
+    }),
+
+    // ── SOURIRE ──
+    irreg("sourire", "to smile", ["emotions", "social"], "avoir", "souri", "souriant", {
+      présent: ["souris", "souris", "sourit", "sourions", "souriez", "sourient"],
+      imparfait: ["souriais", "souriais", "souriait", "souriions", "souriiez", "souriaient"],
+      futurSimple: ["sourirai", "souriras", "sourira", "sourirons", "sourirez", "souriront"],
+      conditionnelPrésent: ["sourirais", "sourirais", "sourirait", "souririons", "souririez", "souriraient"],
+      subjonctifPrésent: ["sourie", "souries", "sourie", "souriions", "souriiez", "sourient"],
+      passéSimple: ["souris", "souris", "sourit", "sourîmes", "sourîtes", "sourirent"],
+      impératif: ["souris", "sourions", "souriez"]
+    }),
+
+    // ── BATTRE ──
+    irreg("battre", "to beat, to hit", ["actions"], "avoir", "battu", "battant", {
+      présent: ["bats", "bats", "bat", "battons", "battez", "battent"],
+      imparfait: ["battais", "battais", "battait", "battions", "battiez", "battaient"],
+      futurSimple: ["battrai", "battras", "battra", "battrons", "battrez", "battront"],
+      conditionnelPrésent: ["battrais", "battrais", "battrait", "battrions", "battriez", "battraient"],
+      subjonctifPrésent: ["batte", "battes", "batte", "battions", "battiez", "battent"],
+      passéSimple: ["battis", "battis", "battit", "battîmes", "battîtes", "battirent"],
+      impératif: ["bats", "battons", "battez"]
+    }),
+
+    // ── INTERROMPRE ──
+    irreg("interrompre", "to interrupt", ["communication", "social"], "avoir", "interrompu", "interrompant", {
+      présent: ["interromps", "interromps", "interrompt", "interrompons", "interrompez", "interrompent"],
+      imparfait: ["interrompais", "interrompais", "interrompait", "interrompions", "interrompiez", "interrompaient"],
+      futurSimple: ["interromprai", "interrompras", "interrompra", "interromprons", "interromprez", "interrompront"],
+      conditionnelPrésent: ["interromprais", "interromprais", "interromprait", "interromprions", "interrompriez", "interrompraient"],
+      subjonctifPrésent: ["interrompe", "interrompes", "interrompe", "interrompions", "interrompiez", "interrompent"],
+      passéSimple: ["interrompis", "interrompis", "interrompit", "interrompîmes", "interrompîtes", "interrompirent"],
+      impératif: ["interromps", "interrompons", "interrompez"]
+    }),
+
+    // ── VALOIR ──
+    irreg("valoir", "to be worth", ["state"], "avoir", "valu", "valant", {
+      présent: ["vaux", "vaux", "vaut", "valons", "valez", "valent"],
+      imparfait: ["valais", "valais", "valait", "valions", "valiez", "valaient"],
+      futurSimple: ["vaudrai", "vaudras", "vaudra", "vaudrons", "vaudrez", "vaudront"],
+      conditionnelPrésent: ["vaudrais", "vaudrais", "vaudrait", "vaudrions", "vaudriez", "vaudraient"],
+      subjonctifPrésent: ["vaille", "vailles", "vaille", "valions", "valiez", "vaillent"],
+      passéSimple: ["valus", "valus", "valut", "valûmes", "valûtes", "valurent"],
+      impératif: ["vaux", "valons", "valez"]
+    }),
+
+    // ── SUFFIRE ──
+    irreg("suffire", "to suffice, to be enough", ["state"], "avoir", "suffi", "suffisant", {
+      présent: ["suffis", "suffis", "suffit", "suffisons", "suffisez", "suffisent"],
+      imparfait: ["suffisais", "suffisais", "suffisait", "suffisions", "suffisiez", "suffisaient"],
+      futurSimple: ["suffirai", "suffiras", "suffira", "suffirons", "suffirez", "suffiront"],
+      conditionnelPrésent: ["suffirais", "suffirais", "suffirait", "suffirions", "suffiriez", "suffiraient"],
+      subjonctifPrésent: ["suffise", "suffises", "suffise", "suffisions", "suffisiez", "suffisent"],
+      passéSimple: ["suffis", "suffis", "suffit", "suffîmes", "suffîtes", "suffirent"],
+      impératif: ["suffis", "suffisons", "suffisez"]
+    }),
+
+    // ── PLEUVOIR (impersonal) ──
+    irreg("pleuvoir", "to rain (il pleut)", ["state"], "avoir", "plu", null, {
+      présent: [null, null, "pleut", null, null, null],
+      imparfait: [null, null, "pleuvait", null, null, null],
+      futurSimple: [null, null, "pleuvra", null, null, null],
+      conditionnelPrésent: [null, null, "pleuvrait", null, null, null],
+      subjonctifPrésent: [null, null, "pleuve", null, null, null],
+      passéSimple: [null, null, "plut", null, null, null],
+      impératif: null
+    }, { impersonal: true }),
+  ];
+
+  // ──────────────────────────────────────────────
+  // REFLEXIVE VERBS
+  // ──────────────────────────────────────────────
+
+  const reflexiveVerbs = [
+    Object.assign(reg("lever", "to get up", "er", ["reflexive", "dailyLife"]), {
+      reflexive: true,
+      reflexiveInfinitive: "se lever",
+      english: "to get up",
+      auxiliary: "être",
+      stemChanges: { presentBoot: "lèv", subjonctifBoot: "lèv", futur: "lèver", conditionnel: "lèver" }
+    }),
+    Object.assign(reg("coucher", "to go to bed", "er", ["reflexive", "dailyLife"]), {
+      reflexive: true, reflexiveInfinitive: "se coucher", auxiliary: "être"
+    }),
+    Object.assign(reg("réveiller", "to wake up", "er", ["reflexive", "dailyLife"]), {
+      reflexive: true, reflexiveInfinitive: "se réveiller", auxiliary: "être"
+    }),
+    Object.assign(reg("habiller", "to get dressed", "er", ["reflexive", "dailyLife"]), {
+      reflexive: true, reflexiveInfinitive: "s'habiller", auxiliary: "être"
+    }),
+    Object.assign(reg("appeler", "to be called", "er", ["reflexive", "essential"]), {
+      reflexive: true, reflexiveInfinitive: "s'appeler", auxiliary: "être",
+      stemChanges: { presentBoot: "appell", subjonctifBoot: "appell", futur: "appeller", conditionnel: "appeller" }
+    }),
+    Object.assign(reg("promener", "to take a walk", "er", ["reflexive", "dailyLife"]), {
+      reflexive: true, reflexiveInfinitive: "se promener", auxiliary: "être",
+      stemChanges: { presentBoot: "promèn", subjonctifBoot: "promèn", futur: "promèner", conditionnel: "promèner" }
+    }),
+    Object.assign({
+      infinitive: "sentir",
+      english: "to feel",
+      group: "irregular",
+      category: ["reflexive", "perception", "emotions"],
+      auxiliary: "être",
+      pastParticiple: "senti",
+      presentParticiple: "sentant",
+      reflexive: true,
+      reflexiveInfinitive: "se sentir",
+      irregular: {
+        présent: ["sens", "sens", "sent", "sentons", "sentez", "sentent"],
+        imparfait: ["sentais", "sentais", "sentait", "sentions", "sentiez", "sentaient"],
+        futurSimple: ["sentirai", "sentiras", "sentira", "sentirons", "sentirez", "sentiront"],
+        conditionnelPrésent: ["sentirais", "sentirais", "sentirait", "sentirions", "sentiriez", "sentiraient"],
+        subjonctifPrésent: ["sente", "sentes", "sente", "sentions", "sentiez", "sentent"],
+        passéSimple: ["sentis", "sentis", "sentit", "sentîmes", "sentîtes", "sentirent"],
+        impératif: ["sens", "sentons", "sentez"]
+      }
+    }),
+    Object.assign(reg("dépêcher", "to hurry", "er", ["reflexive", "dailyLife"]), {
+      reflexive: true, reflexiveInfinitive: "se dépêcher", auxiliary: "être"
+    }),
+    Object.assign(reg("reposer", "to rest", "er", ["reflexive", "dailyLife"]), {
+      reflexive: true, reflexiveInfinitive: "se reposer", auxiliary: "être"
+    }),
+    Object.assign({
+      infinitive: "souvenir",
+      english: "to remember",
+      group: "irregular",
+      category: ["reflexive", "thinking"],
+      auxiliary: "être",
+      pastParticiple: "souvenu",
+      presentParticiple: "souvenant",
+      reflexive: true,
+      reflexiveInfinitive: "se souvenir",
+      irregular: {
+        présent: ["souviens", "souviens", "souvient", "souvenons", "souvenez", "souviennent"],
+        imparfait: ["souvenais", "souvenais", "souvenait", "souvenions", "souveniez", "souvenaient"],
+        futurSimple: ["souviendrai", "souviendras", "souviendra", "souviendrons", "souviendrez", "souviendront"],
+        conditionnelPrésent: ["souviendrais", "souviendrais", "souviendrait", "souviendrions", "souviendriez", "souviendraient"],
+        subjonctifPrésent: ["souvienne", "souviennes", "souvienne", "souvenions", "souveniez", "souviennent"],
+        passéSimple: ["souvins", "souvins", "souvint", "souvînmes", "souvîntes", "souvinrent"],
+        impératif: ["souviens", "souvenons", "souvenez"]
+      }
+    }),
+    Object.assign(reg("tromper", "to make a mistake", "er", ["reflexive", "dailyLife"]), {
+      reflexive: true, reflexiveInfinitive: "se tromper", auxiliary: "être"
+    }),
+    Object.assign(reg("arrêter", "to stop (oneself)", "er", ["reflexive", "actions"]), {
+      reflexive: true, reflexiveInfinitive: "s'arrêter", auxiliary: "être"
+    }),
+    Object.assign({
+      infinitive: "asseoir",
+      english: "to sit down",
+      group: "irregular",
+      category: ["reflexive", "dailyLife"],
+      auxiliary: "être",
+      pastParticiple: "assis",
+      presentParticiple: "asseyant",
+      reflexive: true,
+      reflexiveInfinitive: "s'asseoir",
+      irregular: {
+        présent: ["assieds", "assieds", "assied", "asseyons", "asseyez", "asseyent"],
+        imparfait: ["asseyais", "asseyais", "asseyait", "asseyions", "asseyiez", "asseyaient"],
+        futurSimple: ["assiérai", "assiéras", "assiéra", "assiérons", "assiérez", "assiéront"],
+        conditionnelPrésent: ["assiérais", "assiérais", "assiérait", "assiérions", "assiériez", "assiéraient"],
+        subjonctifPrésent: ["asseye", "asseyes", "asseye", "asseyions", "asseyiez", "asseyent"],
+        passéSimple: ["assis", "assis", "assit", "assîmes", "assîtes", "assirent"],
+        impératif: ["assieds", "asseyons", "asseyez"]
+      }
+    }),
+    Object.assign(reg("marier", "to get married", "er", ["reflexive", "social"]), {
+      reflexive: true, reflexiveInfinitive: "se marier", auxiliary: "être"
+    }),
+    Object.assign(reg("laver", "to wash oneself", "er", ["reflexive", "dailyLife"]), {
+      reflexive: true, reflexiveInfinitive: "se laver", auxiliary: "être"
+    }),
+    Object.assign({
+      infinitive: "endormir",
+      english: "to fall asleep",
+      group: "irregular",
+      category: ["reflexive", "dailyLife"],
+      auxiliary: "être",
+      pastParticiple: "endormi",
+      presentParticiple: "endormant",
+      reflexive: true,
+      reflexiveInfinitive: "s'endormir",
+      irregular: {
+        présent: ["endors", "endors", "endort", "endormons", "endormez", "endorment"],
+        imparfait: ["endormais", "endormais", "endormait", "endormions", "endormiez", "endormaient"],
+        futurSimple: ["endormirai", "endormiras", "endormira", "endormirons", "endormirez", "endormiront"],
+        conditionnelPrésent: ["endormirais", "endormirais", "endormirait", "endormirions", "endormiriez", "endormiraient"],
+        subjonctifPrésent: ["endorme", "endormes", "endorme", "endormions", "endormiez", "endorment"],
+        passéSimple: ["endormis", "endormis", "endormit", "endormîmes", "endormîtes", "endormirent"],
+        impératif: ["endors", "endormons", "endormez"]
+      }
+    }),
+  ];
+
+  // ──────────────────────────────────────────────
+  // REGULAR -ER VERBS
+  // ──────────────────────────────────────────────
+
+  const regularErVerbs = [
+    reg("parler", "to speak", "er", ["essential", "communication"]),
+    reg("écouter", "to listen", "er", ["essential", "perception"]),
+    reg("demander", "to ask", "er", ["essential", "communication"]),
+    reg("expliquer", "to explain", "er", ["communication", "work"]),
+    reg("raconter", "to tell (a story)", "er", ["communication"]),
+    reg("crier", "to shout, to cry out", "er", ["communication", "emotions"]),
+    reg("chanter", "to sing", "er", ["actions", "dailyLife"]),
+    reg("montrer", "to show", "er", ["communication", "actions"]),
+    reg("proposer", "to propose, to suggest", "er", ["communication", "social"]),
+    reg("exprimer", "to express", "er", ["communication", "emotions"]),
+    reg("répéter", "to repeat", "er", ["communication"], {
+      stemChanges: { presentBoot: "répèt", subjonctifBoot: "répèt" }
+    }),
+    reg("manger", "to eat", "er", ["essential", "dailyLife"]),
+    reg("cuisiner", "to cook", "er", ["dailyLife"]),
+    reg("acheter", "to buy", "er", ["dailyLife", "actions"], {
+      stemChanges: { presentBoot: "achèt", subjonctifBoot: "achèt", futur: "achèter", conditionnel: "achèter" }
+    }),
+    reg("travailler", "to work", "er", ["essential", "work"]),
+    reg("jouer", "to play", "er", ["dailyLife", "actions"]),
+    reg("habiter", "to live (reside)", "er", ["essential", "dailyLife"]),
+    reg("porter", "to carry, to wear", "er", ["actions", "dailyLife"]),
+    reg("donner", "to give", "er", ["essential", "social"]),
+    reg("fermer", "to close", "er", ["actions", "dailyLife"]),
+    reg("chercher", "to look for, to search", "er", ["actions", "thinking"]),
+    reg("trouver", "to find", "er", ["essential", "actions"]),
+    reg("marcher", "to walk", "er", ["movement", "actions"]),
+    reg("nager", "to swim", "er", ["actions"]),
+    reg("aimer", "to love, to like", "er", ["essential", "emotions"]),
+    reg("détester", "to hate", "er", ["emotions"]),
+    reg("adorer", "to adore, to love", "er", ["emotions"]),
+    reg("regretter", "to regret", "er", ["emotions"]),
+    reg("pleurer", "to cry", "er", ["emotions"]),
+    reg("regarder", "to watch, to look at", "er", ["essential", "perception"]),
+    reg("toucher", "to touch", "er", ["perception", "actions"]),
+    reg("goûter", "to taste", "er", ["perception", "dailyLife"]),
+    reg("observer", "to observe", "er", ["perception", "thinking"]),
+    reg("remarquer", "to notice", "er", ["perception", "thinking"]),
+    reg("commencer", "to begin, to start", "er", ["essential", "actions"]),
+    reg("continuer", "to continue", "er", ["actions"]),
+    reg("arrêter", "to stop", "er", ["actions"]),
+    reg("essayer", "to try", "er", ["essential", "actions"], {
+      stemChanges: { presentBoot: "essai", subjonctifBoot: "essai" }
+    }),
+    reg("changer", "to change", "er", ["actions"]),
+    reg("aider", "to help", "er", ["social", "actions"]),
+    reg("créer", "to create", "er", ["actions", "work"]),
+    reg("casser", "to break", "er", ["actions"]),
+    reg("couper", "to cut", "er", ["actions", "dailyLife"]),
+    reg("lancer", "to throw, to launch", "er", ["actions"]),
+    reg("pousser", "to push", "er", ["actions"]),
+    reg("tirer", "to pull, to shoot", "er", ["actions"]),
+    reg("accepter", "to accept", "er", ["social", "thinking"]),
+    reg("refuser", "to refuse", "er", ["social", "communication"]),
+    reg("imaginer", "to imagine", "er", ["thinking"]),
+    reg("préparer", "to prepare", "er", ["dailyLife", "actions"]),
+    reg("utiliser", "to use", "er", ["actions", "work"]),
+    reg("laisser", "to leave (behind), to let", "er", ["actions"]),
+    reg("garder", "to keep, to guard", "er", ["actions"]),
+    reg("quitter", "to leave (a place/person)", "er", ["actions", "movement"]),
+    reg("emporter", "to take away, to carry off", "er", ["actions"]),
+    reg("apporter", "to bring", "er", ["actions"]),
+    reg("ajouter", "to add", "er", ["actions"]),
+    reg("retirer", "to remove, to withdraw", "er", ["actions"]),
+    reg("améliorer", "to improve", "er", ["actions", "work"]),
+    reg("traverser", "to cross", "er", ["movement", "actions"]),
+    reg("voyager", "to travel", "er", ["movement", "dailyLife"]),
+    reg("visiter", "to visit (a place)", "er", ["movement", "social"]),
+    reg("rencontrer", "to meet, to encounter", "er", ["social"]),
+    reg("inviter", "to invite", "er", ["social"]),
+    reg("présenter", "to present, to introduce", "er", ["social", "communication"]),
+    reg("partager", "to share", "er", ["social"]),
+    reg("accompagner", "to accompany", "er", ["social", "movement"]),
+    reg("remercier", "to thank", "er", ["social", "communication"]),
+    reg("excuser", "to excuse", "er", ["social", "communication"]),
+    reg("étudier", "to study", "er", ["work", "thinking"]),
+    reg("enseigner", "to teach", "er", ["work", "communication"]),
+    reg("gagner", "to win, to earn", "er", ["work", "actions"]),
+    reg("payer", "to pay", "er", ["dailyLife", "work"], {
+      stemChanges: { presentBoot: "pai", subjonctifBoot: "pai" }
+    }),
+    reg("compter", "to count", "er", ["thinking", "work"]),
+    reg("organiser", "to organize", "er", ["work"]),
+    reg("développer", "to develop", "er", ["work"]),
+    reg("diriger", "to direct, to manage", "er", ["work"]),
+    reg("exister", "to exist", "er", ["state"]),
+    reg("sembler", "to seem", "er", ["state", "perception"]),
+    reg("arriver", "to arrive", "er", ["essential", "movement"], { auxiliary: "être" }),
+    reg("entrer", "to enter", "er", ["movement"], { auxiliary: "être" }),
+    reg("rester", "to stay, to remain", "er", ["essential", "movement"], { auxiliary: "être" }),
+    reg("tomber", "to fall", "er", ["movement"], { auxiliary: "être" }),
+    reg("monter", "to go up, to climb", "er", ["movement"], { auxiliary: "être" }),
+    reg("rentrer", "to return home", "er", ["movement"], { auxiliary: "être" }),
+    reg("retourner", "to return, to go back", "er", ["movement"], { auxiliary: "être" }),
+    reg("passer", "to pass, to spend (time)", "er", ["essential", "actions"], { auxiliary: "être" }),
+    reg("lever", "to raise, to lift", "er", ["actions"], {
+      stemChanges: { presentBoot: "lèv", subjonctifBoot: "lèv", futur: "lèver", conditionnel: "lèver" }
+    }),
+    reg("jeter", "to throw", "er", ["actions"], {
+      stemChanges: { presentBoot: "jett", subjonctifBoot: "jett", futur: "jetter", conditionnel: "jetter" }
+    }),
+    reg("appuyer", "to press, to lean", "er", ["actions"], {
+      stemChanges: { presentBoot: "appui", subjonctifBoot: "appui" }
+    }),
+    reg("nettoyer", "to clean", "er", ["dailyLife", "actions"], {
+      stemChanges: { presentBoot: "nettoi", subjonctifBoot: "nettoi" }
+    }),
+    reg("employer", "to employ, to use", "er", ["work", "actions"], {
+      stemChanges: { presentBoot: "emploi", subjonctifBoot: "emploi" }
+    }),
+    reg("rappeler", "to call back, to remind", "er", ["communication"], {
+      stemChanges: { presentBoot: "rappell", subjonctifBoot: "rappell", futur: "rappeller", conditionnel: "rappeller" }
+    }),
+    reg("manquer", "to miss, to lack", "er", ["emotions", "state"]),
+  ];
+
+  // ──────────────────────────────────────────────
+  // REGULAR -IR VERBS (2nd group, -issant)
+  // ──────────────────────────────────────────────
+
+  const regularIrVerbs = [
+    reg("finir", "to finish", "ir", ["essential", "actions"]),
+    reg("réussir", "to succeed", "ir", ["work", "actions"]),
+    reg("choisir", "to choose", "ir", ["essential", "thinking"]),
+    reg("grandir", "to grow (up)", "ir", ["state"]),
+    reg("remplir", "to fill", "ir", ["actions"]),
+    reg("réfléchir", "to think, to reflect", "ir", ["thinking"]),
+    reg("obéir", "to obey", "ir", ["social"]),
+    reg("punir", "to punish", "ir", ["social"]),
+    reg("guérir", "to heal, to cure", "ir", ["state", "dailyLife"]),
+    reg("nourrir", "to feed, to nourish", "ir", ["dailyLife", "actions"]),
+    reg("agir", "to act", "ir", ["actions"]),
+    reg("définir", "to define", "ir", ["thinking", "communication"]),
+    reg("établir", "to establish", "ir", ["work", "actions"]),
+    reg("réagir", "to react", "ir", ["actions", "emotions"]),
+    reg("applaudir", "to applaud", "ir", ["social", "actions"]),
+    reg("avertir", "to warn", "ir", ["communication"]),
+    reg("bâtir", "to build", "ir", ["actions", "work"]),
+    reg("ralentir", "to slow down", "ir", ["actions", "movement"]),
+    reg("atterrir", "to land", "ir", ["movement"]),
+    reg("saisir", "to seize, to grasp", "ir", ["actions", "thinking"]),
+    reg("rougir", "to blush", "ir", ["emotions"]),
+    reg("maigrir", "to lose weight", "ir", ["state"]),
+    reg("grossir", "to gain weight", "ir", ["state"]),
+    reg("vieillir", "to age, to grow old", "ir", ["state"]),
+    reg("rajeunir", "to rejuvenate", "ir", ["state"]),
+    reg("enrichir", "to enrich", "ir", ["state", "work"]),
+    reg("approfondir", "to deepen", "ir", ["thinking"]),
+    reg("accomplir", "to accomplish", "ir", ["work", "actions"]),
+  ];
+
+  // ──────────────────────────────────────────────
+  // REGULAR -RE VERBS
+  // ──────────────────────────────────────────────
+
+  const regularReVerbs = [
+    reg("vendre", "to sell", "re", ["essential", "work"]),
+    reg("entendre", "to hear", "re", ["essential", "perception"]),
+    reg("répondre", "to answer", "re", ["essential", "communication"]),
+    reg("attendre", "to wait (for)", "re", ["essential", "actions"]),
+    reg("perdre", "to lose", "re", ["actions"]),
+    reg("descendre", "to go down, to descend", "re", ["movement"], { auxiliary: "être" }),
+  ];
+
+  // ──────────────────────────────────────────────
+  // COMBINE ALL VERBS
+  // ──────────────────────────────────────────────
+
+  const verbs = [
+    ...irregularVerbs,
+    ...reflexiveVerbs,
+    ...regularErVerbs,
+    ...regularIrVerbs,
+    ...regularReVerbs
+  ];
+
+  // ──────────────────────────────────────────────
+  // PUBLIC API
+  // ──────────────────────────────────────────────
+
+  return Object.freeze({
+    engine,
+    tenseInfo,
+    persons: PERSONS,
+    verbs,
+    categories,
+
+    /** Find a verb by infinitive. */
+    findVerb(infinitive) {
+      const lower = infinitive.toLowerCase();
+      return verbs.find(v =>
+        v.infinitive === lower ||
+        (v.reflexiveInfinitive && v.reflexiveInfinitive === lower)
+      ) || null;
+    },
+
+    /** Get all verbs in a given category. */
+    getByCategory(cat) {
+      return verbs.filter(v => v.category.includes(cat));
+    },
+
+    /** Get all verbs that use être as auxiliary. */
+    getEtreVerbs() {
+      return verbs.filter(v => v.auxiliary === "être");
+    },
+
+    /** Get all reflexive verbs. */
+    getReflexiveVerbs() {
+      return verbs.filter(v => v.reflexive);
+    },
+
+    /** Conjugate a verb (by object or infinitive string) in a given tense. */
+    conjugate(verbOrInfinitive, tense) {
+      const verb = typeof verbOrInfinitive === "string"
+        ? this.findVerb(verbOrInfinitive)
+        : verbOrInfinitive;
+      if (!verb) return null;
+      return engine.conjugate(verb, tense);
+    },
+
+    /** Get a display-ready conjugation table. */
+    getConjugationTable(verbOrInfinitive, tense) {
+      const verb = typeof verbOrInfinitive === "string"
+        ? this.findVerb(verbOrInfinitive)
+        : verbOrInfinitive;
+      if (!verb) return null;
+      return engine.getConjugationTable(verb, tense);
+    },
+
+    /** Get all available tense keys. */
+    getTenseKeys() {
+      return Object.keys(tenseInfo);
+    },
+
+    /** Get all simple (non-compound) tense keys. */
+    getSimpleTenseKeys() {
+      return Object.keys(tenseInfo).filter(k => !tenseInfo[k].compound);
+    },
+
+    /** Get all compound tense keys. */
+    getCompoundTenseKeys() {
+      return Object.keys(tenseInfo).filter(k => tenseInfo[k].compound);
+    },
+
+    /** Get verb count. */
+    get count() {
+      return verbs.length;
+    }
+  });
+})();
